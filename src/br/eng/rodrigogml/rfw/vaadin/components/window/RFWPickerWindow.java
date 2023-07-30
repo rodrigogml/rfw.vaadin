@@ -48,15 +48,17 @@ public class RFWPickerWindow<VO extends RFWVO> extends Window {
   private final Panel listPanel = new Panel("Lista");
   private final VerticalLayout listLayout;
 
+  private final RFWDBProvider dbProvider;
+
   /**
    * Listener chamado ao confirmar a seleção no picker, passando os itens selecionados.
    */
   private RFWPickerConfirmListener<VO> confirmListener = null;
 
-  public RFWPickerWindow(Class<VO> voClass, String caption, ThemeResource icon, final RFWDBProvider dataProvider) throws RFWException {
+  public RFWPickerWindow(Class<VO> voClass, String caption, ThemeResource icon, final RFWDBProvider dbProvider) throws RFWException {
     super(caption);
 
-    PreProcess.requiredNonNull(dataProvider, "O RFWPickerWindow necessita um dataProvider válido para funcionar corretamente!");
+    PreProcess.requiredNonNull(dbProvider, "O RFWPickerWindow necessita um dataProvider válido para funcionar corretamente!");
 
     this.setIcon(icon);
     this.setModal(true);
@@ -65,6 +67,8 @@ public class RFWPickerWindow<VO extends RFWVO> extends Window {
     this.setHeight("95%");
     this.center();
     this.setClosable(true);
+
+    this.dbProvider = dbProvider;
 
     this.uiFac = new UIFactory<>(voClass);
 
@@ -101,10 +105,6 @@ public class RFWPickerWindow<VO extends RFWVO> extends Window {
     listLayout.setComponentAlignment(buttonBar, Alignment.MIDDLE_RIGHT);
     this.listPanel.setContent(listLayout);
 
-    // Criamos a parte dinâmica do Layout com essas informações (Que se alterará caso a página seja redimensionada)
-    // Atualiza o conteúdo do searchPanel
-    searchPanel.setContent(this.uiFac.createSearchPanel(1, null, dataProvider));
-
     this.setContent(this.mainView);
   }
 
@@ -115,7 +115,12 @@ public class RFWPickerWindow<VO extends RFWVO> extends Window {
    * @throws RFWException the RFW exception
    */
   protected void setGrid(Grid<GVO<VO>> grid) throws RFWException {
-    listLayout.addComponent(grid);
+    // Remove os componentes iniciais até só só sobrar o último (que é a barra de botões cancelar a confirmar.
+    while (listLayout.getComponentCount() > 1) {
+      listLayout.removeComponent(listLayout.getComponent(0));
+    }
+
+    listLayout.addComponent(grid, 0);
     listLayout.setExpandRatio(grid, 1f);
 
     // Adiciona o double click para selecionar e confirmar o Picker
@@ -124,7 +129,14 @@ public class RFWPickerWindow<VO extends RFWVO> extends Window {
       grid.getSelectionModel().select(e.getItem());
       clickedButtonConfirm();
     });
+  }
 
+  /**
+   * Força a atualização do painel de busca de acordo com os campos criados no UIFactory para o MO da listagem.
+   */
+  protected void updateSearchPanel() {
+    // Atualiza o conteúdo do searchPanel
+    searchPanel.setContent(this.uiFac.createSearchPanel(1, null, this.dbProvider));
   }
 
   @SuppressWarnings("unchecked")
@@ -133,7 +145,9 @@ public class RFWPickerWindow<VO extends RFWVO> extends Window {
       // Verificamos se há 1 objeto selecionado no Grid
       final Set<GVO<VO>> sels = getUiFac().getMOGrid().getSelectedItems();
       if (sels.size() == 0) throw new RFWValidationException("Selecione o item desejado antes de confirmar.");
-      if (this.confirmListener != null) this.confirmListener.confirm(sels.iterator().next().getVO());
+      VO vo = sels.iterator().next().getVO();
+      System.out.println(vo.getClass());
+      if (this.confirmListener != null) this.confirmListener.confirm(vo);
       this.close();
     } catch (Throwable e) {
       TreatException.treat(e);

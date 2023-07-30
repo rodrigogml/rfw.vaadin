@@ -33,15 +33,19 @@ public abstract class RFWWindow extends Panel {
    * Método chamado quando a janela ganha o foco.
    */
   public void focus(FocusEvent focusEvent) {
-  };
+  }
 
   /**
    * Deve retornar o caminho do ícone da janela.
+   *
+   * @return É experado o caminho do ícone relativo ao caminho do thema. Por exmeplo: "icon/calc_24.png"
    */
   public abstract String getWindowIcon();
 
   /**
    * Deve retornar o caption da Janela.
+   *
+   * @return Esperado o título da janela. Recomendável um nome mais sintético possível que seja suficiente para diferenciar das outras janelas.
    */
   public abstract String getWindowCaption();
 

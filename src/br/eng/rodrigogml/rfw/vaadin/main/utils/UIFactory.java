@@ -94,9 +94,6 @@ import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWRunTimeException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWValidationException;
 import br.eng.rodrigogml.rfw.kernel.interfaces.RFWDBProvider;
-import br.eng.rodrigogml.rfw.kernel.location.LocationCityDefaultVO;
-import br.eng.rodrigogml.rfw.kernel.location.LocationStateDefaultVO;
-import br.eng.rodrigogml.rfw.kernel.location.LocationStateDefaultVO_;
 import br.eng.rodrigogml.rfw.kernel.logger.RFWLogger;
 import br.eng.rodrigogml.rfw.kernel.measureruler.interfaces.MeasureUnit;
 import br.eng.rodrigogml.rfw.kernel.measureruler.interfaces.MeasureUnit.MeasureDimension;
@@ -130,8 +127,6 @@ import br.eng.rodrigogml.rfw.kernel.vo.RFWOrderBy;
 import br.eng.rodrigogml.rfw.kernel.vo.RFWVO;
 import br.eng.rodrigogml.rfw.vaadin.components.RFWAssociativeComponent;
 import br.eng.rodrigogml.rfw.vaadin.components.RFWButtonToggle;
-import br.eng.rodrigogml.rfw.vaadin.components.RFWCEPField;
-import br.eng.rodrigogml.rfw.vaadin.components.RFWComboBoxCity;
 import br.eng.rodrigogml.rfw.vaadin.components.RFWComboBoxMeasureUnit;
 import br.eng.rodrigogml.rfw.vaadin.components.RFWDateRangeComponent;
 import br.eng.rodrigogml.rfw.vaadin.components.RFWDateRangeComponent.RFWDateRangeScope;
@@ -757,19 +752,19 @@ public class UIFactory<VO extends RFWVO> {
    *          <b>ATENÇÃO:</B> Note que o atributo passado aqui é em relação ao objeto que estará no Provider do ComboBox e não do objeto sobre o qual estamos criando os campos.<br>
    *          Por exemplo, o ItemVO tem um relaiconamento com o ItemTypeVO e utiliza este método paracriar o campo. O valor passado aqui deve ser o 'name' ou ItemTypeVO_.vo().name(), e não o caminho a partir do ItemVO, utilizado para gerar o campo.
    * @param filterAttributes Lista de atributos (ou atributo único) que serão utilizados para realizar o filtro do componente. Se passado nulo ou vazio, será utilizado o atributo passado em captionAttribute.
-   * @param resolutionOverride Quando passado, nos campos da date/periodo sobrepõe a precisão de data/hora definido no BISMeta para o campo.
+   * @param resolutionOverride Quando passado, nos campos da date/periodo sobrepõe a precisão de data/hora definido no RFWMeta para o campo.
    * @param df DataFormatter a ser utilizado no campo. Se for passado NULL o método criará o DataFormatter Padrão conforme a BISMetaAnnotation do atributo.
-   * @param dataProvider Provedor de dados para que o componente consiga acessar os outros objetos do sistema.
+   * @param dbProvider Provedor de dados para que o componente consiga acessar os outros objetos do sistema.
    *
    * @return
    * @throws RFWException
    */
   @SuppressWarnings("unchecked")
-  private <FIELDTYPE, BEANTYPE> HasValue<?> createMOFieldImp(String propertyPath, String minWidth, String maxWidth, FieldAlignment fieldAlignment, String captionAttribute, LinkedList<String> filterAttributes, DateTimeResolution resolutionOverride, RFWDataFormatter<FIELDTYPE, BEANTYPE> df, RFWDBProvider dataProvider) throws RFWException {
+  private <FIELDTYPE, BEANTYPE> HasValue<?> createMOFieldImp(String propertyPath, String minWidth, String maxWidth, FieldAlignment fieldAlignment, String captionAttribute, LinkedList<String> filterAttributes, DateTimeResolution resolutionOverride, RFWDataFormatter<FIELDTYPE, BEANTYPE> df, RFWDBProvider dbProvider) throws RFWException {
     final Boolean forceRequired = Boolean.FALSE; // Nunca queremos um campo de filtro obrigatório.
     final Boolean ignoreTextArea = Boolean.TRUE; // Nunca queremos um TextArea nos campos de Filtro
 
-    final HasValue<Object> c = UIFactory.createField(this.voClass, propertyPath, null, forceRequired, fieldAlignment, forceRequired, captionAttribute, filterAttributes, resolutionOverride, ignoreTextArea, df, dataProvider);
+    final HasValue<Object> c = UIFactory.createField(this.voClass, propertyPath, null, forceRequired, fieldAlignment, forceRequired, captionAttribute, filterAttributes, resolutionOverride, ignoreTextArea, df, dbProvider);
 
     // Verificamos se tem um DataFormatter Padrão para a propriedade
     if (df == null) df = getDataFormatterByBISMetaAnnotation(this.voClass, propertyPath);
@@ -970,7 +965,7 @@ public class UIFactory<VO extends RFWVO> {
         fieldData.moBuilderListener.build(mo, fieldData.attributePath, fieldData.component);
       } else {
         Annotation ann = RUReflex.getRFWMetaAnnotation(this.voClass, fieldData.attributePath);
-        if (ann == null) throw new RFWCriticalException("Impossível gerar um campo para o atributo '${0}' da classe '${1}'. O atributo não tem uma BISMeta Annotation!", new String[] { fieldData.attributePath, this.voClass.getCanonicalName() });
+        if (ann == null) throw new RFWCriticalException("Impossível gerar um campo para o atributo '${0}' da classe '${1}'. O atributo não tem uma RFWMeta Annotation!", new String[] { fieldData.attributePath, this.voClass.getCanonicalName() });
 
         Object value = null;
         try {
@@ -1110,7 +1105,7 @@ public class UIFactory<VO extends RFWVO> {
             final RFWVO bisVO = (RFWVO) value;
             if (bisVO != null) mo.equal(fieldData.attributePath + ".id", bisVO.getId());
           } else {
-            throw new RFWCriticalException("Tipo de Dados '${3}' não suportado pela BISMeta '${2}' não suportada pelo BISUIFactory: atributo '${0}' da classe '${1}'.", new String[] { fieldData.attributePath, this.voClass.getCanonicalName(), ann.annotationType().getSimpleName(), type.getCanonicalName() });
+            throw new RFWCriticalException("Tipo de Dados '${3}' não suportado pela RFWMeta '${2}' não suportada pelo BISUIFactory: atributo '${0}' da classe '${1}'.", new String[] { fieldData.attributePath, this.voClass.getCanonicalName(), ann.annotationType().getSimpleName(), type.getCanonicalName() });
           }
         } else if (RFWMetaCollectionField.class.isAssignableFrom(ann.getClass())) {
           final Class<?> type = RUReflex.getPropertyTypeByType(this.voClass, fieldData.attributePath);
@@ -1125,10 +1120,10 @@ public class UIFactory<VO extends RFWVO> {
               throw new RFWCriticalException("Método despreparado para Criar o RFWMO a com um campo do tipo '" + fieldData.component.getClass().getCanonicalName() + "'.");
             }
           } else {
-            throw new RFWCriticalException("Tipo de Dados '${3}' não suportado pela BISMeta '${2}' não suportada pelo BISUIFactory: atributo '${0}' da classe '${1}'.", new String[] { fieldData.attributePath, this.voClass.getCanonicalName(), ann.annotationType().getSimpleName(), type.getCanonicalName() });
+            throw new RFWCriticalException("Tipo de Dados '${3}' não suportado pela RFWMeta '${2}' não suportada pelo BISUIFactory: atributo '${0}' da classe '${1}'.", new String[] { fieldData.attributePath, this.voClass.getCanonicalName(), ann.annotationType().getSimpleName(), type.getCanonicalName() });
           }
         } else {
-          throw new RFWCriticalException("BISMeta '${2}' não suportada pelo BISUIFactory: atributo '${0}' da classe '${1}'.", new String[] { fieldData.attributePath, this.voClass.getCanonicalName(), ann.annotationType().getSimpleName() });
+          throw new RFWCriticalException("RFWMeta '${2}' não suportada pelo BISUIFactory: atributo '${0}' da classe '${1}'.", new String[] { fieldData.attributePath, this.voClass.getCanonicalName(), ann.annotationType().getSimpleName() });
         }
       }
     }
@@ -1151,7 +1146,19 @@ public class UIFactory<VO extends RFWVO> {
    * Este método cria um campo padrão conforme o BISMetaAnnotation o tipo do atributo do VO.
    *
    * @param propertyPath Atributo / Caminho do Atributo para gerar o campo.
-   * @param forceRequired Indica se devemos sobrepor a definição de obrigatório presente no VO. True indica que é obrigatório, False indica que não é obrigatório, null utiliza a definição do BISMeta existente no VO.
+   * @param dbProvider Provedor de dados para que o componente consiga acessar os outros objetos do sistema.
+   * @return Component criado conforme atributos passados
+   * @throws RFWException
+   */
+  public Component createVOField(String propertyPath, RFWDBProvider dbProvider) throws RFWException {
+    return (Component) createVOFieldImp(propertyPath, null, null, false, null, null, null, null, null, null, dbProvider);
+  }
+
+  /**
+   * Este método cria um campo padrão conforme o BISMetaAnnotation o tipo do atributo do VO.
+   *
+   * @param propertyPath Atributo / Caminho do Atributo para gerar o campo.
+   * @param forceRequired Indica se devemos sobrepor a definição de obrigatório presente no VO. True indica que é obrigatório, False indica que não é obrigatório, null utiliza a definição do RFWMeta existente no VO.
    * @return Component criado conforme atributos passados
    * @throws RFWException
    */
@@ -1163,7 +1170,7 @@ public class UIFactory<VO extends RFWVO> {
    * Este método cria um campo padrão conforme o BISMetaAnnotation o tipo do atributo do VO.
    *
    * @param propertyPath Atributo / Caminho do Atributo para gerar o campo.
-   * @param resolutionOverride Quando passado, nos campos da date/periodo sobrepõe a precisão de data/hora definido no BISMeta para o campo.
+   * @param resolutionOverride Quando passado, nos campos da date/periodo sobrepõe a precisão de data/hora definido no RFWMeta para o campo.
    * @return Component criado conforme atributos passados
    * @throws RFWException
    */
@@ -1287,7 +1294,7 @@ public class UIFactory<VO extends RFWVO> {
    *          <b>ATENÇÃO:</B> Note que o atributo passado aqui é em relação ao objeto que estará no Provider do ComboBox e não do objeto sobre o qual estamos criando os campos.<br>
    *          Por exemplo, o ItemVO tem um relaiconamento com o ItemTypeVO e utiliza este método paracriar o campo. O valor passado aqui deve ser o 'name' ou ItemTypeVO_.vo().name(), e não o caminho a partir do ItemVO, utilizado para gerar o campo.
    * @param filterAttributes Lista de atributos (ou atributo único) que serão utilizados para realizar o filtro do componente. Se passado nulo ou vazio, será utilizado o atributo passado em captionAttribute.
-   * @param forceRequired Indica se devemos sobrepor a definição de obrigatório presente no VO. True indica que é obrigatório, False indica que não é obrigatório, null utiliza a definição do BISMeta existente no VO.
+   * @param forceRequired Indica se devemos sobrepor a definição de obrigatório presente no VO. True indica que é obrigatório, False indica que não é obrigatório, null utiliza a definição do RFWMeta existente no VO.
    * @return Component criado conforme atributos passados
    * @throws RFWException
    */
@@ -1307,19 +1314,19 @@ public class UIFactory<VO extends RFWVO> {
    *          <b>ATENÇÃO:</B> Note que o atributo passado aqui é em relação ao objeto que estará no Provider do ComboBox e não do objeto sobre o qual estamos criando os campos.<br>
    *          Por exemplo, o ItemVO tem um relaiconamento com o ItemTypeVO e utiliza este método paracriar o campo. O valor passado aqui deve ser o 'name' ou ItemTypeVO_.vo().name(), e não o caminho a partir do ItemVO, utilizado para gerar o campo.
    * @param filterAttributes Lista de atributos (ou atributo único) que serão utilizados para realizar o filtro do componente. Se passado nulo ou vazio, será utilizado o atributo passado em captionAttribute.
-   * @param resolutionOverride Quando passado, nos campos da date/periodo sobrepõe a precisão de data/hora definido no BISMeta para o campo.
+   * @param resolutionOverride Quando passado, nos campos da date/periodo sobrepõe a precisão de data/hora definido no RFWMeta para o campo.
    * @param ignoreTextArea Quando o atributo é do tipo String e o tamanho máximo passa dos 1000 caracteres, o BIS cria por padrão um TextArea ao invés de um TextField. Quando esse atributo for true, o método continuará criando um TextField. Útil quando queremos criar um campo de filtro para o atributo.
    * @param df DataFormatter a ser utilizado no campo. Se for passado NULL o método criará o DataFormatter Padrão conforme a BISMetaAnnotation do atributo.
-   * @param forceRequired Indica se devemos sobrepor a definição de obrigatório presente no VO. True indica que é obrigatório, False indica que não é obrigatório, null utiliza a definição do BISMeta existente no VO.
-   * @param dataProvider Provedor de dados para que o componente consiga acessar os outros objetos do sistema.
+   * @param forceRequired Indica se devemos sobrepor a definição de obrigatório presente no VO. True indica que é obrigatório, False indica que não é obrigatório, null utiliza a definição do RFWMeta existente no VO.
+   * @param dbProvider Provedor de dados para que o componente consiga acessar os outros objetos do sistema.
    * @return
    * @throws RFWException
    */
   @SuppressWarnings("unchecked")
-  private <FIELDTYPE, BEANTYPE> HasValue<?> createVOFieldImp(String propertyPath, String helpPopupKey, FieldAlignment fieldAlignment, Boolean masked, String captionAttribute, List<String> filterAttributes, DateTimeResolution resolutionOverride, Boolean ignoreTextArea, RFWDataFormatter<FIELDTYPE, BEANTYPE> df, Boolean forceRequired, RFWDBProvider dataProvider) throws RFWException {
+  private <FIELDTYPE, BEANTYPE> HasValue<?> createVOFieldImp(String propertyPath, String helpPopupKey, FieldAlignment fieldAlignment, Boolean masked, String captionAttribute, List<String> filterAttributes, DateTimeResolution resolutionOverride, Boolean ignoreTextArea, RFWDataFormatter<FIELDTYPE, BEANTYPE> df, Boolean forceRequired, RFWDBProvider dbProvider) throws RFWException {
     Objects.requireNonNull(this.vo, "Impossível criar o campo sem que o VO esteja definido no UIFactory!");
     // Criamos o campo com base na informação do VO
-    HasValue<FIELDTYPE> c = (HasValue<FIELDTYPE>) UIFactory.createField(vo.getClass(), propertyPath, helpPopupKey, forceRequired, fieldAlignment, masked, captionAttribute, filterAttributes, resolutionOverride, ignoreTextArea, df, dataProvider);
+    HasValue<FIELDTYPE> c = (HasValue<FIELDTYPE>) UIFactory.createField(vo.getClass(), propertyPath, helpPopupKey, forceRequired, fieldAlignment, masked, captionAttribute, filterAttributes, resolutionOverride, ignoreTextArea, df, dbProvider);
     // Realizamos o Bind no VO
     final UIBinder<FIELDTYPE, BEANTYPE, VO> uiBinder = UIFactory.bindVO(c, this.voClass, this.vo, propertyPath, df, forceRequired);
     // Registra o field na Hash de Fields de VOs do UIFactory
@@ -1335,7 +1342,7 @@ public class UIFactory<VO extends RFWVO> {
    *
    * @param propertyPath Atributo / Caminho do Atributo para gerar o campo. Deve ser Boolean obrigatoriamente e conter a {@link RFWMetaBooleanField}
    * @param helpPopupKey Chave do Bundle com o texto de ajuda/explicação para o campo
-   * @param forceRequired Indica se devemos sobrepor a definição de obrigatório presente no VO. True indica que é obrigatório, False indica que não é obrigatório, null utiliza a definição do BISMeta existente no VO.
+   * @param forceRequired Indica se devemos sobrepor a definição de obrigatório presente no VO. True indica que é obrigatório, False indica que não é obrigatório, null utiliza a definição do RFWMeta existente no VO.
    * @return Component criado conforme atributos passados
    * @throws RFWException
    */
@@ -1461,7 +1468,7 @@ public class UIFactory<VO extends RFWVO> {
   private static <BEANTYPE, FIELDTYPE, VO extends RFWVO> RFWDataFormatter<FIELDTYPE, BEANTYPE> getDataFormatterByBISMetaAnnotation(Class<VO> voClass, String propertyPath) throws RFWException {
     final Annotation ann = RUReflex.getRFWMetaAnnotation(voClass, propertyPath);
     if (ann == null) {
-      // throw new RFWCriticalException("Impossível gerar um campo para o atributo '${0}' da classe '${1}'. O atributo não tem uma BISMeta Annotation!", new String[] { propertyPath, voClass.getCanonicalName() });
+      // throw new RFWCriticalException("Impossível gerar um campo para o atributo '${0}' da classe '${1}'. O atributo não tem uma RFWMeta Annotation!", new String[] { propertyPath, voClass.getCanonicalName() });
       return null; // Retornamos null ao invés do erro acima para que seja possível criar colunas no Grid sem que seja um VO com bisMeta.
     }
 
@@ -1556,15 +1563,15 @@ public class UIFactory<VO extends RFWVO> {
    *          <b>ATENÇÃO:</B> Note que o atributo passado aqui é em relação ao objeto que estará no Provider do ComboBox e não do objeto sobre o qual estamos criando os campos.<br>
    *          Por exemplo, o ItemVO tem um relaiconamento com o ItemTypeVO e utiliza este método paracriar o campo. O valor passado aqui deve ser o 'name' ou ItemTypeVO_.vo().name(), e não o caminho a partir do ItemVO, utilizado para gerar o campo.
    * @param filterAttributes Lista de atributos (ou atributo único) que serão utilizados para realizar o filtro do componente. Se passado nulo ou vazio, será utilizado o atributo passado em captionAttribute.
-   * @param resolutionOverride Quando passado, nos campos da date/periodo sobrepõe a precisão de data/hora definido no BISMeta para o campo.
+   * @param resolutionOverride Quando passado, nos campos da date/periodo sobrepõe a precisão de data/hora definido no RFWMeta para o campo.
    * @param ignoreTextArea Quando o atributo é do tipo String e o tamanho máximo passa dos 1000 caracteres, o BIS cria por padrão um TextArea ao invés de um TextField. Quando esse atributo for true, o método continuará criando um TextField. Útil quando queremos criar um campo de filtro para o atributo.
    * @param df DataFormatter a ser utilizado no campo. Se for passado NULL o método criará o DataFormatter Padrão conforme a BISMetaAnnotation do atributo.
-   * @param dataProvider Provedor de dados para que o componente consiga acessar os outros objetos do sistema.
+   * @param dbProvider Provedor de dados para que o componente consiga acessar os outros objetos do sistema.
    * @return Componente criado conforme o tipo do atributo. TextFields para Strings, Combos para Enums, etc.
    * @throws RFWException
    */
   @SuppressWarnings("unchecked")
-  private static <VO extends RFWVO, FIELDTYPE> HasValue<FIELDTYPE> createField(Class<VO> voClass, String attribute, String helpPopupKey, Boolean forceRequired, FieldAlignment fieldAlignment, Boolean masked, String captionAttribute, List<String> filterAttributes, DateTimeResolution resolutionOverride, Boolean ignoreTextArea, RFWDataFormatter<?, ?> df, RFWDBProvider dataProvider) throws RFWException {
+  private static <VO extends RFWVO, FIELDTYPE> HasValue<FIELDTYPE> createField(Class<VO> voClass, String attribute, String helpPopupKey, Boolean forceRequired, FieldAlignment fieldAlignment, Boolean masked, String captionAttribute, List<String> filterAttributes, DateTimeResolution resolutionOverride, Boolean ignoreTextArea, RFWDataFormatter<?, ?> df, RFWDBProvider dbProvider) throws RFWException {
     HasValue<FIELDTYPE> c = null;
 
     // Define valores padrões dos parâmetros
@@ -1573,10 +1580,10 @@ public class UIFactory<VO extends RFWVO> {
 
     Annotation ann = RUReflex.getRFWMetaAnnotation(voClass, attribute);
     if (ann == null) {
-      throw new RFWCriticalException("Impossível gerar um campo para o atributo '${0}' da classe '${1}'. O atributo não tem uma BISMeta Annotation!", new String[] { attribute, voClass.getCanonicalName() });
+      throw new RFWCriticalException("Impossível gerar um campo para o atributo '${0}' da classe '${1}'. O atributo não tem uma RFWMeta Annotation!", new String[] { attribute, voClass.getCanonicalName() });
     }
 
-    // Verifica o tipo de BISMeta para criar o campo adequado
+    // Verifica o tipo de RFWMeta para criar o campo adequado
     if (ann instanceof RFWMetaStringField) {
       if (!ignoreTextArea && ((RFWMetaStringField) ann).maxlength() >= 1000) {
         c = (HasValue<FIELDTYPE>) createField_TextArea(voClass, attribute, helpPopupKey, forceRequired, fieldAlignment, df);
@@ -1613,30 +1620,27 @@ public class UIFactory<VO extends RFWVO> {
     } else if (ann instanceof RFWMetaRelationshipField) {
       // Quando é uma meta de relacionamento, precisamos destinguir o tipo de relacionamento para saber se sabemos que campo criar
       final Class<VO> type = (Class<VO>) RUReflex.getPropertyTransparentType(voClass, attribute);
-      if (LocationCityDefaultVO.class.isAssignableFrom(type)) {
-        c = (HasValue<FIELDTYPE>) createField_RFWComboBoxCity(voClass, attribute, helpPopupKey, forceRequired, dataProvider);
-      } else if (LocationStateDefaultVO.class.isAssignableFrom(type)) {
-        c = (HasValue<FIELDTYPE>) createField_ComboBox_BISVO(voClass, attribute, helpPopupKey, forceRequired, type, RFWOrderBy.createInstance(LocationStateDefaultVO_.vo().name()), null, LocationStateDefaultVO_.vo().name(), RUArray.createArrayList(LocationStateDefaultVO_.vo().name()), null, dataProvider);
-      } else if (RFWVO.class.isAssignableFrom(type)) {
-        c = (HasValue<FIELDTYPE>) createField_ComboBox_BISVO(voClass, attribute, helpPopupKey, forceRequired, type, null, null, captionAttribute, filterAttributes, null, dataProvider);
+      if (RFWVO.class.isAssignableFrom(type)) {
+        c = (HasValue<FIELDTYPE>) createField_ComboBox_BISVO(voClass, attribute, helpPopupKey, forceRequired, type, null, null, captionAttribute, filterAttributes, null, dbProvider);
       } else {
-        throw new RFWCriticalException("BISMeta '${2}' não suportada pelo BISUIFactory: atributo '${0}' da classe '${1}'.", new String[] { attribute, voClass.getCanonicalName(), ann.annotationType().getCanonicalName(), type.getCanonicalName() });
+        throw new RFWCriticalException("RFWMeta '${2}' não suportada pelo BISUIFactory: atributo '${0}' da classe '${1}'.", new String[] { attribute, voClass.getCanonicalName(), ann.annotationType().getCanonicalName(), type.getCanonicalName() });
       }
     } else if (ann instanceof RFWMetaCollectionField) {
       c = (HasValue<FIELDTYPE>) createField_RFWTagsSelector(voClass, attribute, helpPopupKey, forceRequired);
     } else if (ann instanceof RFWMetaStringCEPField) {
-      c = (HasValue<FIELDTYPE>) createField_RFWCEPField(voClass, attribute, helpPopupKey, forceRequired, dataProvider);
+      // c = (HasValue<FIELDTYPE>) createField_RFWCEPField(voClass, attribute, helpPopupKey, forceRequired, dbProvider);
+      c = (HasValue<FIELDTYPE>) createField_TextField(voClass, attribute, helpPopupKey, forceRequired, fieldAlignment, masked, df);
     } else if (ann instanceof RFWMetaGenericField) {
       final Class<?> type = RUReflex.getPropertyTransparentType(voClass, attribute);
       if (MeasureUnit.class.isAssignableFrom(type)) {
         c = (HasValue<FIELDTYPE>) createField_BISComboMeasureUnit(voClass, attribute, helpPopupKey, forceRequired);
       } else {
-        throw new RFWCriticalException("BISMeta '${2}' não suportada pelo BISUIFactory: atributo '${0}' da classe '${1}'.", new String[] { attribute, voClass.getCanonicalName(), ann.annotationType().getSimpleName() });
+        throw new RFWCriticalException("RFWMeta '${2}' não suportada pelo BISUIFactory: atributo '${0}' da classe '${1}'.", new String[] { attribute, voClass.getCanonicalName(), ann.annotationType().getSimpleName() });
       }
     } else if (ann instanceof RFWMetaBooleanField) {
       c = (HasValue<FIELDTYPE>) createField_CheckBoxOrRadioGroup(voClass, attribute, helpPopupKey, forceRequired, fieldAlignment);
     } else {
-      throw new RFWCriticalException("BISMeta '${2}' não suportada pelo BISUIFactory: atributo '${0}' da classe '${1}'.", new String[] { attribute, voClass.getCanonicalName(), ann.annotationType().getSimpleName() });
+      throw new RFWCriticalException("RFWMeta '${2}' não suportada pelo BISUIFactory: atributo '${0}' da classe '${1}'.", new String[] { attribute, voClass.getCanonicalName(), ann.annotationType().getSimpleName() });
     }
     // Se não temos um campo, EXCEPTION NELES!!!
     if (c == null) throw new RFWCriticalException("O UIFactory falhou ao criar um campo para o atributo '${0}' presente no VO '${1}'.", new String[] { attribute, voClass.getCanonicalName() });
@@ -1658,7 +1662,7 @@ public class UIFactory<VO extends RFWVO> {
    */
   public static <VO extends RFWVO> AbstractComponent createField_CheckBoxOrRadioGroup(Class<VO> voClass, String attribute, String helpPopupKey, Boolean forceRequired, FieldAlignment fieldAlignment) throws RFWException {
     Annotation ann = RUReflex.getRFWMetaAnnotation(voClass, attribute);
-    if (ann == null) throw new RFWCriticalException("Impossível gerar um campo para o atributo '${0}' da classe '${1}'. O atributo não tem uma BISMeta Annotation!", new String[] { attribute, voClass.getCanonicalName() });
+    if (ann == null) throw new RFWCriticalException("Impossível gerar um campo para o atributo '${0}' da classe '${1}'. O atributo não tem uma RFWMeta Annotation!", new String[] { attribute, voClass.getCanonicalName() });
 
     // Caso force required seja definido, utilizamos ele, caso contrário procuramos o valor da Annotation
     if (forceRequired == null) {
@@ -1752,7 +1756,7 @@ public class UIFactory<VO extends RFWVO> {
         return opt;
       }
     } else {
-      throw new RFWCriticalException("BISMeta '${2}' não suportada pelo BISUIFactory: atributo '${0}' da classe '${1}'.", new String[] { attribute, voClass.getCanonicalName(), ann.annotationType().getSimpleName() });
+      throw new RFWCriticalException("RFWMeta '${2}' não suportada pelo BISUIFactory: atributo '${0}' da classe '${1}'.", new String[] { attribute, voClass.getCanonicalName(), ann.annotationType().getSimpleName() });
     }
   }
 
@@ -1769,7 +1773,7 @@ public class UIFactory<VO extends RFWVO> {
    */
   public static <VO extends RFWVO> RFWComboBoxMeasureUnit createField_BISComboMeasureUnit(Class<VO> voClass, String attribute, String helpPopupKey, Boolean forceRequired) throws RFWException {
     Annotation ann = RUReflex.getRFWMetaAnnotation(voClass, attribute);
-    if (ann == null) throw new RFWCriticalException("Impossível gerar um campo para o atributo '${0}' da classe '${1}'. O atributo não tem uma BISMeta Annotation!", new String[] { attribute, voClass.getCanonicalName() });
+    if (ann == null) throw new RFWCriticalException("Impossível gerar um campo para o atributo '${0}' da classe '${1}'. O atributo não tem uma RFWMeta Annotation!", new String[] { attribute, voClass.getCanonicalName() });
 
     // Caso force required seja definido, utilizamos ele, caso contrário procuramos o valor da Annotation
     if (forceRequired == null) {
@@ -1786,10 +1790,10 @@ public class UIFactory<VO extends RFWVO> {
         if (helpPopupKey != null) cb.setDescription(createHelpDescription(helpPopupKey), ContentMode.HTML);
         return cb;
       } else {
-        throw new RFWCriticalException("BISMeta '${2}' não suportada pelo BISUIFactory: atributo '${0}' da classe '${1}'.", new String[] { attribute, voClass.getCanonicalName(), ann.annotationType().getCanonicalName(), type.getCanonicalName() });
+        throw new RFWCriticalException("RFWMeta '${2}' não suportada pelo BISUIFactory: atributo '${0}' da classe '${1}'.", new String[] { attribute, voClass.getCanonicalName(), ann.annotationType().getCanonicalName(), type.getCanonicalName() });
       }
     } else {
-      throw new RFWCriticalException("BISMeta '${2}' não suportada pelo BISUIFactory: atributo '${0}' da classe '${1}'.", new String[] { attribute, voClass.getCanonicalName(), ann.annotationType().getSimpleName() });
+      throw new RFWCriticalException("RFWMeta '${2}' não suportada pelo BISUIFactory: atributo '${0}' da classe '${1}'.", new String[] { attribute, voClass.getCanonicalName(), ann.annotationType().getSimpleName() });
     }
   }
 
@@ -1807,7 +1811,7 @@ public class UIFactory<VO extends RFWVO> {
    */
   public static <VO extends RFWVO> ComboBox<MeasureUnit> createField_ComboBox_MeasureUnit(Class<VO> voClass, String attribute, String helpPopupKey, Boolean forceRequired, MeasureDimension dimension) throws RFWException {
     Annotation ann = RUReflex.getRFWMetaAnnotation(voClass, attribute);
-    if (ann == null) throw new RFWCriticalException("Impossível gerar um campo para o atributo '${0}' da classe '${1}'. O atributo não tem uma BISMeta Annotation!", new String[] { attribute, voClass.getCanonicalName() });
+    if (ann == null) throw new RFWCriticalException("Impossível gerar um campo para o atributo '${0}' da classe '${1}'. O atributo não tem uma RFWMeta Annotation!", new String[] { attribute, voClass.getCanonicalName() });
 
     // Caso force required seja definido, utilizamos ele, caso contrário procuramos o valor da Annotation
     if (forceRequired == null) {
@@ -1835,42 +1839,10 @@ public class UIFactory<VO extends RFWVO> {
         });
         return cb;
       } else {
-        throw new RFWCriticalException("BISMeta '${2}' não suportada pelo BISUIFactory: atributo '${0}' da classe '${1}'.", new String[] { attribute, voClass.getCanonicalName(), ann.annotationType().getCanonicalName(), type.getCanonicalName() });
+        throw new RFWCriticalException("RFWMeta '${2}' não suportada pelo BISUIFactory: atributo '${0}' da classe '${1}'.", new String[] { attribute, voClass.getCanonicalName(), ann.annotationType().getCanonicalName(), type.getCanonicalName() });
       }
     } else {
-      throw new RFWCriticalException("BISMeta '${2}' não suportada pelo BISUIFactory: atributo '${0}' da classe '${1}'.", new String[] { attribute, voClass.getCanonicalName(), ann.annotationType().getSimpleName() });
-    }
-  }
-
-  /**
-   * Cria um RFWCEPField para um campo de CEP. Este componente apresenta uma Lupa que permite que o CEP possa ser escolhido a partir de uma tela do tipo picker.<br>
-   * ATENÇÃO: Os métodos com o prefixo "createField_" não registra o campo no UIFactory, nem realiza nenhum tipo de BIND, apenas cria o Field e o configura conforme as definições do atributo do VO.
-   *
-   * @param voClass Classe do VO para o qual estamos montando o campo.
-   * @param attribute Atributo / Caminho do atributo para gerar o campo.
-   * @param helpPopupKey Chave da mensagem de ajuda. NULL caso não tenha.
-   * @param forceRequired Se passado nulo será utilizado a definição da Annotation. Se definido TRUE o campo será deifnido como brigatório, se definido como FALSE o campo será definido como opcional.
-   * @param dataProvider Provedor de dados para que o componente consiga acessar os outros objetos do sistema.
-   * @return Component criado conforme atributos passados
-   * @throws RFWException
-   */
-  public static <VO extends RFWVO> RFWCEPField createField_RFWCEPField(Class<VO> voClass, String attribute, String helpPopupKey, Boolean forceRequired, RFWDBProvider dataProvider) throws RFWException {
-    Annotation ann = RUReflex.getRFWMetaAnnotation(voClass, attribute);
-    if (ann == null) throw new RFWCriticalException("Impossível gerar um campo para o atributo '${0}' da classe '${1}'. O atributo não tem uma BISMeta Annotation!", new String[] { attribute, voClass.getCanonicalName() });
-
-    // Caso force required seja definido, utilizamos ele, caso contrário procuramos o valor da Annotation
-    if (forceRequired == null) {
-      forceRequired = RUReflex.getRFWMetaAnnotationRequired(voClass, attribute);
-      if (forceRequired == null) forceRequired = Boolean.FALSE;
-    }
-
-    if (ann instanceof RFWMetaStringCEPField) {
-      RFWCEPField f = new RFWCEPField(((RFWMetaStringCEPField) ann).caption() + ':', dataProvider);
-      f.setRequiredIndicatorVisible(forceRequired);
-      if (helpPopupKey != null) f.setDescription(createHelpDescription(helpPopupKey), ContentMode.HTML);
-      return f;
-    } else {
-      throw new RFWCriticalException("BISMeta '${2}' não suportada pelo BISUIFactory: atributo '${0}' da classe '${1}'.", new String[] { attribute, voClass.getCanonicalName(), ann.annotationType().getSimpleName() });
+      throw new RFWCriticalException("RFWMeta '${2}' não suportada pelo BISUIFactory: atributo '${0}' da classe '${1}'.", new String[] { attribute, voClass.getCanonicalName(), ann.annotationType().getSimpleName() });
     }
   }
 
@@ -1888,7 +1860,7 @@ public class UIFactory<VO extends RFWVO> {
   @SuppressWarnings("unchecked")
   public static <VO extends RFWVO> RFWTagsSelector<?> createField_RFWTagsSelector(Class<VO> voClass, String attribute, String helpPopupKey, Boolean forceRequired) throws RFWException {
     Annotation ann = RUReflex.getRFWMetaAnnotation(voClass, attribute);
-    if (ann == null) throw new RFWCriticalException("Impossível gerar um campo para o atributo '${0}' da classe '${1}'. O atributo não tem uma BISMeta Annotation!", new String[] { attribute, voClass.getCanonicalName() });
+    if (ann == null) throw new RFWCriticalException("Impossível gerar um campo para o atributo '${0}' da classe '${1}'. O atributo não tem uma RFWMeta Annotation!", new String[] { attribute, voClass.getCanonicalName() });
 
     // Caso force required seja definido, utilizamos ele, caso contrário procuramos o valor da Annotation
     if (forceRequired == null) {
@@ -1918,7 +1890,7 @@ public class UIFactory<VO extends RFWVO> {
         throw new RFWCriticalException("O UIFactory não sabe que campo criar para o atributo '${0}' da classe '${1}', pois está anotado com a RFWMetaCollectionField e tem uma coleção do tipo '${2}'.", new String[] { attribute, voClass.getCanonicalName(), type.getCanonicalName() });
       }
     } else {
-      throw new RFWCriticalException("BISMeta '${2}' não suportada pelo BISUIFactory: atributo '${0}' da classe '${1}'.", new String[] { attribute, voClass.getCanonicalName(), ann.annotationType().getSimpleName() });
+      throw new RFWCriticalException("RFWMeta '${2}' não suportada pelo BISUIFactory: atributo '${0}' da classe '${1}'.", new String[] { attribute, voClass.getCanonicalName(), ann.annotationType().getSimpleName() });
     }
   }
 
@@ -1937,7 +1909,7 @@ public class UIFactory<VO extends RFWVO> {
   @SuppressWarnings("unchecked")
   public static <VO extends RFWVO, E extends Enum<?>> ComboBoxMultiselect<E> createField_ComboBoxMultiselect_Enum(Class<VO> voClass, String attribute, String helpPopupKey, Boolean forceRequired, E[] values) throws RFWException {
     Annotation ann = RUReflex.getRFWMetaAnnotation(voClass, attribute);
-    if (ann == null) throw new RFWCriticalException("Impossível gerar um campo para o atributo '${0}' da classe '${1}'. O atributo não tem uma BISMeta Annotation!", new String[] { attribute, voClass.getCanonicalName() });
+    if (ann == null) throw new RFWCriticalException("Impossível gerar um campo para o atributo '${0}' da classe '${1}'. O atributo não tem uma RFWMeta Annotation!", new String[] { attribute, voClass.getCanonicalName() });
 
     // Caso force required seja definido, utilizamos ele, caso contrário procuramos o valor da Annotation
     if (forceRequired == null) {
@@ -1982,7 +1954,7 @@ public class UIFactory<VO extends RFWVO> {
         throw new RFWCriticalException("O UIFactory não sabe que campo criar para o atributo '${0}' da classe '${1}', pois está anotado com a RFWMetaCollectionField e tem uma coleção do tipo '${2}'.", new String[] { attribute, voClass.getCanonicalName(), type.getCanonicalName() });
       }
     } else {
-      throw new RFWCriticalException("BISMeta '${2}' não suportada pelo BISUIFactory: atributo '${0}' da classe '${1}'.", new String[] { attribute, voClass.getCanonicalName(), ann.annotationType().getSimpleName() });
+      throw new RFWCriticalException("RFWMeta '${2}' não suportada pelo BISUIFactory: atributo '${0}' da classe '${1}'.", new String[] { attribute, voClass.getCanonicalName(), ann.annotationType().getSimpleName() });
     }
   }
 
@@ -1993,7 +1965,7 @@ public class UIFactory<VO extends RFWVO> {
    * @param voClass Classe do VO a Qual este Combo será associado.
    * @param attribute Nome do atributo no VO onde será associado o VO deste combo como valor.
    * @param helpPopupKey Chave de acesso do HelpPopup do campo.
-   * @param forceRequired Caso true, força a exibição de que a informação é obrigtória, independente da definição da BISMeta do atributo.
+   * @param forceRequired Caso true, força a exibição de que a informação é obrigtória, independente da definição da RFWMeta do atributo.
    * @param providerClass Classe dos VOs que serão utilizados para popular o ComboBox. Este atributo é ignorado quando o atributo provider é fornecido com um provider pronto.
    * @param orderBy OrderBy para organizar os dados dentro do Combo. Este atributo é ignorado quando o atributo provider é fornecido com um provider pronto.
    * @param attributes Attributos que os objetos do combo precisam carregar. Recomendado passar nulo e não carregar nada a não ser que o caption esteja em algum subatributo. Evitando assim um "overload" do banco. Caso alguma informação seja necessária do objeto escolhido, faça a consulta completa desse objeto isolado quando for utilizar. Este atributo é ignorado quando o atributo provider é
@@ -2001,14 +1973,14 @@ public class UIFactory<VO extends RFWVO> {
    * @param captionAttribute Atributo da 'providerClass' que será utilizado para gerar os Captions no ComboBox. (Pode ser substituido por outro ItemCaptionGenerator posteriormente.
    * @param filterAttributes Lista de atributos (ou atributo único) que serão utilizados para realizar o filtro do componente. Se passado nulo ou vazio, será utilizado o atributo passado em captionAttribute.
    * @param provider Define um Provider pronto para ser utilizado no combo. Caso seja passado nulo, um provider padrão é criado a partir dos argumentos providerClass, orderBy e Attributes.
-   * @param dataProvider Provedor de dados para que o componente consiga acessar os outros objetos do sistema.
+   * @param dbProvider Provedor de dados para que o componente consiga acessar os outros objetos do sistema.
    * @return BISComboBox com generics adequado.
    * @throws RFWException
    */
   @SuppressWarnings({ "unchecked", "rawtypes" })
-  public static <VO extends RFWVO, VALUE extends RFWVO> ComboBox<VALUE> createField_ComboBox_BISVO(Class<VO> voClass, String attribute, String helpPopupKey, Boolean forceRequired, Class<VALUE> providerClass, RFWOrderBy orderBy, String[] attributes, String captionAttribute, List<String> filterAttributes, UIDataProvider<VALUE> provider, RFWDBProvider dataProvider) throws RFWException {
+  public static <VO extends RFWVO, VALUE extends RFWVO> ComboBox<VALUE> createField_ComboBox_BISVO(Class<VO> voClass, String attribute, String helpPopupKey, Boolean forceRequired, Class<VALUE> providerClass, RFWOrderBy orderBy, String[] attributes, String captionAttribute, List<String> filterAttributes, UIDataProvider<VALUE> provider, RFWDBProvider dbProvider) throws RFWException {
     Annotation ann = RUReflex.getRFWMetaAnnotation(voClass, attribute);
-    if (ann == null) throw new RFWCriticalException("Impossível gerar um campo para o atributo '${0}' da classe '${1}'. O atributo não tem uma BISMeta Annotation!", new String[] { attribute, voClass.getCanonicalName() });
+    if (ann == null) throw new RFWCriticalException("Impossível gerar um campo para o atributo '${0}' da classe '${1}'. O atributo não tem uma RFWMeta Annotation!", new String[] { attribute, voClass.getCanonicalName() });
 
     if (captionAttribute == null) throw new RFWCriticalException("O parâmetro 'captionAttribute' é obrigatório para criação do campo para o atributo '${0}' da classe '${1}'.", new String[] { attribute, voClass.getCanonicalName() });
 
@@ -2018,13 +1990,13 @@ public class UIFactory<VO extends RFWVO> {
       if (forceRequired == null) forceRequired = Boolean.FALSE;
     }
 
-    // Verifica o tipo de BISMeta para criar o campo adequado
+    // Verifica o tipo de RFWMeta para criar o campo adequado
     if (ann instanceof RFWMetaRelationshipField) {
       ComboBox<VALUE> cb = new ComboBox<>(((RFWMetaRelationshipField) ann).caption() + ':');
       cb.setRequiredIndicatorVisible(forceRequired);
       if (helpPopupKey != null) cb.setDescription(createHelpDescription(helpPopupKey), ContentMode.HTML);
 
-      if (provider == null) provider = new UIDataProvider(providerClass, orderBy, attributes, dataProvider);
+      if (provider == null) provider = new UIDataProvider(providerClass, orderBy, attributes, dbProvider);
       if (filterAttributes == null || filterAttributes.size() == 0) {
         filterAttributes = new LinkedList<>();
         filterAttributes.add(captionAttribute);
@@ -2042,41 +2014,7 @@ public class UIFactory<VO extends RFWVO> {
       cb.setWidth("100%");
       return cb;
     } else {
-      throw new RFWCriticalException("BISMeta '${2}' não suportada pelo BISUIFactory: atributo '${0}' da classe '${1}'.", new String[] { attribute, voClass.getCanonicalName(), ann.annotationType().getSimpleName() });
-    }
-  }
-
-  /**
-   * Cria um componente do Tipo {@link RFWComboBoxCity} (dois combo box) que permite associar uma cidade em um VO. O primeiro combo terá os estados, que serve de filtro para escolher a cidade no outro combo de cidades. Apenas o combo de cidade é associado ao VO recebido, o estado deve ser retirado da própria informação da cidade e não estar diretamente associada no VO. <br>
-   * ATENÇÃO: Os métodos com o prefixo "createField_" não registra o campo no UIFactory, nem realiza nenhum tipo de BIND, apenas cria o Field e o configura conforme as definições do atributo do VO.
-   *
-   * @param voClass Classe do VO a Qual este Combo será associado.
-   * @param attribute Nome do atributo no VO onde será associado o VO deste combo como valor.
-   * @param helpPopupKey Chave de acesso do HelpPopup do campo.
-   * @param forceRequired Caso true, força a exibição de que a informação é obrigtória, independente da definição da BISMeta do atributo.
-   * @param dataProvider Provedor de dados para que o componente consiga acessar os outros objetos do sistema. Provedor de dados para que o componente consiga acessar os outros objetos do sistema.
-   * @return BISComboBox com generics adequado.
-   * @throws RFWException
-   */
-  public static <VO extends RFWVO> RFWComboBoxCity createField_RFWComboBoxCity(Class<VO> voClass, String attribute, String helpPopupKey, Boolean forceRequired, RFWDBProvider dataProvider) throws RFWException {
-    Annotation ann = RUReflex.getRFWMetaAnnotation(voClass, attribute);
-    if (ann == null) throw new RFWCriticalException("Impossível gerar um campo para o atributo '${0}' da classe '${1}'. O atributo não tem uma BISMeta Annotation!", new String[] { attribute, voClass.getCanonicalName() });
-
-    // Caso force required seja definido, utilizamos ele, caso contrário procuramos o valor da Annotation
-    if (forceRequired == null) {
-      forceRequired = RUReflex.getRFWMetaAnnotationRequired(voClass, attribute);
-      if (forceRequired == null) forceRequired = Boolean.FALSE;
-    }
-
-    // Verifica o tipo de BISMeta para criar o campo adequado
-    if (ann instanceof RFWMetaRelationshipField) {
-      RFWComboBoxCity cb = new RFWComboBoxCity(((RFWMetaRelationshipField) ann).caption() + ':', dataProvider);
-      cb.setRequiredIndicatorVisible(forceRequired);
-      if (helpPopupKey != null) cb.setDescription(createHelpDescription(helpPopupKey), ContentMode.HTML);
-      cb.setWidth("100%");
-      return cb;
-    } else {
-      throw new RFWCriticalException("BISMeta '${2}' não suportada pelo BISUIFactory: atributo '${0}' da classe '${1}'.", new String[] { attribute, voClass.getCanonicalName(), ann.annotationType().getSimpleName() });
+      throw new RFWCriticalException("RFWMeta '${2}' não suportada pelo BISUIFactory: atributo '${0}' da classe '${1}'.", new String[] { attribute, voClass.getCanonicalName(), ann.annotationType().getSimpleName() });
     }
   }
 
@@ -2090,13 +2028,13 @@ public class UIFactory<VO extends RFWVO> {
    * @param helpPopupKey Chave da mensagem de ajuda. NULL caso não tenha.
    * @param forceRequired Se passado nulo será utilizado a definição da Annotation. Se definido TRUE o campo será deifnido como brigatório, se definido como FALSE o campo será definido como opcional.
    * @param fieldAlignment Alinhamendo do conteúdo co campo. Suportado até o momento apenas em TextFields.
-   * @param resolutionOverride Quando passado, nos campos da date/periodo sobrepõe a precisão de data/hora definido no BISMeta para o campo.
+   * @param resolutionOverride Quando passado, nos campos da date/periodo sobrepõe a precisão de data/hora definido no RFWMeta para o campo.
    * @return Componente criado conforme o tipo do atributo. TextFields para Strings, Combos para Enums, etc.
    * @throws RFWException
    */
   public static <VO extends RFWVO> AbstractField<?> createField_DateTime(Class<VO> voClass, String attribute, String helpPopupKey, Boolean forceRequired, FieldAlignment fieldAlignment, DateTimeResolution resolutionOverride) throws RFWException {
     Annotation ann = RUReflex.getRFWMetaAnnotation(voClass, attribute);
-    if (ann == null) throw new RFWCriticalException("Impossível gerar um campo para o atributo '${0}' da classe '${1}'. O atributo não tem uma BISMeta Annotation!", new String[] { attribute, voClass.getCanonicalName() });
+    if (ann == null) throw new RFWCriticalException("Impossível gerar um campo para o atributo '${0}' da classe '${1}'. O atributo não tem uma RFWMeta Annotation!", new String[] { attribute, voClass.getCanonicalName() });
 
     // Caso force required seja definido, utilizamos ele, caso contrário procuramos o valor da Annotation
     if (forceRequired == null) {
@@ -2143,7 +2081,7 @@ public class UIFactory<VO extends RFWVO> {
       field.setRequiredIndicatorVisible(forceRequired);
       return field;
     } else {
-      throw new RFWCriticalException("BISMeta '${2}' não suportada pelo BISUIFactory: atributo '${0}' da classe '${1}'.", new String[] { attribute, voClass.getCanonicalName(), ann.annotationType().getSimpleName() });
+      throw new RFWCriticalException("RFWMeta '${2}' não suportada pelo BISUIFactory: atributo '${0}' da classe '${1}'.", new String[] { attribute, voClass.getCanonicalName(), ann.annotationType().getSimpleName() });
     }
   }
 
@@ -2162,7 +2100,7 @@ public class UIFactory<VO extends RFWVO> {
   @SuppressWarnings("unchecked")
   public static <E extends Enum<?>, VO extends RFWVO> ComboBox<E> createField_ComboBox_Enum(Class<VO> voClass, String attribute, String helpPopupKey, Boolean forceRequired, E[] values) throws RFWException {
     Annotation ann = RUReflex.getRFWMetaAnnotation(voClass, attribute);
-    if (ann == null) throw new RFWCriticalException("Impossível gerar um campo para o atributo '${0}' da classe '${1}'. O atributo não tem uma BISMeta Annotation!", new String[] { attribute, voClass.getCanonicalName() });
+    if (ann == null) throw new RFWCriticalException("Impossível gerar um campo para o atributo '${0}' da classe '${1}'. O atributo não tem uma RFWMeta Annotation!", new String[] { attribute, voClass.getCanonicalName() });
 
     final Class<?> type = RUReflex.getPropertyTransparentType(voClass, attribute);
     if (!Enum.class.isAssignableFrom(type)) throw new RFWCriticalException("A RFWMetaEnumField foi utilizada no atributo '${0}' da classe '${1}', mas seu tipo não é uma Enumeration.", new String[] { attribute, voClass.getCanonicalName() });
@@ -2173,7 +2111,7 @@ public class UIFactory<VO extends RFWVO> {
       if (forceRequired == null) forceRequired = Boolean.FALSE;
     }
 
-    // Verifica o tipo de BISMeta para criar o campo adequado
+    // Verifica o tipo de RFWMeta para criar o campo adequado
     if (ann instanceof RFWMetaEnumField) {
       ComboBox<E> cb = new ComboBox<>(((RFWMetaEnumField) ann).caption() + ':');
       cb.setRequiredIndicatorVisible(forceRequired);
@@ -2187,7 +2125,7 @@ public class UIFactory<VO extends RFWVO> {
       cb.setWidth("100%");
       return cb;
     } else {
-      throw new RFWCriticalException("BISMeta '${2}' não suportada pelo BISUIFactory: atributo '${0}' da classe '${1}'.", new String[] { attribute, voClass.getCanonicalName(), ann.annotationType().getSimpleName() });
+      throw new RFWCriticalException("RFWMeta '${2}' não suportada pelo BISUIFactory: atributo '${0}' da classe '${1}'.", new String[] { attribute, voClass.getCanonicalName(), ann.annotationType().getSimpleName() });
     }
   }
 
@@ -2218,7 +2156,7 @@ public class UIFactory<VO extends RFWVO> {
       if (forceRequired == null) forceRequired = Boolean.FALSE;
     }
 
-    // Verifica o tipo de BISMeta para criar o campo adequado
+    // Verifica o tipo de RFWMeta para criar o campo adequado
     ComboBox<Boolean> cb = new ComboBox<>(((RFWMetaBooleanField) ann).caption() + ':');
     cb.setRequiredIndicatorVisible(forceRequired);
     if (helpPopupKey != null) cb.setDescription(createHelpDescription(helpPopupKey), ContentMode.HTML);
@@ -2253,7 +2191,7 @@ public class UIFactory<VO extends RFWVO> {
    */
   public static <VO extends RFWVO> TextField createField_TextField(Class<VO> voClass, String attribute, String helpPopupKey, Boolean forceRequired, FieldAlignment fieldAlignment, Boolean masked, RFWDataFormatter<?, ?> df) throws RFWException {
     final Annotation ann = RUReflex.getRFWMetaAnnotation(voClass, attribute);
-    if (ann == null) throw new RFWCriticalException("Impossível gerar um campo para o atributo '${0}' da classe '${1}'. O atributo não tem uma BISMeta Annotation!", new String[] { attribute, voClass.getCanonicalName() });
+    if (ann == null) throw new RFWCriticalException("Impossível gerar um campo para o atributo '${0}' da classe '${1}'. O atributo não tem uma RFWMeta Annotation!", new String[] { attribute, voClass.getCanonicalName() });
 
     // Caso force required seja definido, utilizamos ele, caso contrário procuramos o valor da Annotation
     if (forceRequired == null) {
@@ -2341,7 +2279,7 @@ public class UIFactory<VO extends RFWVO> {
       t.setMaxLength(RFWCEPDataFormatter.getInstance().getMaxLenght());
       t.setWidth("130px");
     } else {
-      throw new RFWCriticalException("BISMeta '${2}' não suportada pelo UIFactory: atributo '${0}' da classe '${1}'.", new String[] { attribute, voClass.getCanonicalName(), ann.annotationType().getSimpleName() });
+      throw new RFWCriticalException("RFWMeta '${2}' não suportada pelo UIFactory: atributo '${0}' da classe '${1}'.", new String[] { attribute, voClass.getCanonicalName(), ann.annotationType().getSimpleName() });
     }
 
     // =====>>>>> Configura o Field
@@ -2384,7 +2322,7 @@ public class UIFactory<VO extends RFWVO> {
    */
   public static <VO extends RFWVO> TextArea createField_TextArea(Class<VO> voClass, String attribute, String helpPopupKey, Boolean forceRequired, FieldAlignment fieldAlignment, RFWDataFormatter<?, ?> df) throws RFWException {
     final Annotation ann = RUReflex.getRFWMetaAnnotation(voClass, attribute);
-    if (ann == null) throw new RFWCriticalException("Impossível gerar um campo para o atributo '${0}' da classe '${1}'. O atributo não tem uma BISMeta Annotation!", new String[] { attribute, voClass.getCanonicalName() });
+    if (ann == null) throw new RFWCriticalException("Impossível gerar um campo para o atributo '${0}' da classe '${1}'. O atributo não tem uma RFWMeta Annotation!", new String[] { attribute, voClass.getCanonicalName() });
 
     // Caso force required seja definido, utilizamos ele, caso contrário procuramos o valor da Annotation
     if (forceRequired == null) {
@@ -2417,7 +2355,7 @@ public class UIFactory<VO extends RFWVO> {
       if (df != null && df.getMaxLenght() > 0) t.setMaxLength(df.getMaxLenght());
       t.setWidth("100%");
     } else {
-      throw new RFWCriticalException("BISMeta '${2}' não suportada pelo BISUIFactory: atributo '${0}' da classe '${1}'.", new String[] { attribute, voClass.getCanonicalName(), ann.annotationType().getSimpleName() });
+      throw new RFWCriticalException("RFWMeta '${2}' não suportada pelo BISUIFactory: atributo '${0}' da classe '${1}'.", new String[] { attribute, voClass.getCanonicalName(), ann.annotationType().getSimpleName() });
     }
     return t;
   }
@@ -2431,7 +2369,7 @@ public class UIFactory<VO extends RFWVO> {
    * @param helpPopupKey Chave do texto de ajuna no arquivo de Bundle.
    * @return String contendo HTML para ser colocado no description do componente.
    */
-  private static String createHelpDescription(String helpPopupKey) {
+  public static String createHelpDescription(String helpPopupKey) {
     if (helpPopupKey != null) {
       return "<img class=\"helpicon\" src=\"VAADIN/themes/" + RFWUI.getCurrent().getTheme() + "/icon/help_32.png\"/>" + RFWBundle.get(helpPopupKey);
     }
@@ -2505,8 +2443,9 @@ public class UIFactory<VO extends RFWVO> {
    *
    * @param rows número de linhas do grid que podemos escrever os componentes.
    * @param listener Aceita um Listener que será chamado antes de executar a função padrão do botão SEARCH. Permitindo assim alguma validação antes de forçar a atualização do Grid. Note que para impedir a atualização do Grid uma exception deve ser lançada, caso contrário o método será executado da mesma maneira.
+   * @param dbProvider Provedor de dados para que o componente consiga acessar os outros objetos do sistema.
    */
-  public Layout createSearchPanel(int rows, final ClickListener listener, final RFWDBProvider dataProvider) {
+  public Layout createSearchPanel(int rows, final ClickListener listener, final RFWDBProvider dbProvider) {
     final HorizontalLayout mainLayout = new HorizontalLayout();
     mainLayout.setSizeFull();
     mainLayout.setMargin(false);
@@ -2633,7 +2572,7 @@ public class UIFactory<VO extends RFWVO> {
           listener.buttonClick(event);
         } else {
           try {
-            applyMOOnGrid(dataProvider);
+            applyMOOnGrid(dbProvider);
           } catch (RFWException e1) {
             TreatException.treat(e1);
           }
@@ -2822,22 +2761,23 @@ public class UIFactory<VO extends RFWVO> {
    * Cria um grid para ser usado em conjunto com os campos de MO criado por esta Factory. Exibindo neste Grid os dados filtrados pelos campos de filtro.
    *
    * @return Component criado conforme atributos passados
+   * @param dbProvider Provedor de dados para que o componente consiga acessar os outros objetos do sistema.
    * @throws RFWException
    */
-  public Grid<GVO<VO>> createGridForMO() throws RFWException {
-    return createGridForMOImp(null, null, null, null, null, null, null);
+  public Grid<GVO<VO>> createGridForMO(RFWDBProvider dbProvider) throws RFWException {
+    return createGridForMOImp(null, null, null, null, null, null, dbProvider);
   }
 
   /**
    * Cria um grid para ser usado em conjunto com os campos de MO criado por esta Factory. Exibindo neste Grid os dados filtrados pelos campos de filtro.
    *
    * @param limitResults Caso definido, limita os resultados que são obtidos do banco de dados e exibidos no grid.
-   *
+   * @param dbProvider Provedor de dados para que o componente consiga acessar os outros objetos do sistema.
    * @return Component criado conforme atributos passados
    * @throws RFWException
    */
-  public Grid<GVO<VO>> createGridForMO(Integer limitResults) throws RFWException {
-    return createGridForMOImp(null, null, null, null, null, limitResults, null);
+  public Grid<GVO<VO>> createGridForMO(Integer limitResults, RFWDBProvider dbProvider) throws RFWException {
+    return createGridForMOImp(null, null, null, null, null, limitResults, dbProvider);
   }
 
   /**
@@ -2845,11 +2785,12 @@ public class UIFactory<VO extends RFWVO> {
    *
    * @param orderBy Objeto para definir a ordem inicial do Grid
    * @param attributes Lista de subatributos que precisam ser recuperados nos VOs do container também. Só usar quando o dado for exibido no GRID, se só precisar do dado para utilizar em outro objeto quando selecionado ou algo do tipo, buscar o objeto mais completo quando precisar para evitar um overload do Grid.
+   * @param dbProvider Provedor de dados para que o componente consiga acessar os outros objetos do sistema.
    * @return Component criado conforme atributos passados
    * @throws RFWException
    */
-  public Grid<GVO<VO>> createGridForMO(RFWOrderBy orderBy, String[] attributes) throws RFWException {
-    return createGridForMOImp(null, orderBy, attributes, null, null, null, null);
+  public Grid<GVO<VO>> createGridForMO(RFWOrderBy orderBy, String[] attributes, RFWDBProvider dbProvider) throws RFWException {
+    return createGridForMOImp(null, orderBy, attributes, null, null, null, dbProvider);
   }
 
   /**
@@ -2859,11 +2800,12 @@ public class UIFactory<VO extends RFWVO> {
    * @param orderBy Objeto para definir a ordem inicial do Grid
    * @param attributes Lista de subatributos que precisam ser recuperados nos VOs do container também. Só usar quando o dado for exibido no GRID, se só precisar do dado para utilizar em outro objeto quando selecionado ou algo do tipo, buscar o objeto mais completo quando precisar para evitar um overload do Grid.
    * @param doubleClickListener Listener para o caso de duplo click em algum item do Grid. Para obter o item que recebeu o duplo click utilize o método event.getItem().
+   * @param dbProvider Provedor de dados para que o componente consiga acessar os outros objetos do sistema.
    * @return Component criado conforme atributos passados
    * @throws RFWException
    */
-  public Grid<GVO<VO>> createGridForMO(SelectionMode selectionMode, RFWOrderBy orderBy, String[] attributes, RFWGridDoubleClickListener<GVO<VO>> doubleClickListener) throws RFWException {
-    return createGridForMOImp(selectionMode, orderBy, attributes, doubleClickListener, null, null, null);
+  public Grid<GVO<VO>> createGridForMO(SelectionMode selectionMode, RFWOrderBy orderBy, String[] attributes, RFWGridDoubleClickListener<GVO<VO>> doubleClickListener, RFWDBProvider dbProvider) throws RFWException {
+    return createGridForMOImp(selectionMode, orderBy, attributes, doubleClickListener, null, null, dbProvider);
   }
 
   /**
@@ -2872,11 +2814,12 @@ public class UIFactory<VO extends RFWVO> {
    * @param orderBy Objeto para definir a ordem inicial do Grid
    * @param attributes Lista de subatributos que precisam ser recuperados nos VOs do container também. Só usar quando o dado for exibido no GRID, se só precisar do dado para utilizar em outro objeto quando selecionado ou algo do tipo, buscar o objeto mais completo quando precisar para evitar um overload do Grid.
    * @param limitResults Caso definido, limita os resultados que são obtidos do banco de dados e exibidos no grid.
+   * @param dbProvider Provedor de dados para que o componente consiga acessar os outros objetos do sistema.
    * @return Component criado conforme atributos passados
    * @throws RFWException
    */
-  public Grid<GVO<VO>> createGridForMO(RFWOrderBy orderBy, String[] attributes, Integer limitResults) throws RFWException {
-    return createGridForMOImp(null, orderBy, attributes, null, null, limitResults, null);
+  public Grid<GVO<VO>> createGridForMO(RFWOrderBy orderBy, String[] attributes, Integer limitResults, RFWDBProvider dbProvider) throws RFWException {
+    return createGridForMOImp(null, orderBy, attributes, null, null, limitResults, dbProvider);
   }
 
   /**
@@ -2887,11 +2830,12 @@ public class UIFactory<VO extends RFWVO> {
    * @param attributes Lista de subatributos que precisam ser recuperados nos VOs do container também. Só usar quando o dado for exibido no GRID, se só precisar do dado para utilizar em outro objeto quando selecionado ou algo do tipo, buscar o objeto mais completo quando precisar para evitar um overload do Grid.
    * @param doubleClickListener Listener para o caso de duplo click em algum item do Grid. Para obter o item que recebeu o duplo click utilize o método event.getItem().
    * @param limitResults Caso definido, limita os resultados que são obtidos do banco de dados e exibidos no grid.
+   * @param dbProvider Provedor de dados para que o componente consiga acessar os outros objetos do sistema.
    * @return Component criado conforme atributos passados
    * @throws RFWException
    */
-  public Grid<GVO<VO>> createGridForMO(SelectionMode selectionMode, RFWOrderBy orderBy, String[] attributes, RFWGridDoubleClickListener<GVO<VO>> doubleClickListener, Integer limitResults) throws RFWException {
-    return createGridForMOImp(selectionMode, orderBy, attributes, doubleClickListener, null, limitResults, null);
+  public Grid<GVO<VO>> createGridForMO(SelectionMode selectionMode, RFWOrderBy orderBy, String[] attributes, RFWGridDoubleClickListener<GVO<VO>> doubleClickListener, Integer limitResults, RFWDBProvider dbProvider) throws RFWException {
+    return createGridForMOImp(selectionMode, orderBy, attributes, doubleClickListener, null, limitResults, dbProvider);
   }
 
   /**
@@ -2903,13 +2847,13 @@ public class UIFactory<VO extends RFWVO> {
    * @param doubleClickListener Listener para o caso de duplo click em algum item do Grid. Para obter o item que recebeu o duplo click utilize o método event.getItem().
    * @param provider Cria a MOGrid com um provider específico.
    * @param limitResults Caso definido, limita os resultados que são obtidos do banco de dados e exibidos no grid.
-   * @param dataProvider
+   * @param dbProvider Provedor de dados para que o componente consiga acessar os outros objetos do sistema.
    * @return
    * @throws RFWException
    */
-  private Grid<GVO<VO>> createGridForMOImp(SelectionMode selectionMode, RFWOrderBy orderBy, String[] attributes, RFWGridDoubleClickListener<GVO<VO>> doubleClickListener, UIGridDataProvider<VO> provider, Integer limitResults, RFWDBProvider dataProvider) throws RFWException {
+  private Grid<GVO<VO>> createGridForMOImp(SelectionMode selectionMode, RFWOrderBy orderBy, String[] attributes, RFWGridDoubleClickListener<GVO<VO>> doubleClickListener, UIGridDataProvider<VO> provider, Integer limitResults, RFWDBProvider dbProvider) throws RFWException {
     if (selectionMode == null) selectionMode = SelectionMode.MULTI;
-    if (provider == null) provider = new UIGridDataProvider<>(this.voClass, this.createBISMO(), orderBy, attributes, dataProvider);
+    if (provider == null) provider = new UIGridDataProvider<>(this.voClass, this.createBISMO(), orderBy, attributes, dbProvider);
 
     if (limitResults != null) provider.setLimitResults(limitResults);
 
@@ -3320,7 +3264,7 @@ public class UIFactory<VO extends RFWVO> {
     if (df == null) {
       Annotation ann = RUReflex.getRFWMetaAnnotation(voClass, cleanAttribute);
       if (ann != null) {
-        // Verifica o tipo de BISMeta para criar o campo adequado
+        // Verifica o tipo de RFWMeta para criar o campo adequado
         if (ann instanceof RFWMetaEnumField) {
           column.setRenderer(value -> {
             if (value == null) return "";
@@ -3471,10 +3415,11 @@ public class UIFactory<VO extends RFWVO> {
   /**
    * Este método cria o MO a partir de todos os campos de MO registrados na Factory e aplica o MO no Grid, se existir um Grid criado para o MO.
    *
+   * @param dbProvider Provedor de dados para que o componente consiga acessar os outros objetos do sistema.
    * @throws RFWException
    */
   @SuppressWarnings("unchecked")
-  public void applyMOOnGrid(RFWDBProvider dataProvider) throws RFWException {
+  public void applyMOOnGrid(RFWDBProvider dbProvider) throws RFWException {
     if (this.moGrid == null) throw new RFWCriticalException("Não há nenhum GRID para MO criado na UIFactory!");
 
     RFWMO mo = createBISMO();
@@ -3489,7 +3434,7 @@ public class UIFactory<VO extends RFWVO> {
       List<Long> ids = null;
       if (mo.getAttributes().size() > 0) {
         // Faz a busca dos IDs de resultado
-        ids = dataProvider.findIDs(this.voClass, mo, null);
+        ids = dbProvider.findIDs(this.voClass, mo, null);
         sg.add(ids);
       }
       provider.refreshAll(); // Força a releitura dos dados
@@ -3708,15 +3653,15 @@ public class UIFactory<VO extends RFWVO> {
    * @param doubleClickListener Listener para o caso de duplo click em algum item do Grid. Para obter o item que recebeu o duplo click utilize o método event.getItem().
    * @param parentAttribute nome do atributo que identifica o pai do objeto na Hierarquia.
    * @param ignoreIDs IDs dos objetos que devem ser ignorados e não serem retornados pelo Provider. Útil quando estamos editando a hierarquia e não queremos que o próprio objeto apareça na listagem.
-   * @param dataProvider Provedor de dados para que o componente consiga acessar os outros objetos do sistema.
+   * @param dbProvider Provedor de dados para que o componente consiga acessar os outros objetos do sistema.
    * @return Grid hierárquivo para exibir os dados.
    * @throws RFWException
    */
   @SuppressWarnings({ "rawtypes", "unchecked" })
-  public static <VO extends RFWVO> TreeGrid<GVO<VO>> createTreeGrid(Class<VO> voClass, SelectionMode selectionMode, RFWOrderBy orderBy, RFWGridDoubleClickListener<GVO<VO>> doubleClickListener, String parentAttribute, Long[] ignoreIDs, RFWDBProvider dataProvider) throws RFWException {
+  public static <VO extends RFWVO> TreeGrid<GVO<VO>> createTreeGrid(Class<VO> voClass, SelectionMode selectionMode, RFWOrderBy orderBy, RFWGridDoubleClickListener<GVO<VO>> doubleClickListener, String parentAttribute, Long[] ignoreIDs, RFWDBProvider dbProvider) throws RFWException {
     final TreeGrid<GVO<VO>> grid = new TreeGrid<>();
 
-    UITreeDataProvider<VO> provider = new UITreeDataProvider<>(voClass, parentAttribute, orderBy, ignoreIDs, dataProvider);
+    UITreeDataProvider<VO> provider = new UITreeDataProvider<>(voClass, parentAttribute, orderBy, ignoreIDs, dbProvider);
     setUpGrid(grid, selectionMode, true, doubleClickListener, provider);
     grid.setStyleGenerator(new UIGridRowHighlight());
 
@@ -3932,7 +3877,7 @@ public class UIFactory<VO extends RFWVO> {
       }
     }
 
-    // Se temos um DF, e temos um campo do tipo TextField, atualizamos o MaxLength para o definido no DataFormatter. Isso pq o campo gerado utiliza o maxLength da BISMeta do VO, e a formatação em geral inclui mais caracteres.
+    // Se temos um DF, e temos um campo do tipo TextField, atualizamos o MaxLength para o definido no DataFormatter. Isso pq o campo gerado utiliza o maxLength da RFWMeta do VO, e a formatação em geral inclui mais caracteres.
     if (df != null && field instanceof AbstractTextField) ((AbstractTextField) field).setMaxLength(df.getMaxLenght());
 
     return bind(field, vo, propertyPath, df, required, nullValue);

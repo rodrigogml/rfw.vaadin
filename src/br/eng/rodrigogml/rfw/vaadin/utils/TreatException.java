@@ -49,10 +49,9 @@ public class TreatException {
     while (last != next) {
       if (next == null) break;
       if (next instanceof RFWException) {
-        // TODO rodrigogml Depois que todo o código estiver no novo ambiente (migração do RFW.Kernel) Verificar o trecho do código a seguir, pois o código da exception não foi encontrada em lugar nenhum. Mas aparentemente está vinculada à falta de sessão ou login na UI ou CRUD.
-        if ("FW_ERROR_000005".equals(((RFWException) next).getExceptionCode())) {
+        if ("RFW_000019".equals(((RFWException) next).getExceptionCode())) {
           // Trocamos pela Exception de Warning comum para evitar logs
-          e = new RFWValidationException("FW_ERROR_000005", e);
+          e = new RFWValidationException("RFW_000019", e);
           RFWUI ui = FWVad.getRFWUI();
           if (ui != null) ui.doLogout();
           break;
