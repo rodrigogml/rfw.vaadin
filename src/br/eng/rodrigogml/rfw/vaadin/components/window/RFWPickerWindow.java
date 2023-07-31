@@ -1,5 +1,6 @@
 package br.eng.rodrigogml.rfw.vaadin.components.window;
 
+import java.util.List;
 import java.util.Set;
 
 import com.vaadin.event.ShortcutAction.KeyCode;
@@ -7,6 +8,8 @@ import com.vaadin.event.ShortcutAction.ModifierKey;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Panel;
@@ -17,9 +20,9 @@ import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWValidationException;
 import br.eng.rodrigogml.rfw.kernel.interfaces.RFWDBProvider;
 import br.eng.rodrigogml.rfw.kernel.preprocess.PreProcess;
+import br.eng.rodrigogml.rfw.kernel.utils.RUReflex;
 import br.eng.rodrigogml.rfw.kernel.vo.GVO;
 import br.eng.rodrigogml.rfw.kernel.vo.RFWVO;
-import br.eng.rodrigogml.rfw.vaadin.interfaces.RFWPickerConfirmListener;
 import br.eng.rodrigogml.rfw.vaadin.main.utils.UIFactory;
 import br.eng.rodrigogml.rfw.vaadin.utils.FWVad;
 import br.eng.rodrigogml.rfw.vaadin.utils.FWVad.ButtonType;
@@ -48,17 +51,31 @@ public class RFWPickerWindow<VO extends RFWVO> extends Window {
   private final Panel listPanel = new Panel("Lista");
   private final VerticalLayout listLayout;
 
+  /**
+   * Referência para o botão de cancelar da janela.
+   */
+  final Button buttonCancel;
+
+  /**
+   * Referência para o botão de confirmar
+   */
+  final Button buttonConfirm;
+
+  /**
+   * DBProvider Fornecido na construção da classe.
+   */
   private final RFWDBProvider dbProvider;
 
   /**
-   * Listener chamado ao confirmar a seleção no picker, passando os itens selecionados.
+   * Lista dos itens selecionados antes da tela ser fechada.<br>
+   * Estará nula caso a tela não tenha sido confirmada (seja fechada ou cancelada).
    */
-  private RFWPickerConfirmListener<VO> confirmListener = null;
+  private List<VO> selectedItems = null;
 
   public RFWPickerWindow(Class<VO> voClass, String caption, ThemeResource icon, final RFWDBProvider dbProvider) throws RFWException {
     super(caption);
 
-    PreProcess.requiredNonNull(dbProvider, "O RFWPickerWindow necessita um dataProvider válido para funcionar corretamente!");
+    PreProcess.requiredNonNull(dbProvider, "O RFWPickerWindow necessita um DBProvider válido para funcionar corretamente!");
 
     this.setIcon(icon);
     this.setModal(true);
@@ -85,8 +102,10 @@ public class RFWPickerWindow<VO extends RFWVO> extends Window {
     buttonBar.setMargin(true);
     buttonBar.setSpacing(false);
     buttonBar.addStyleName(FWVad.STYLE_COMPONENT_ASSOCIATIVE);
-    buttonBar.addComponent(FWVad.createButton(ButtonType.CANCEL, e -> this.close()));
-    buttonBar.addComponent(FWVad.createButton(ButtonType.CONFIRM, e -> clickedButtonConfirm()));
+    buttonCancel = FWVad.createButton(ButtonType.CANCEL, e -> this.close());
+    buttonBar.addComponent(buttonCancel);
+    buttonConfirm = FWVad.createButton(ButtonType.CONFIRM, e -> clickedButtonConfirm());
+    buttonBar.addComponent(buttonConfirm);
 
     // ==>>> Agora montamos os componentes nos layouts para gerar a view de Listagem
     this.mainView.setMargin(true);
@@ -132,6 +151,21 @@ public class RFWPickerWindow<VO extends RFWVO> extends Window {
   }
 
   /**
+   * Permite a troca do componente da Barra de botões de confirmar a cancelar.
+   *
+   * @param component
+   * @throws RFWException
+   */
+  protected void setButtonBar(Component component) throws RFWException {
+    // Garante que o componente não é nulo para não perdermos a conta dos componentes no layout, já que a substituição é feita com base na posição dele no verticallayout
+    PreProcess.requiredNonNullCritical(component, "O componente da barra de botões não pode ser nulo e deve incluir ao menos o botão de confirmar!");
+    // A barra de botões sempre está no componente, mas o grid pode não ter sido alocado ainda. Assim a barra pode estar na posição 0 ou 1.
+    int index = listLayout.getComponentCount() - 1;
+    listLayout.removeComponent(listLayout.getComponent(index));
+    listLayout.addComponent(component, index);
+  }
+
+  /**
    * Força a atualização do painel de busca de acordo com os campos criados no UIFactory para o MO da listagem.
    */
   protected void updateSearchPanel() {
@@ -139,15 +173,12 @@ public class RFWPickerWindow<VO extends RFWVO> extends Window {
     searchPanel.setContent(this.uiFac.createSearchPanel(1, null, this.dbProvider));
   }
 
-  @SuppressWarnings("unchecked")
   private void clickedButtonConfirm() {
     try {
       // Verificamos se há 1 objeto selecionado no Grid
       final Set<GVO<VO>> sels = getUiFac().getMOGrid().getSelectedItems();
       if (sels.size() == 0) throw new RFWValidationException("Selecione o item desejado antes de confirmar.");
-      VO vo = sels.iterator().next().getVO();
-      System.out.println(vo.getClass());
-      if (this.confirmListener != null) this.confirmListener.confirm(vo);
+      this.selectedItems = RUReflex.collectGVOToVOList(sels);
       this.close();
     } catch (Throwable e) {
       TreatException.treat(e);
@@ -164,21 +195,52 @@ public class RFWPickerWindow<VO extends RFWVO> extends Window {
   }
 
   /**
-   * # listener chamado ao confirmar a seleção no picker, passando os itens selecionados.
+   * # lista dos itens selecionados antes da tela ser fechada.<br>
+   * Estará nula caso a tela não tenha sido confirmada (seja fechada ou cancelada).
    *
-   * @return # listener chamado ao confirmar a seleção no picker, passando os itens selecionados
+   * @return # lista dos itens selecionados antes da tela ser fechada
    */
-  public RFWPickerConfirmListener<VO> getConfirmListener() {
-    return confirmListener;
+  public List<VO> getSelectedItems() {
+    return selectedItems;
   }
 
   /**
-   * # listener chamado ao confirmar a seleção no picker, passando os itens selecionados.
+   * # dBProvider Fornecido na construção da classe.
    *
-   * @param confirmListener # listener chamado ao confirmar a seleção no picker, passando os itens selecionados
+   * @return # dBProvider Fornecido na construção da classe
    */
-  public void setConfirmListener(RFWPickerConfirmListener<VO> confirmListener) {
-    this.confirmListener = confirmListener;
+  public RFWDBProvider getDbProvider() {
+    return dbProvider;
+  }
+
+  /**
+   * # referência para o botão de cancelar da janela.
+   *
+   * @return # referência para o botão de cancelar da janela
+   */
+  public Button getButtonCancel() {
+    return buttonCancel;
+  }
+
+  /**
+   * # referência para o botão de confirmar.
+   *
+   * @return # referência para o botão de confirmar
+   */
+  public Button getButtonConfirm() {
+    return buttonConfirm;
+  }
+
+  /**
+   * Este método retorna o primeiro item da lista dos itens retornados por {@link #getSelectedItems()}, não é necessaraimente o primeiro item que o usuário selecionou. O objectivo deste método é evitar ter que lhe dar com a lista quando temos apenas um item selecionado.
+   *
+   * @return null se {@link #getSelectedItems()} for nulo, o primeiro item da lista de {@link #getSelectedItems()}.
+   */
+  public VO getSelectedFirstItem() {
+    if (getSelectedItems() != null) {
+      return getSelectedItems().iterator().next();
+    }
+    return null;
   }
 
 }
