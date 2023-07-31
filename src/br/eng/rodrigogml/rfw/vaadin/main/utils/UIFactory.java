@@ -165,7 +165,7 @@ public class UIFactory<VO extends RFWVO> {
    * DISCLAIMER: Deixamos de utilizar o Binder do próprio vaadin por ele trabalhar com um cache, e só transferir os dados para/do o VO nos métodos de writeBean/readBean. Desta forma muitas vezes o usuário já fez alterações nos campos, mas quando precisamos da informação é necessário procurar o campo para obter o valor ainda não tratado (com a formatação de locale, números em formato String, etc.).
    * Também não é possível chamar o método o tempo todo pq ao chamar ele valida os campos obrigatórios que não foram preenchidos e os deixa todos em vemelho com código de erro.<br>
    * <br>
-   * Toda a funcionalidade do Binder do vaadin se encontra dentro do UIFactory. O bind é feito através desta classe e utiliza o evento de 'valueChange' para ler o valor do campo e converter para o VO conforme a necessidade. Deixando tudo de forma mais automática para realizar o Bind utilizando a própria estrutura do BIS.
+   * Toda a funcionalidade do Binder do vaadin se encontra dentro do UIFactory. O bind é feito através desta classe e utiliza o evento de 'valueChange' para ler o valor do campo e converter para o VO conforme a necessidade. Deixando tudo de forma mais automática para realizar o Bind utilizando a própria estrutura do RFW.
    *
    * @author Rodrigo Leitão
    * @since 10.0.0 (31 de out de 2018)
@@ -178,12 +178,12 @@ public class UIFactory<VO extends RFWVO> {
     private final HasValue<FIELDTYPE> field;
 
     /**
-     * VO do BIS onde a propriedade/valor será lido.
+     * VO do RFW onde a propriedade/valor será lido.
      */
     private final BEAN bean;
 
     /**
-     * Propriedade do VO que será ligada ao campo da tela. Aceita toda a estrutura de Neasted Properties do BIS.
+     * Propriedade do VO que será ligada ao campo da tela. Aceita toda a estrutura de Neasted Properties do RFW.
      */
     private String property = null;
 
@@ -213,7 +213,7 @@ public class UIFactory<VO extends RFWVO> {
      *
      * @param field "Campo da tela" Objeto do vaadin que cria o field na tela.
      * @param bean Qualquer objeto do java (tipo Bean, com métodos get/set) onde a propriedade/valor será lido.
-     * @param property Propriedade do VO que será ligada ao campo da tela. Aceita toda a estrutura de Neasted Properties do BIS.
+     * @param property Propriedade do VO que será ligada ao campo da tela. Aceita toda a estrutura de Neasted Properties do RFW.
      * @param formatter Define um {@link RFWDataFormatter} para tratar e converter os valores regionalizados da tela para o objeto, e vice-versa.
      * @param required Define se o campo é obrigatório. Ajusta automaticamente a validação dos campos bem como o indicador de obrigatoriedade no campo.<br>
      *          <b>ATENÇÃO:</B> O valor passado aqui é repassado para o field, mas não é armazenado aqui! A mudança do atributo 'setRequiredIndicatorVisible(boolean)' do campo muda automaticamente as validações do bind. Isso permite que o desenvolvedor possa alterar as condições de obrigatoriedade diretamente no componente.
@@ -402,8 +402,8 @@ public class UIFactory<VO extends RFWVO> {
         if (formatter != null) value = formatter.toPresentation((BEANTYPE) value, RFWUI.getLocaleCurrent());
 
         if (value != null && Date.class.isAssignableFrom(value.getClass())) {
-          // Se o valor é um java.util.Date, temos de converter para LocalDateTime, pois o UIFactory cria o DataTimeField do Vaadin 8 que trabalha com as classes de data do Java 8, enquanto o BIS ainda usa as java.util.Date
-          throw new RFWCriticalException("Por definição o BIS não deve trabalhar com java.utils.Date. Verifique o código e substitua por LocalDate, LocalTime ou LocalDateTime.");
+          // Se o valor é um java.util.Date, temos de converter para LocalDateTime, pois o UIFactory cria o DataTimeField do Vaadin 8 que trabalha com as classes de data do Java 8, enquanto o RFW ainda usa as java.util.Date
+          throw new RFWCriticalException("Por definição o RFW não deve trabalhar com java.utils.Date. Verifique o código e substitua por LocalDate, LocalTime ou LocalDateTime.");
         } else if (value == null && CheckBox.class.isAssignableFrom(field.getClass())) {
           // Como checkbox não aceita o valor nulo, vamos forçar um valor "False" quando o valor é nulo
           RUReflex.setPropertyValue(bean, property, Boolean.FALSE, false); // Já força o mesmo valor no VO para que não fiquem descasados (inicializa o VO)
@@ -476,7 +476,7 @@ public class UIFactory<VO extends RFWVO> {
     }
 
     /**
-     * Define o propriedade do VO que será ligada ao campo da tela. Aceita toda a estrutura de Neasted Properties do BIS.
+     * Define o propriedade do VO que será ligada ao campo da tela. Aceita toda a estrutura de Neasted Properties do RFW.
      *
      * @param property the new propriedade do VO que será ligada ao campo da tela
      */
@@ -494,7 +494,7 @@ public class UIFactory<VO extends RFWVO> {
   }
 
   /**
-   * Define os tipos de Label (aparência) que o BIS trabalha.
+   * Define os tipos de Label (aparência) que o RFW trabalha.
    */
   public static enum LabelType {
     /**
@@ -618,7 +618,7 @@ public class UIFactory<VO extends RFWVO> {
    * Define um RFWMO "base" padrão para ser utilizado no GRID do MO {@link #moGrid}. Se definido, este MO é clonado e utilizado como base para colocar as condições dos campos de filtro.<br>
    * Este MO deve ser utilizado quando temos algum filtro que deve ser sempre utilizado recuperar os dados para o Grid. Por exemplo, queremos apenas que só os objetos ativos sejam exibidos independente das opções de filtro que o usuário escolha.
    */
-  private RFWMO baseBISMO = null;
+  private RFWMO baseRFWMO = null;
 
   /**
    * Referência para a linha de rodapé do Grid de MO (quando criada).
@@ -685,7 +685,7 @@ public class UIFactory<VO extends RFWVO> {
    *          O espaço é dividido em um layoutGrid com larguras de no mínimo 100px. Para o Vaadin o componente terá sempre a largura "100%" para ocupar todo o espaço dado dentro do grid. As medidas aqui são utilizadas para calcular quantas colunas cada componente usará. Medidas em percentual são transformadas de acordo com a medida da largura da tela. Caso o valor passado seja nulo o espaço máximo
    *          cedido será de 3 colunas =~ 300px.
    * @param df
-   * @param df DataFormatter a ser utilizado no campo. Se for passado NULL o método criará o DataFormatter Padrão conforme a BISMetaAnnotation do atributo.
+   * @param df DataFormatter a ser utilizado no campo. Se for passado NULL o método criará o DataFormatter Padrão conforme a RFWMetaAnnotation do atributo.
    *
    * @return
    * @throws RFWException
@@ -729,7 +729,7 @@ public class UIFactory<VO extends RFWVO> {
    *          <b>ATENÇÃO:</B> Note que o atributo passado aqui é em relação ao objeto que estará no Provider do ComboBox e não do objeto sobre o qual estamos criando os campos.<br>
    *          Por exemplo, o ItemVO tem um relaiconamento com o ItemTypeVO e utiliza este método paracriar o campo. O valor passado aqui deve ser o 'name' ou ItemTypeVO_.vo().name(), e não o caminho a partir do ItemVO, utilizado para gerar o campo.
    * @param filterAttributes Lista de atributos (ou atributo único) que serão utilizados para realizar o filtro do componente. Se passado nulo ou vazio, será utilizado o atributo passado em captionAttribute.
-   * @param df DataFormatter a ser utilizado no campo. Se for passado NULL o método criará o DataFormatter Padrão conforme a BISMetaAnnotation do atributo.
+   * @param df DataFormatter a ser utilizado no campo. Se for passado NULL o método criará o DataFormatter Padrão conforme a RFWMetaAnnotation do atributo.
    * @return
    * @throws RFWException
    */
@@ -753,7 +753,7 @@ public class UIFactory<VO extends RFWVO> {
    *          Por exemplo, o ItemVO tem um relaiconamento com o ItemTypeVO e utiliza este método paracriar o campo. O valor passado aqui deve ser o 'name' ou ItemTypeVO_.vo().name(), e não o caminho a partir do ItemVO, utilizado para gerar o campo.
    * @param filterAttributes Lista de atributos (ou atributo único) que serão utilizados para realizar o filtro do componente. Se passado nulo ou vazio, será utilizado o atributo passado em captionAttribute.
    * @param resolutionOverride Quando passado, nos campos da date/periodo sobrepõe a precisão de data/hora definido no RFWMeta para o campo.
-   * @param df DataFormatter a ser utilizado no campo. Se for passado NULL o método criará o DataFormatter Padrão conforme a BISMetaAnnotation do atributo.
+   * @param df DataFormatter a ser utilizado no campo. Se for passado NULL o método criará o DataFormatter Padrão conforme a RFWMetaAnnotation do atributo.
    * @param dbProvider Provedor de dados para que o componente consiga acessar os outros objetos do sistema.
    *
    * @return
@@ -767,8 +767,8 @@ public class UIFactory<VO extends RFWVO> {
     final HasValue<Object> c = UIFactory.createField(this.voClass, propertyPath, null, forceRequired, fieldAlignment, forceRequired, captionAttribute, filterAttributes, resolutionOverride, ignoreTextArea, df, dbProvider);
 
     // Verificamos se tem um DataFormatter Padrão para a propriedade
-    if (df == null) df = getDataFormatterByBISMetaAnnotation(this.voClass, propertyPath);
-    if (df != null) applyBISDataFormatter(c, (RFWDataFormatter<Object, Object>) df);
+    if (df == null) df = getDataFormatterByRFWMetaAnnotation(this.voClass, propertyPath);
+    if (df != null) applyRFWDataFormatter(c, (RFWDataFormatter<Object, Object>) df);
 
     this.moFieldHash.put(propertyPath, new FieldMetaData(c, propertyPath, minWidth, maxWidth, (RFWDataFormatter<Object, Object>) df, null));
     return c;
@@ -786,7 +786,7 @@ public class UIFactory<VO extends RFWVO> {
    * @param df Formatador responsável pela reformatação do valor.
    * @throws RFWException
    */
-  public static <FIELDTYPE, BEANTYPE> void applyBISDataFormatter(HasValue<FIELDTYPE> component, RFWDataFormatter<FIELDTYPE, BEANTYPE> df) throws RFWException {
+  public static <FIELDTYPE, BEANTYPE> void applyRFWDataFormatter(HasValue<FIELDTYPE> component, RFWDataFormatter<FIELDTYPE, BEANTYPE> df) throws RFWException {
     // Verificamos se o field emite o evento de onBlur
     if (component instanceof BlurNotifier) {
       // Se temos um Dataformater e o evento onBlur, criamos o "reformater" para o campo do MO, que faz com que ao sair do campo o conteúdo seja reformatado para ficar no padrão visual adequado. e não do jeito que o usuário deixou.
@@ -952,10 +952,10 @@ public class UIFactory<VO extends RFWVO> {
    * @throws RFWException Em caso de algum problema durante a geração do RFWMO.
    */
   @SuppressWarnings("unchecked")
-  public RFWMO createBISMO() throws RFWException {
+  public RFWMO createRFWMO() throws RFWException {
     final RFWMO mo;
-    if (this.baseBISMO != null) {
-      mo = this.baseBISMO.cloneRecursive();
+    if (this.baseRFWMO != null) {
+      mo = this.baseRFWMO.cloneRecursive();
     } else {
       mo = new RFWMO();
     }
@@ -1012,7 +1012,7 @@ public class UIFactory<VO extends RFWVO> {
           if (fieldData.component instanceof ComboBox) {
             if (value != null) mo.equal(fieldData.attributePath, value);
           } else if (fieldData.component instanceof RFWAssociativeComponent) {
-            // Iteramos todos os componsntes do BISAssociaciteComponente para lêr os valores e saber quais os valores que foram clicados e adicionar no MO
+            // Iteramos todos os componsntes do RFWAssociaciteComponente para lêr os valores e saber quais os valores que foram clicados e adicionar no MO
             RFWAssociativeComponent ass = (RFWAssociativeComponent) fieldData.component;
             RFWMO assMO = null;
             for (Component comp : ass.getLayout()) {
@@ -1102,10 +1102,10 @@ public class UIFactory<VO extends RFWVO> {
           // Verificamos se o Tipo é um RFWVO
           final Class<?> type = RUReflex.getPropertyTypeByType(this.voClass, fieldData.attributePath);
           if (RFWVO.class.isAssignableFrom(type)) {
-            final RFWVO bisVO = (RFWVO) value;
-            if (bisVO != null) mo.equal(fieldData.attributePath + ".id", bisVO.getId());
+            final RFWVO rfwVO = (RFWVO) value;
+            if (rfwVO != null) mo.equal(fieldData.attributePath + ".id", rfwVO.getId());
           } else {
-            throw new RFWCriticalException("Tipo de Dados '${3}' não suportado pela RFWMeta '${2}' não suportada pelo BISUIFactory: atributo '${0}' da classe '${1}'.", new String[] { fieldData.attributePath, this.voClass.getCanonicalName(), ann.annotationType().getSimpleName(), type.getCanonicalName() });
+            throw new RFWCriticalException("Tipo de Dados '${3}' não suportado pela RFWMeta '${2}' não suportada pelo UIFactory: atributo '${0}' da classe '${1}'.", new String[] { fieldData.attributePath, this.voClass.getCanonicalName(), ann.annotationType().getSimpleName(), type.getCanonicalName() });
           }
         } else if (RFWMetaCollectionField.class.isAssignableFrom(ann.getClass())) {
           final Class<?> type = RUReflex.getPropertyTypeByType(this.voClass, fieldData.attributePath);
@@ -1120,10 +1120,10 @@ public class UIFactory<VO extends RFWVO> {
               throw new RFWCriticalException("Método despreparado para Criar o RFWMO a com um campo do tipo '" + fieldData.component.getClass().getCanonicalName() + "'.");
             }
           } else {
-            throw new RFWCriticalException("Tipo de Dados '${3}' não suportado pela RFWMeta '${2}' não suportada pelo BISUIFactory: atributo '${0}' da classe '${1}'.", new String[] { fieldData.attributePath, this.voClass.getCanonicalName(), ann.annotationType().getSimpleName(), type.getCanonicalName() });
+            throw new RFWCriticalException("Tipo de Dados '${3}' não suportado pela RFWMeta '${2}' não suportada pelo UIFactory: atributo '${0}' da classe '${1}'.", new String[] { fieldData.attributePath, this.voClass.getCanonicalName(), ann.annotationType().getSimpleName(), type.getCanonicalName() });
           }
         } else {
-          throw new RFWCriticalException("RFWMeta '${2}' não suportada pelo BISUIFactory: atributo '${0}' da classe '${1}'.", new String[] { fieldData.attributePath, this.voClass.getCanonicalName(), ann.annotationType().getSimpleName() });
+          throw new RFWCriticalException("RFWMeta '${2}' não suportada pelo UIFactory: atributo '${0}' da classe '${1}'.", new String[] { fieldData.attributePath, this.voClass.getCanonicalName(), ann.annotationType().getSimpleName() });
         }
       }
     }
@@ -1132,7 +1132,7 @@ public class UIFactory<VO extends RFWVO> {
   }
 
   /**
-   * Este método cria um campo padrão conforme o BISMetaAnnotation o tipo do atributo do VO.
+   * Este método cria um campo padrão conforme o RFWMetaAnnotation o tipo do atributo do VO.
    *
    * @param propertyPath Atributo / Caminho do Atributo para gerar o campo.
    * @return Component criado conforme atributos passados
@@ -1143,7 +1143,7 @@ public class UIFactory<VO extends RFWVO> {
   }
 
   /**
-   * Este método cria um campo padrão conforme o BISMetaAnnotation o tipo do atributo do VO.
+   * Este método cria um campo padrão conforme o RFWMetaAnnotation o tipo do atributo do VO.
    *
    * @param propertyPath Atributo / Caminho do Atributo para gerar o campo.
    * @param dbProvider Provedor de dados para que o componente consiga acessar os outros objetos do sistema.
@@ -1155,7 +1155,7 @@ public class UIFactory<VO extends RFWVO> {
   }
 
   /**
-   * Este método cria um campo padrão conforme o BISMetaAnnotation o tipo do atributo do VO.
+   * Este método cria um campo padrão conforme o RFWMetaAnnotation o tipo do atributo do VO.
    *
    * @param propertyPath Atributo / Caminho do Atributo para gerar o campo.
    * @param forceRequired Indica se devemos sobrepor a definição de obrigatório presente no VO. True indica que é obrigatório, False indica que não é obrigatório, null utiliza a definição do RFWMeta existente no VO.
@@ -1167,7 +1167,7 @@ public class UIFactory<VO extends RFWVO> {
   }
 
   /**
-   * Este método cria um campo padrão conforme o BISMetaAnnotation o tipo do atributo do VO.
+   * Este método cria um campo padrão conforme o RFWMetaAnnotation o tipo do atributo do VO.
    *
    * @param propertyPath Atributo / Caminho do Atributo para gerar o campo.
    * @param resolutionOverride Quando passado, nos campos da date/periodo sobrepõe a precisão de data/hora definido no RFWMeta para o campo.
@@ -1179,10 +1179,10 @@ public class UIFactory<VO extends RFWVO> {
   }
 
   /**
-   * Este método cria um campo padrão conforme o BISMetaAnnotation o tipo do atributo do VO.
+   * Este método cria um campo padrão conforme o RFWMetaAnnotation o tipo do atributo do VO.
    *
    * @param propertyPath Atributo / Caminho do Atributo para gerar o campo.
-   * @param df DataFormatter a ser utilizado no campo. Se for passado NULL o método criará o DataFormatter Padrão conforme a BISMetaAnnotation do atributo.
+   * @param df DataFormatter a ser utilizado no campo. Se for passado NULL o método criará o DataFormatter Padrão conforme a RFWMetaAnnotation do atributo.
    * @return Component criado conforme atributos passados
    * @throws RFWException
    */
@@ -1191,7 +1191,7 @@ public class UIFactory<VO extends RFWVO> {
   }
 
   /**
-   * Este método cria um campo padrão conforme o BISMetaAnnotation o tipo do atributo do VO.
+   * Este método cria um campo padrão conforme o RFWMetaAnnotation o tipo do atributo do VO.
    *
    * @param propertyPath Atributo / Caminho do Atributo para gerar o campo.
    * @param fieldAlignment Alinhamendo do conteúdo co campo. Suportado até o momento apenas em TextFields.
@@ -1203,11 +1203,11 @@ public class UIFactory<VO extends RFWVO> {
   }
 
   /**
-   * Este método cria um campo padrão conforme o BISMetaAnnotation o tipo do atributo do VO.
+   * Este método cria um campo padrão conforme o RFWMetaAnnotation o tipo do atributo do VO.
    *
    * @param propertyPath Atributo / Caminho do Atributo para gerar o campo.
    * @param fieldAlignment Alinhamendo do conteúdo co campo. Suportado até o momento apenas em TextFields.
-   * @param df DataFormatter a ser utilizado no campo. Se for passado NULL o método criará o DataFormatter Padrão conforme a BISMetaAnnotation do atributo.
+   * @param df DataFormatter a ser utilizado no campo. Se for passado NULL o método criará o DataFormatter Padrão conforme a RFWMetaAnnotation do atributo.
    * @return Component criado conforme atributos passados
    * @throws RFWException
    */
@@ -1216,7 +1216,7 @@ public class UIFactory<VO extends RFWVO> {
   }
 
   /**
-   * Este método cria um campo padrão conforme o BISMetaAnnotation o tipo do atributo do VO.
+   * Este método cria um campo padrão conforme o RFWMetaAnnotation o tipo do atributo do VO.
    *
    * @param propertyPath Atributo / Caminho do Atributo para gerar o campo.
    * @param helpPopupKey Chave do Bundle com o texto de ajuda/explicação para o campo
@@ -1228,7 +1228,7 @@ public class UIFactory<VO extends RFWVO> {
   }
 
   /**
-   * Este método cria um campo padrão conforme o BISMetaAnnotation o tipo do atributo do VO.
+   * Este método cria um campo padrão conforme o RFWMetaAnnotation o tipo do atributo do VO.
    *
    * @param propertyPath Atributo / Caminho do Atributo para gerar o campo.
    * @param helpPopupKey Chave do Bundle com o texto de ajuda/explicação para o campo
@@ -1241,7 +1241,7 @@ public class UIFactory<VO extends RFWVO> {
   }
 
   /**
-   * Este método cria um campo padrão conforme o BISMetaAnnotation o tipo do atributo do VO.
+   * Este método cria um campo padrão conforme o RFWMetaAnnotation o tipo do atributo do VO.
    *
    * @param propertyPath Atributo / Caminho do Atributo para gerar o campo.
    * @param helpPopupKey Chave do Bundle com o texto de ajuda/explicação para o campo
@@ -1255,7 +1255,7 @@ public class UIFactory<VO extends RFWVO> {
   }
 
   /**
-   * Este método cria um campo padrão conforme o BISMetaAnnotation o tipo do atributo do VO.
+   * Este método cria um campo padrão conforme o RFWMetaAnnotation o tipo do atributo do VO.
    *
    * @param propertyPath Atributo / Caminho do Atributo para gerar o campo.
    * @param helpPopupKey Chave do Bundle com o texto de ajuda/explicação para o campo
@@ -1270,7 +1270,23 @@ public class UIFactory<VO extends RFWVO> {
   }
 
   /**
-   * Este método cria um campo padrão conforme o BISMetaAnnotation o tipo do atributo do VO.
+   * Este método cria um campo padrão conforme o RFWMetaAnnotation o tipo do atributo do VO.
+   *
+   * @param propertyPath Atributo / Caminho do Atributo para gerar o campo.
+   * @param helpPopupKey Chave do Bundle com o texto de ajuda/explicação para o campo
+   * @param captionAttribute Usado quando o componente criado refere-se à um {@link RFWMetaRelationshipField} e o objeto em questão é um RFWVO. Aqui devemos passar qual o atributo do VO será utilizado como Caption no ComboBox Criado.<br>
+   *          <b>ATENÇÃO:</B> Note que o atributo passado aqui é em relação ao objeto que estará no Provider do ComboBox e não do objeto sobre o qual estamos criando os campos.<br>
+   *          Por exemplo, o ItemVO tem um relaiconamento com o ItemTypeVO e utiliza este método paracriar o campo. O valor passado aqui deve ser o 'name' ou ItemTypeVO_.vo().name(), e não o caminho a partir do ItemVO, utilizado para gerar o campo.
+   * @param dbProvider Provedor de dados para que o componente consiga acessar os outros objetos do sistema.
+   * @return Component criado conforme atributos passados
+   * @throws RFWException
+   */
+  public Component createVOField(String propertyPath, String helpPopupKey, String captionAttribute, RFWDBProvider dbProvider) throws RFWException {
+    return (Component) createVOFieldImp(propertyPath, helpPopupKey, null, null, captionAttribute, null, null, null, null, null, dbProvider);
+  }
+
+  /**
+   * Este método cria um campo padrão conforme o RFWMetaAnnotation o tipo do atributo do VO.
    *
    * @param propertyPath Atributo / Caminho do Atributo para gerar o campo.
    * @param helpPopupKey Chave do Bundle com o texto de ajuda/explicação para o campo
@@ -1286,7 +1302,7 @@ public class UIFactory<VO extends RFWVO> {
   }
 
   /**
-   * Este método cria um campo padrão conforme o BISMetaAnnotation o tipo do atributo do VO.
+   * Este método cria um campo padrão conforme o RFWMetaAnnotation o tipo do atributo do VO.
    *
    * @param propertyPath Atributo / Caminho do Atributo para gerar o campo.
    * @param helpPopupKey Chave do Bundle com o texto de ajuda/explicação para o campo
@@ -1315,8 +1331,8 @@ public class UIFactory<VO extends RFWVO> {
    *          Por exemplo, o ItemVO tem um relaiconamento com o ItemTypeVO e utiliza este método paracriar o campo. O valor passado aqui deve ser o 'name' ou ItemTypeVO_.vo().name(), e não o caminho a partir do ItemVO, utilizado para gerar o campo.
    * @param filterAttributes Lista de atributos (ou atributo único) que serão utilizados para realizar o filtro do componente. Se passado nulo ou vazio, será utilizado o atributo passado em captionAttribute.
    * @param resolutionOverride Quando passado, nos campos da date/periodo sobrepõe a precisão de data/hora definido no RFWMeta para o campo.
-   * @param ignoreTextArea Quando o atributo é do tipo String e o tamanho máximo passa dos 1000 caracteres, o BIS cria por padrão um TextArea ao invés de um TextField. Quando esse atributo for true, o método continuará criando um TextField. Útil quando queremos criar um campo de filtro para o atributo.
-   * @param df DataFormatter a ser utilizado no campo. Se for passado NULL o método criará o DataFormatter Padrão conforme a BISMetaAnnotation do atributo.
+   * @param ignoreTextArea Quando o atributo é do tipo String e o tamanho máximo passa dos 1000 caracteres, o RFW cria por padrão um TextArea ao invés de um TextField. Quando esse atributo for true, o método continuará criando um TextField. Útil quando queremos criar um campo de filtro para o atributo.
+   * @param df DataFormatter a ser utilizado no campo. Se for passado NULL o método criará o DataFormatter Padrão conforme a RFWMetaAnnotation do atributo.
    * @param forceRequired Indica se devemos sobrepor a definição de obrigatório presente no VO. True indica que é obrigatório, False indica que não é obrigatório, null utiliza a definição do RFWMeta existente no VO.
    * @param dbProvider Provedor de dados para que o componente consiga acessar os outros objetos do sistema.
    * @return
@@ -1457,7 +1473,7 @@ public class UIFactory<VO extends RFWVO> {
   }
 
   /**
-   * Este método tem a finalidade criar um DataFormatter de acordo com o tipo de campo do VO. O tipo do campo é avaliado pela BISMetaAnnotation do field.
+   * Este método tem a finalidade criar um DataFormatter de acordo com o tipo de campo do VO. O tipo do campo é avaliado pela RFWMetaAnnotation do field.
    *
    * @param voClass Class do VO
    * @param propertyPath Atributo que se deseja o DataFormatter.
@@ -1465,11 +1481,11 @@ public class UIFactory<VO extends RFWVO> {
    * @throws RFWException
    */
   @SuppressWarnings("unchecked")
-  private static <BEANTYPE, FIELDTYPE, VO extends RFWVO> RFWDataFormatter<FIELDTYPE, BEANTYPE> getDataFormatterByBISMetaAnnotation(Class<VO> voClass, String propertyPath) throws RFWException {
+  private static <BEANTYPE, FIELDTYPE, VO extends RFWVO> RFWDataFormatter<FIELDTYPE, BEANTYPE> getDataFormatterByRFWMetaAnnotation(Class<VO> voClass, String propertyPath) throws RFWException {
     final Annotation ann = RUReflex.getRFWMetaAnnotation(voClass, propertyPath);
     if (ann == null) {
       // throw new RFWCriticalException("Impossível gerar um campo para o atributo '${0}' da classe '${1}'. O atributo não tem uma RFWMeta Annotation!", new String[] { propertyPath, voClass.getCanonicalName() });
-      return null; // Retornamos null ao invés do erro acima para que seja possível criar colunas no Grid sem que seja um VO com bisMeta.
+      return null; // Retornamos null ao invés do erro acima para que seja possível criar colunas no Grid sem que seja um VO com RFWMeta.
     }
 
     RFWDataFormatter<FIELDTYPE, BEANTYPE> df = null;
@@ -1544,13 +1560,13 @@ public class UIFactory<VO extends RFWVO> {
       }
     } else {
       // Se não está previsto ainda o tipo de Annotation lançamos uma Exception para garantir que o desenvolvedor prepare adequadamente o Bind, criando converter se necessário.
-      throw new RFWCriticalException("BISMetaAnnotation '${0}' não suportada pelo getDataFormatterByBISMetaAnnotation(...) do UIFactory", new String[] { ann.annotationType().getSimpleName() });
+      throw new RFWCriticalException("RFWMetaAnnotation '${0}' não suportada pelo getDataFormatterByRFWMetaAnnotation(...) do UIFactory", new String[] { ann.annotationType().getSimpleName() });
     }
     return df;
   }
 
   /**
-   * Este método cria um campo conforme o tipo do attributo do VO passado. Para cada tipo de attirbuto e BISMetaAnnotation este método retornará um tipo de campo. <br>
+   * Este método cria um campo conforme o tipo do attributo do VO passado. Para cada tipo de attirbuto e RFWMetaAnnotation este método retornará um tipo de campo. <br>
    * ATENÇÃO: Os métodos com o prefixo "createField_" não registra o campo no UIFactory, nem realiza nenhum tipo de BIND, apenas cria o Field e o configura conforme as definições do atributo do VO.
    *
    * @param voClass Classe do VO para o qual estamos montando o campo.
@@ -1564,8 +1580,8 @@ public class UIFactory<VO extends RFWVO> {
    *          Por exemplo, o ItemVO tem um relaiconamento com o ItemTypeVO e utiliza este método paracriar o campo. O valor passado aqui deve ser o 'name' ou ItemTypeVO_.vo().name(), e não o caminho a partir do ItemVO, utilizado para gerar o campo.
    * @param filterAttributes Lista de atributos (ou atributo único) que serão utilizados para realizar o filtro do componente. Se passado nulo ou vazio, será utilizado o atributo passado em captionAttribute.
    * @param resolutionOverride Quando passado, nos campos da date/periodo sobrepõe a precisão de data/hora definido no RFWMeta para o campo.
-   * @param ignoreTextArea Quando o atributo é do tipo String e o tamanho máximo passa dos 1000 caracteres, o BIS cria por padrão um TextArea ao invés de um TextField. Quando esse atributo for true, o método continuará criando um TextField. Útil quando queremos criar um campo de filtro para o atributo.
-   * @param df DataFormatter a ser utilizado no campo. Se for passado NULL o método criará o DataFormatter Padrão conforme a BISMetaAnnotation do atributo.
+   * @param ignoreTextArea Quando o atributo é do tipo String e o tamanho máximo passa dos 1000 caracteres, o RFW cria por padrão um TextArea ao invés de um TextField. Quando esse atributo for true, o método continuará criando um TextField. Útil quando queremos criar um campo de filtro para o atributo.
+   * @param df DataFormatter a ser utilizado no campo. Se for passado NULL o método criará o DataFormatter Padrão conforme a RFWMetaAnnotation do atributo.
    * @param dbProvider Provedor de dados para que o componente consiga acessar os outros objetos do sistema.
    * @return Componente criado conforme o tipo do atributo. TextFields para Strings, Combos para Enums, etc.
    * @throws RFWException
@@ -1614,16 +1630,16 @@ public class UIFactory<VO extends RFWVO> {
       c = (HasValue<FIELDTYPE>) createField_TextField(voClass, attribute, helpPopupKey, forceRequired, fieldAlignment, masked, df);
     } else if (ann instanceof RFWMetaStringPhoneField) {
       c = (HasValue<FIELDTYPE>) createField_TextField(voClass, attribute, helpPopupKey, forceRequired, fieldAlignment, masked, df);
-      // c = (HasValue<FIELDTYPE>) createField_BISPhoneField(voClass, attribute, helpPopupKey, forceRequired);
+      // c = (HasValue<FIELDTYPE>) createField_RFWPhoneField(voClass, attribute, helpPopupKey, forceRequired);
     } else if (ann instanceof RFWMetaDateField) {
       c = (HasValue<FIELDTYPE>) createField_DateTime(voClass, attribute, helpPopupKey, forceRequired, fieldAlignment, resolutionOverride);
     } else if (ann instanceof RFWMetaRelationshipField) {
       // Quando é uma meta de relacionamento, precisamos destinguir o tipo de relacionamento para saber se sabemos que campo criar
       final Class<VO> type = (Class<VO>) RUReflex.getPropertyTransparentType(voClass, attribute);
       if (RFWVO.class.isAssignableFrom(type)) {
-        c = (HasValue<FIELDTYPE>) createField_ComboBox_BISVO(voClass, attribute, helpPopupKey, forceRequired, type, null, null, captionAttribute, filterAttributes, null, dbProvider);
+        c = (HasValue<FIELDTYPE>) createField_ComboBox_RFWVO(voClass, attribute, helpPopupKey, forceRequired, type, null, null, captionAttribute, filterAttributes, null, dbProvider);
       } else {
-        throw new RFWCriticalException("RFWMeta '${2}' não suportada pelo BISUIFactory: atributo '${0}' da classe '${1}'.", new String[] { attribute, voClass.getCanonicalName(), ann.annotationType().getCanonicalName(), type.getCanonicalName() });
+        throw new RFWCriticalException("RFWMeta '${2}' não suportada pelo UIFactory: atributo '${0}' da classe '${1}'.", new String[] { attribute, voClass.getCanonicalName(), ann.annotationType().getCanonicalName(), type.getCanonicalName() });
       }
     } else if (ann instanceof RFWMetaCollectionField) {
       c = (HasValue<FIELDTYPE>) createField_RFWTagsSelector(voClass, attribute, helpPopupKey, forceRequired);
@@ -1633,14 +1649,14 @@ public class UIFactory<VO extends RFWVO> {
     } else if (ann instanceof RFWMetaGenericField) {
       final Class<?> type = RUReflex.getPropertyTransparentType(voClass, attribute);
       if (MeasureUnit.class.isAssignableFrom(type)) {
-        c = (HasValue<FIELDTYPE>) createField_BISComboMeasureUnit(voClass, attribute, helpPopupKey, forceRequired);
+        c = (HasValue<FIELDTYPE>) createField_RFWComboMeasureUnit(voClass, attribute, helpPopupKey, forceRequired);
       } else {
-        throw new RFWCriticalException("RFWMeta '${2}' não suportada pelo BISUIFactory: atributo '${0}' da classe '${1}'.", new String[] { attribute, voClass.getCanonicalName(), ann.annotationType().getSimpleName() });
+        throw new RFWCriticalException("RFWMeta '${2}' não suportada pelo UIFactory: atributo '${0}' da classe '${1}'.", new String[] { attribute, voClass.getCanonicalName(), ann.annotationType().getSimpleName() });
       }
     } else if (ann instanceof RFWMetaBooleanField) {
       c = (HasValue<FIELDTYPE>) createField_CheckBoxOrRadioGroup(voClass, attribute, helpPopupKey, forceRequired, fieldAlignment);
     } else {
-      throw new RFWCriticalException("RFWMeta '${2}' não suportada pelo BISUIFactory: atributo '${0}' da classe '${1}'.", new String[] { attribute, voClass.getCanonicalName(), ann.annotationType().getSimpleName() });
+      throw new RFWCriticalException("RFWMeta '${2}' não suportada pelo UIFactory: atributo '${0}' da classe '${1}'.", new String[] { attribute, voClass.getCanonicalName(), ann.annotationType().getSimpleName() });
     }
     // Se não temos um campo, EXCEPTION NELES!!!
     if (c == null) throw new RFWCriticalException("O UIFactory falhou ao criar um campo para o atributo '${0}' presente no VO '${1}'.", new String[] { attribute, voClass.getCanonicalName() });
@@ -1756,7 +1772,7 @@ public class UIFactory<VO extends RFWVO> {
         return opt;
       }
     } else {
-      throw new RFWCriticalException("RFWMeta '${2}' não suportada pelo BISUIFactory: atributo '${0}' da classe '${1}'.", new String[] { attribute, voClass.getCanonicalName(), ann.annotationType().getSimpleName() });
+      throw new RFWCriticalException("RFWMeta '${2}' não suportada pelo UIFactory: atributo '${0}' da classe '${1}'.", new String[] { attribute, voClass.getCanonicalName(), ann.annotationType().getSimpleName() });
     }
   }
 
@@ -1771,7 +1787,7 @@ public class UIFactory<VO extends RFWVO> {
    * @return Component criado conforme atributos passados
    * @throws RFWException
    */
-  public static <VO extends RFWVO> RFWComboBoxMeasureUnit createField_BISComboMeasureUnit(Class<VO> voClass, String attribute, String helpPopupKey, Boolean forceRequired) throws RFWException {
+  public static <VO extends RFWVO> RFWComboBoxMeasureUnit createField_RFWComboMeasureUnit(Class<VO> voClass, String attribute, String helpPopupKey, Boolean forceRequired) throws RFWException {
     Annotation ann = RUReflex.getRFWMetaAnnotation(voClass, attribute);
     if (ann == null) throw new RFWCriticalException("Impossível gerar um campo para o atributo '${0}' da classe '${1}'. O atributo não tem uma RFWMeta Annotation!", new String[] { attribute, voClass.getCanonicalName() });
 
@@ -1790,10 +1806,10 @@ public class UIFactory<VO extends RFWVO> {
         if (helpPopupKey != null) cb.setDescription(createHelpDescription(helpPopupKey), ContentMode.HTML);
         return cb;
       } else {
-        throw new RFWCriticalException("RFWMeta '${2}' não suportada pelo BISUIFactory: atributo '${0}' da classe '${1}'.", new String[] { attribute, voClass.getCanonicalName(), ann.annotationType().getCanonicalName(), type.getCanonicalName() });
+        throw new RFWCriticalException("RFWMeta '${2}' não suportada pelo UIFactory: atributo '${0}' da classe '${1}'.", new String[] { attribute, voClass.getCanonicalName(), ann.annotationType().getCanonicalName(), type.getCanonicalName() });
       }
     } else {
-      throw new RFWCriticalException("RFWMeta '${2}' não suportada pelo BISUIFactory: atributo '${0}' da classe '${1}'.", new String[] { attribute, voClass.getCanonicalName(), ann.annotationType().getSimpleName() });
+      throw new RFWCriticalException("RFWMeta '${2}' não suportada pelo UIFactory: atributo '${0}' da classe '${1}'.", new String[] { attribute, voClass.getCanonicalName(), ann.annotationType().getSimpleName() });
     }
   }
 
@@ -1839,10 +1855,10 @@ public class UIFactory<VO extends RFWVO> {
         });
         return cb;
       } else {
-        throw new RFWCriticalException("RFWMeta '${2}' não suportada pelo BISUIFactory: atributo '${0}' da classe '${1}'.", new String[] { attribute, voClass.getCanonicalName(), ann.annotationType().getCanonicalName(), type.getCanonicalName() });
+        throw new RFWCriticalException("RFWMeta '${2}' não suportada pelo UIFactory: atributo '${0}' da classe '${1}'.", new String[] { attribute, voClass.getCanonicalName(), ann.annotationType().getCanonicalName(), type.getCanonicalName() });
       }
     } else {
-      throw new RFWCriticalException("RFWMeta '${2}' não suportada pelo BISUIFactory: atributo '${0}' da classe '${1}'.", new String[] { attribute, voClass.getCanonicalName(), ann.annotationType().getSimpleName() });
+      throw new RFWCriticalException("RFWMeta '${2}' não suportada pelo UIFactory: atributo '${0}' da classe '${1}'.", new String[] { attribute, voClass.getCanonicalName(), ann.annotationType().getSimpleName() });
     }
   }
 
@@ -1890,7 +1906,7 @@ public class UIFactory<VO extends RFWVO> {
         throw new RFWCriticalException("O UIFactory não sabe que campo criar para o atributo '${0}' da classe '${1}', pois está anotado com a RFWMetaCollectionField e tem uma coleção do tipo '${2}'.", new String[] { attribute, voClass.getCanonicalName(), type.getCanonicalName() });
       }
     } else {
-      throw new RFWCriticalException("RFWMeta '${2}' não suportada pelo BISUIFactory: atributo '${0}' da classe '${1}'.", new String[] { attribute, voClass.getCanonicalName(), ann.annotationType().getSimpleName() });
+      throw new RFWCriticalException("RFWMeta '${2}' não suportada pelo UIFactory: atributo '${0}' da classe '${1}'.", new String[] { attribute, voClass.getCanonicalName(), ann.annotationType().getSimpleName() });
     }
   }
 
@@ -1954,7 +1970,7 @@ public class UIFactory<VO extends RFWVO> {
         throw new RFWCriticalException("O UIFactory não sabe que campo criar para o atributo '${0}' da classe '${1}', pois está anotado com a RFWMetaCollectionField e tem uma coleção do tipo '${2}'.", new String[] { attribute, voClass.getCanonicalName(), type.getCanonicalName() });
       }
     } else {
-      throw new RFWCriticalException("RFWMeta '${2}' não suportada pelo BISUIFactory: atributo '${0}' da classe '${1}'.", new String[] { attribute, voClass.getCanonicalName(), ann.annotationType().getSimpleName() });
+      throw new RFWCriticalException("RFWMeta '${2}' não suportada pelo UIFactory: atributo '${0}' da classe '${1}'.", new String[] { attribute, voClass.getCanonicalName(), ann.annotationType().getSimpleName() });
     }
   }
 
@@ -1974,11 +1990,11 @@ public class UIFactory<VO extends RFWVO> {
    * @param filterAttributes Lista de atributos (ou atributo único) que serão utilizados para realizar o filtro do componente. Se passado nulo ou vazio, será utilizado o atributo passado em captionAttribute.
    * @param provider Define um Provider pronto para ser utilizado no combo. Caso seja passado nulo, um provider padrão é criado a partir dos argumentos providerClass, orderBy e Attributes.
    * @param dbProvider Provedor de dados para que o componente consiga acessar os outros objetos do sistema.
-   * @return BISComboBox com generics adequado.
+   * @return RFWComboBox com generics adequado.
    * @throws RFWException
    */
   @SuppressWarnings({ "unchecked", "rawtypes" })
-  public static <VO extends RFWVO, VALUE extends RFWVO> ComboBox<VALUE> createField_ComboBox_BISVO(Class<VO> voClass, String attribute, String helpPopupKey, Boolean forceRequired, Class<VALUE> providerClass, RFWOrderBy orderBy, String[] attributes, String captionAttribute, List<String> filterAttributes, UIDataProvider<VALUE> provider, RFWDBProvider dbProvider) throws RFWException {
+  public static <VO extends RFWVO, VALUE extends RFWVO> ComboBox<VALUE> createField_ComboBox_RFWVO(Class<VO> voClass, String attribute, String helpPopupKey, Boolean forceRequired, Class<VALUE> providerClass, RFWOrderBy orderBy, String[] attributes, String captionAttribute, List<String> filterAttributes, UIDataProvider<VALUE> provider, RFWDBProvider dbProvider) throws RFWException {
     Annotation ann = RUReflex.getRFWMetaAnnotation(voClass, attribute);
     if (ann == null) throw new RFWCriticalException("Impossível gerar um campo para o atributo '${0}' da classe '${1}'. O atributo não tem uma RFWMeta Annotation!", new String[] { attribute, voClass.getCanonicalName() });
 
@@ -2014,7 +2030,7 @@ public class UIFactory<VO extends RFWVO> {
       cb.setWidth("100%");
       return cb;
     } else {
-      throw new RFWCriticalException("RFWMeta '${2}' não suportada pelo BISUIFactory: atributo '${0}' da classe '${1}'.", new String[] { attribute, voClass.getCanonicalName(), ann.annotationType().getSimpleName() });
+      throw new RFWCriticalException("RFWMeta '${2}' não suportada pelo UIFactory: atributo '${0}' da classe '${1}'.", new String[] { attribute, voClass.getCanonicalName(), ann.annotationType().getSimpleName() });
     }
   }
 
@@ -2081,7 +2097,7 @@ public class UIFactory<VO extends RFWVO> {
       field.setRequiredIndicatorVisible(forceRequired);
       return field;
     } else {
-      throw new RFWCriticalException("RFWMeta '${2}' não suportada pelo BISUIFactory: atributo '${0}' da classe '${1}'.", new String[] { attribute, voClass.getCanonicalName(), ann.annotationType().getSimpleName() });
+      throw new RFWCriticalException("RFWMeta '${2}' não suportada pelo UIFactory: atributo '${0}' da classe '${1}'.", new String[] { attribute, voClass.getCanonicalName(), ann.annotationType().getSimpleName() });
     }
   }
 
@@ -2125,7 +2141,7 @@ public class UIFactory<VO extends RFWVO> {
       cb.setWidth("100%");
       return cb;
     } else {
-      throw new RFWCriticalException("RFWMeta '${2}' não suportada pelo BISUIFactory: atributo '${0}' da classe '${1}'.", new String[] { attribute, voClass.getCanonicalName(), ann.annotationType().getSimpleName() });
+      throw new RFWCriticalException("RFWMeta '${2}' não suportada pelo UIFactory: atributo '${0}' da classe '${1}'.", new String[] { attribute, voClass.getCanonicalName(), ann.annotationType().getSimpleName() });
     }
   }
 
@@ -2184,7 +2200,7 @@ public class UIFactory<VO extends RFWVO> {
    * @param forceRequired Se passado nulo será utilizado a definição da Annotation. Se definido TRUE o campo será deifnido como brigatório, se definido como FALSE o campo será definido como opcional.
    * @param fieldAlignment Alinhamendo do conteúdo co campo. Suportado até o momento apenas em TextFields.
    * @param masked Utilizável quando é um campo de Texto, {@link RFWMetaStringField}, cria um campo de senha, cujo conteúdo fica oculto (PasswordField). Valor Padrão = FALSE.
-   * @param df DataFormatter a ser utilizado no campo. Se for passado NULL o método criará o DataFormatter Padrão conforme a BISMetaAnnotation do atributo.
+   * @param df DataFormatter a ser utilizado no campo. Se for passado NULL o método criará o DataFormatter Padrão conforme a RFWMetaAnnotation do atributo.
    *
    * @return Component criado conforme atributos passados
    * @throws RFWException Em caso de erro, ou caso o tipo de annonation não seja suportado por este método
@@ -2315,7 +2331,7 @@ public class UIFactory<VO extends RFWVO> {
    * @param helpPopupKey Chave da mensagem de ajuda. NULL caso não tenha.
    * @param forceRequired Se passado nulo será utilizado a definição da Annotation. Se definido TRUE o campo será deifnido como brigatório, se definido como FALSE o campo será definido como opcional.
    * @param fieldAlignment Alinhamendo do conteúdo co campo. Suportado até o momento apenas em TextFields.
-   * @param df DataFormatter a ser utilizado no campo. Se for passado NULL o método criará o DataFormatter Padrão conforme a BISMetaAnnotation do atributo.
+   * @param df DataFormatter a ser utilizado no campo. Se for passado NULL o método criará o DataFormatter Padrão conforme a RFWMetaAnnotation do atributo.
    *
    * @return Component criado conforme atributos passados
    * @throws RFWException Em caso de erro, ou caso o tipo de annonation não seja suportado por este método
@@ -2355,7 +2371,7 @@ public class UIFactory<VO extends RFWVO> {
       if (df != null && df.getMaxLenght() > 0) t.setMaxLength(df.getMaxLenght());
       t.setWidth("100%");
     } else {
-      throw new RFWCriticalException("RFWMeta '${2}' não suportada pelo BISUIFactory: atributo '${0}' da classe '${1}'.", new String[] { attribute, voClass.getCanonicalName(), ann.annotationType().getSimpleName() });
+      throw new RFWCriticalException("RFWMeta '${2}' não suportada pelo UIFactory: atributo '${0}' da classe '${1}'.", new String[] { attribute, voClass.getCanonicalName(), ann.annotationType().getSimpleName() });
     }
     return t;
   }
@@ -2377,7 +2393,7 @@ public class UIFactory<VO extends RFWVO> {
   }
 
   /**
-   * Este método coloca uma mensagem de ajuda no padrão do BIS em qualquer componente.
+   * Este método coloca uma mensagem de ajuda no padrão do RFW em qualquer componente.
    *
    * @param tab Componente que deve receber a mensagem de ajuda (popup help description).
    * @param helpKey Conteúdo da Mensagem de ajuda. Se estiver no formato "HLP\\d{6,}" o conteúdo será procurado como chave no Bundle. Se nada for encontrado a chave é colocada na mensagem de HELP.
@@ -2388,7 +2404,7 @@ public class UIFactory<VO extends RFWVO> {
   }
 
   /**
-   * Este método coloca uma mensagem de ajuda no padrão do BIS em qualquer componente.
+   * Este método coloca uma mensagem de ajuda no padrão do RFW em qualquer componente.
    *
    * @param component Componente que deve receber a mensagem de ajuda (popup help description).
    * @param helpKey Conteúdo da Mensagem de ajuda. Se estiver no formato "HLP\\d{6,}" o conteúdo será procurado como chave no Bundle. Se nada for encontrado a chave é colocada na mensagem de HELP.
@@ -2437,7 +2453,7 @@ public class UIFactory<VO extends RFWVO> {
   }
 
   /**
-   * Este método o conteúdo do painel de busca utilizado no BIS em um GridLayout.<br>
+   * Este método o conteúdo do painel de busca utilizado no RFW em um GridLayout.<br>
    * A largura total será dividida em colunas de 100px, e os campos serão alocados de acordo com sua largura mínima até que se acabe os componentes.<br>
    * Ao chegar no final, se um componente não couber, tentaremos o próximo e assim por diante até que se acabem os componentes. Ao acabar os componentes, vemos o espaço que não foi utilizado e vamos espandindo os componentes até que os que entraram na tela ocupem o espaço todo disponível.
    *
@@ -2853,7 +2869,7 @@ public class UIFactory<VO extends RFWVO> {
    */
   private Grid<GVO<VO>> createGridForMOImp(SelectionMode selectionMode, RFWOrderBy orderBy, String[] attributes, RFWGridDoubleClickListener<GVO<VO>> doubleClickListener, UIGridDataProvider<VO> provider, Integer limitResults, RFWDBProvider dbProvider) throws RFWException {
     if (selectionMode == null) selectionMode = SelectionMode.MULTI;
-    if (provider == null) provider = new UIGridDataProvider<>(this.voClass, this.createBISMO(), orderBy, attributes, dbProvider);
+    if (provider == null) provider = new UIGridDataProvider<>(this.voClass, this.createRFWMO(), orderBy, attributes, dbProvider);
 
     if (limitResults != null) provider.setLimitResults(limitResults);
 
@@ -2899,7 +2915,7 @@ public class UIFactory<VO extends RFWVO> {
   }
 
   /**
-   * Método de configuração do Grid/TreeGrid usada por padrão no BIS. Define as configurações que são utilizadas por padrão no BIS. Abstraímos o método de configuração da Grid para que tenhamos apenas um só, assim as definições comuns para a Grid e a TreeGrid ficam centralizadas.
+   * Método de configuração do Grid/TreeGrid usada por padrão no RFW. Define as configurações que são utilizadas por padrão no RFW. Abstraímos o método de configuração da Grid para que tenhamos apenas um só, assim as definições comuns para a Grid e a TreeGrid ficam centralizadas.
    *
    * @param grid Grid/TreeGrid a ser configurada
    * @param selectionMode Define o modo de seleção do Grid
@@ -3018,7 +3034,7 @@ public class UIFactory<VO extends RFWVO> {
   /**
    * Cria Colunas no Grid salvo para ser utilizado com os campos de MO já configurando os conversores de acordo com o tipo de informação do Bean.
    *
-   * @param attribute Coluna (propriedade do VO) a ser adicionada no grid. Aceita atributos "nestead" separados por '.'. Não acieta a notação do bis para listas ou hash com '[]'.
+   * @param attribute Coluna (propriedade do VO) a ser adicionada no grid. Aceita atributos "nestead" separados por '.'. Não acieta a notação do rfw para listas ou hash com '[]'.
    * @return Coluna criada
    * @throws RFWException
    */
@@ -3029,7 +3045,7 @@ public class UIFactory<VO extends RFWVO> {
   /**
    * Cria Colunas no Grid salvo para ser utilizado com os campos de MO já configurando os conversores de acordo com o tipo de informação do Bean.
    *
-   * @param attribute Coluna (propriedade do VO) a ser adicionada no grid. Aceita atributos "nestead" separados por '.'. Não acieta a notação do bis para listas ou hash com '[]'.
+   * @param attribute Coluna (propriedade do VO) a ser adicionada no grid. Aceita atributos "nestead" separados por '.'. Não acieta a notação do rfw para listas ou hash com '[]'.
    * @param fieldAlignment Define o alinhamento da coluna. Se passado NULL, a coluna será alinhada a Esquerda (Alinhamento padrão do GRID).
    * @return Coluna criada
    * @throws RFWException
@@ -3041,8 +3057,8 @@ public class UIFactory<VO extends RFWVO> {
   /**
    * Cria Colunas no Grid salvo para ser utilizado com os campos de MO já configurando os conversores de acordo com o tipo de informação do Bean.
    *
-   * @param attribute Coluna (propriedade do VO) a ser adicionada no grid. Aceita atributos "nestead" separados por '.'. Não acieta a notação do bis para listas ou hash com '[]'.
-   * @param df DataFormatter a ser utilizado no campo. Se for passado NULL o método criará o DataFormatter Padrão conforme a BISMetaAnnotation do atributo.
+   * @param attribute Coluna (propriedade do VO) a ser adicionada no grid. Aceita atributos "nestead" separados por '.'. Não acieta a notação do rfw para listas ou hash com '[]'.
+   * @param df DataFormatter a ser utilizado no campo. Se for passado NULL o método criará o DataFormatter Padrão conforme a RFWMetaAnnotation do atributo.
    * @param fieldAlignment Define o alinhamento da coluna. Se passado NULL, a coluna será alinhada a Esquerda (Alinhamento padrão do GRID).
    * @return Coluna criada
    * @throws RFWException
@@ -3054,8 +3070,8 @@ public class UIFactory<VO extends RFWVO> {
   /**
    * Cria Colunas no Grid salvo para ser utilizado com os campos de MO já configurando os conversores de acordo com o tipo de informação do Bean.
    *
-   * @param attribute Coluna (propriedade do VO) a ser adicionada no grid. Aceita atributos "nestead" separados por '.'. Não acieta a notação do bis para listas ou hash com '[]'.
-   * @param df DataFormatter a ser utilizado no campo. Se for passado NULL o método criará o DataFormatter Padrão conforme a BISMetaAnnotation do atributo.
+   * @param attribute Coluna (propriedade do VO) a ser adicionada no grid. Aceita atributos "nestead" separados por '.'. Não acieta a notação do rfw para listas ou hash com '[]'.
+   * @param df DataFormatter a ser utilizado no campo. Se for passado NULL o método criará o DataFormatter Padrão conforme a RFWMetaAnnotation do atributo.
    * @return Coluna criada
    * @throws RFWException
    */
@@ -3066,7 +3082,7 @@ public class UIFactory<VO extends RFWVO> {
   /**
    * Cria Colunas no Grid salvo para ser utilizado com os campos de MO já configurando os conversores de acordo com o tipo de informação do Bean.
    *
-   * @param attribute Coluna (propriedade do VO) a ser adicionada no grid. Aceita atributos "nestead" separados por '.'. Não acieta a notação do bis para listas ou hash com '[]'.
+   * @param attribute Coluna (propriedade do VO) a ser adicionada no grid. Aceita atributos "nestead" separados por '.'. Não acieta a notação do rfw para listas ou hash com '[]'.
    * @param hidable Define se é possível "esconder" a coluna (true) ou não (false).
    * @param hidden Define se a coluna deve estar escondida/collapsed (true), ou não (false).
    * @return Coluna criada
@@ -3079,7 +3095,7 @@ public class UIFactory<VO extends RFWVO> {
   /**
    * Cria Colunas no Grid salvo para ser utilizado com os campos de MO já configurando os conversores de acordo com o tipo de informação do Bean.
    *
-   * @param attribute Coluna (propriedade do VO) a ser adicionada no grid. Aceita atributos "nestead" separados por '.'. Não acieta a notação do bis para listas ou hash com '[]'.
+   * @param attribute Coluna (propriedade do VO) a ser adicionada no grid. Aceita atributos "nestead" separados por '.'. Não acieta a notação do rfw para listas ou hash com '[]'.
    * @param hidable Define se é possível "esconder" a coluna (true) ou não (false).
    * @param hidden Define se a coluna deve estar escondida/collapsed (true), ou não (false).
    * @param fieldAlignment Define o alinhamento da coluna. Se passado NULL, a coluna será alinhada a Esquerda (Alinhamento padrão do GRID).
@@ -3093,11 +3109,11 @@ public class UIFactory<VO extends RFWVO> {
   /**
    * Cria Colunas no Grid salvo para ser utilizado com os campos de MO já configurando os conversores de acordo com o tipo de informação do Bean.
    *
-   * @param attribute Coluna (propriedade do VO) a ser adicionada no grid. Aceita atributos "nestead" separados por '.'. Não acieta a notação do bis para listas ou hash com '[]'.
+   * @param attribute Coluna (propriedade do VO) a ser adicionada no grid. Aceita atributos "nestead" separados por '.'. Não acieta a notação do rfw para listas ou hash com '[]'.
    * @param hidable Define se é possível "esconder" a coluna (true) ou não (false).
    * @param hidden Define se a coluna deve estar escondida/collapsed (true), ou não (false).
    * @param fieldAlignment Define o alinhamento da coluna. Se passado NULL, a coluna será alinhada a Esquerda (Alinhamento padrão do GRID).
-   * @param df DataFormatter a ser utilizado no campo. Se for passado NULL o método criará o DataFormatter Padrão conforme a BISMetaAnnotation do atributo.
+   * @param df DataFormatter a ser utilizado no campo. Se for passado NULL o método criará o DataFormatter Padrão conforme a RFWMetaAnnotation do atributo.
    * @return Coluna criada
    * @throws RFWException
    */
@@ -3108,7 +3124,7 @@ public class UIFactory<VO extends RFWVO> {
   /**
    * Cria Coluna em um Grid que utiliza o {@link GVO} já configurando os conversores de acordo com o tipo de informação do Bean.
    *
-   * @param attribute Coluna (propriedade do VO) a ser adicionada no grid. Aceita atributos "nestead" separados por '.'. Não acieta a notação do bis para listas ou hash com '[]'.
+   * @param attribute Coluna (propriedade do VO) a ser adicionada no grid. Aceita atributos "nestead" separados por '.'. Não acieta a notação do rfw para listas ou hash com '[]'.
    * @return Coluna criada
    * @throws RFWException
    */
@@ -3119,7 +3135,7 @@ public class UIFactory<VO extends RFWVO> {
   /**
    * Cria Coluna em um Grid qualquer já configurando os conversores de acordo com o tipo de informação do Bean.
    *
-   * @param attribute Coluna (propriedade do VO) a ser adicionada no grid. Aceita atributos "nestead" separados por '.'. Não acieta a notação do bis para listas ou hash com '[]'.
+   * @param attribute Coluna (propriedade do VO) a ser adicionada no grid. Aceita atributos "nestead" separados por '.'. Não acieta a notação do rfw para listas ou hash com '[]'.
    * @param hidable Define se é possível "esconder" a coluna (true) ou não (false).
    * @param hidden Define se a coluna deve estar escondida/collapsed (true), ou não (false).
    * @return Coluna criada
@@ -3132,10 +3148,10 @@ public class UIFactory<VO extends RFWVO> {
   /**
    * Cria Coluna em um Grid qualquer já configurando os conversores de acordo com o tipo de informação do Bean.
    *
-   * @param attribute Coluna (propriedade do VO) a ser adicionada no grid. Aceita atributos "nestead" separados por '.'. Não acieta a notação do bis para listas ou hash com '[]'.
+   * @param attribute Coluna (propriedade do VO) a ser adicionada no grid. Aceita atributos "nestead" separados por '.'. Não acieta a notação do rfw para listas ou hash com '[]'.
    * @param hidable Define se é possível "esconder" a coluna (true) ou não (false).
    * @param hidden Define se a coluna deve estar escondida/collapsed (true), ou não (false).
-   * @param df DataFormatter a ser utilizado no campo. Se for passado NULL o método criará o DataFormatter Padrão conforme a BISMetaAnnotation do atributo.
+   * @param df DataFormatter a ser utilizado no campo. Se for passado NULL o método criará o DataFormatter Padrão conforme a RFWMetaAnnotation do atributo.
    * @param fieldAlignment Define o alinhamento da coluna. Se passado NULL, a coluna será alinhada a Esquerda (Alinhamento padrão do GRID).
    * @return Coluna criada
    * @throws RFWException
@@ -3147,7 +3163,7 @@ public class UIFactory<VO extends RFWVO> {
   /**
    * Cria Coluna em um Grid qualquer que não utilize a classe GVO, já configurando os conversores de acordo com o tipo de informação do Bean.
    *
-   * @param attribute Coluna (propriedade do VO) a ser adicionada no grid. Aceita atributos "nestead" separados por '.'. Não acieta a notação do bis para listas ou hash com '[]'.
+   * @param attribute Coluna (propriedade do VO) a ser adicionada no grid. Aceita atributos "nestead" separados por '.'. Não acieta a notação do rfw para listas ou hash com '[]'.
    * @return Coluna criada
    * @throws RFWException
    */
@@ -3158,7 +3174,7 @@ public class UIFactory<VO extends RFWVO> {
   /**
    * Cria Coluna em um Grid qualquer que não utilize a classe GVO, já configurando os conversores de acordo com o tipo de informação do Bean.
    *
-   * @param attribute Coluna (propriedade do VO) a ser adicionada no grid. Aceita atributos "nestead" separados por '.'. Não acieta a notação do bis para listas ou hash com '[]'.
+   * @param attribute Coluna (propriedade do VO) a ser adicionada no grid. Aceita atributos "nestead" separados por '.'. Não acieta a notação do rfw para listas ou hash com '[]'.
    * @param fieldAlignment Define o alinhamento da coluna. Se passado NULL, a coluna será alinhada a Esquerda (Alinhamento padrão do GRID).
    * @return Coluna criada
    * @throws RFWException
@@ -3172,10 +3188,10 @@ public class UIFactory<VO extends RFWVO> {
    *
    * @param voClass Class do VO que é objeto de listagem do GRID
    * @param grid Grid criado em que será adicionado a coluna editável.
-   * @param attribute Coluna (propriedade do VO) a ser adicionada no grid. Aceita atributos "nestead" separados por '.'. Não acieta a notação do bis para listas ou hash com '[]'.
+   * @param attribute Coluna (propriedade do VO) a ser adicionada no grid. Aceita atributos "nestead" separados por '.'. Não acieta a notação do rfw para listas ou hash com '[]'.
    * @param hidable Define se é possível "esconder" a coluna (true) ou não (false).
    * @param hidden Define se a coluna deve estar escondida/collapsed (true), ou não (false).
-   * @param df DataFormatter a ser utilizado no campo. Se for passado NULL o método criará o DataFormatter Padrão conforme a BISMetaAnnotation do atributo.
+   * @param df DataFormatter a ser utilizado no campo. Se for passado NULL o método criará o DataFormatter Padrão conforme a RFWMetaAnnotation do atributo.
    * @param fieldAlignment Define o alinhamento da coluna. Se passado NULL, a coluna será alinhada a Esquerda (Alinhamento padrão do GRID).
    * @return Coluna criada
    * @throws RFWException
@@ -3189,10 +3205,10 @@ public class UIFactory<VO extends RFWVO> {
    *
    * @param voClass Class do VO que é objeto de listagem do GRID
    * @param grid Grid criado em que será adicionado a coluna editável.
-   * @param attribute Coluna (propriedade do VO) a ser adicionada no grid. Aceita atributos "nestead" separados por '.'. Não acieta a notação do bis para listas ou hash com '[]'.
+   * @param attribute Coluna (propriedade do VO) a ser adicionada no grid. Aceita atributos "nestead" separados por '.'. Não acieta a notação do rfw para listas ou hash com '[]'.
    * @param hidable Define se é possível "esconder" a coluna (true) ou não (false).
    * @param hidden Define se a coluna deve estar escondida/collapsed (true), ou não (false).
-   * @param df DataFormatter a ser utilizado no campo. Se for passado NULL o método criará o DataFormatter Padrão conforme a BISMetaAnnotation do atributo.
+   * @param df DataFormatter a ser utilizado no campo. Se for passado NULL o método criará o DataFormatter Padrão conforme a RFWMetaAnnotation do atributo.
    * @param fieldAlignment Define o alinhamento da coluna. Se passado NULL, a coluna será alinhada a Esquerda (Alinhamento padrão do GRID).
    * @return Coluna criada
    * @throws RFWException
@@ -3206,10 +3222,10 @@ public class UIFactory<VO extends RFWVO> {
    *
    * @param voClass Class do VO que é objeto de listagem do GRID
    * @param grid Grid criado em que será adicionado a coluna editável.
-   * @param attribute Coluna (propriedade do VO) a ser adicionada no grid. Aceita atributos "nestead" separados por '.'. Não acieta a notação do bis para listas ou hash com '[]'.
+   * @param attribute Coluna (propriedade do VO) a ser adicionada no grid. Aceita atributos "nestead" separados por '.'. Não acieta a notação do rfw para listas ou hash com '[]'.
    * @param hidable Define se é possível "esconder" a coluna (true) ou não (false).
    * @param hidden Define se a coluna deve estar escondida/collapsed (true), ou não (false).
-   * @param df DataFormatter a ser utilizado no campo. Se for passado NULL o método criará o DataFormatter Padrão conforme a BISMetaAnnotation do atributo.
+   * @param df DataFormatter a ser utilizado no campo. Se for passado NULL o método criará o DataFormatter Padrão conforme a RFWMetaAnnotation do atributo.
    * @param fieldAlignment Define o alinhamento da coluna. Se passado NULL, a coluna será alinhada a Esquerda (Alinhamento padrão do GRID).
    * @return Coluna criada
    * @throws RFWException
@@ -3248,7 +3264,7 @@ public class UIFactory<VO extends RFWVO> {
     column.setHidden(hidden);
     column.setId(attribute); // Colocamos o nome da coluna como ID para conseguir recuperar essa coluna posteriormente, como no método de adicionar rodapé
 
-    if (df == null) df = getDataFormatterByBISMetaAnnotation(voClass, cleanAttribute);
+    if (df == null) df = getDataFormatterByRFWMetaAnnotation(voClass, cleanAttribute);
     if (df != null) {
       final RFWDataFormatter<Object, Object> dff = (RFWDataFormatter<Object, Object>) df;
       column.setRenderer(value -> {
@@ -3327,7 +3343,7 @@ public class UIFactory<VO extends RFWVO> {
    *
    * @param voClass Class do VO que é objeto de listagem do GRID
    * @param grid Grid criado em que será adicionado a coluna editável.
-   * @param attribute Coluna (propriedade do VO) a ser adicionada no grid. Aceita atributos "nestead" separados por '.'. Não acieta a notação do bis para listas ou hash com '[]'.
+   * @param attribute Coluna (propriedade do VO) a ser adicionada no grid. Aceita atributos "nestead" separados por '.'. Não acieta a notação do rfw para listas ou hash com '[]'.
    * @return coluna adicionada do GRID
    * @throws RFWException
    */
@@ -3341,7 +3357,7 @@ public class UIFactory<VO extends RFWVO> {
    *
    * @param voClass Class do VO que é objeto de listagem do GRID
    * @param grid Grid criado em que será adicionado a coluna editável.
-   * @param attribute Coluna (propriedade do VO) a ser adicionada no grid. Aceita atributos "nestead" separados por '.'. Não acieta a notação do bis para listas ou hash com '[]'.
+   * @param attribute Coluna (propriedade do VO) a ser adicionada no grid. Aceita atributos "nestead" separados por '.'. Não acieta a notação do rfw para listas ou hash com '[]'.
    * @param fieldAlignment Define o alinhamento da coluna. Se passado NULL, a coluna será alinhada a Esquerda (Alinhamento padrão do GRID).
    *
    * @return coluna adicionada do GRID
@@ -3357,10 +3373,10 @@ public class UIFactory<VO extends RFWVO> {
    *
    * @param voClass Class do VO que é objeto de listagem do GRID
    * @param grid Grid criado em que será adicionado a coluna editável.
-   * @param attribute Coluna (propriedade do VO) a ser adicionada no grid. Aceita atributos "nestead" separados por '.'. Não acieta a notação do bis para listas ou hash com '[]'.
+   * @param attribute Coluna (propriedade do VO) a ser adicionada no grid. Aceita atributos "nestead" separados por '.'. Não acieta a notação do rfw para listas ou hash com '[]'.
    * @param hidable Define se é possível "esconder" a coluna (true) ou não (false).
    * @param hidden Define se a coluna deve estar escondida/collapsed (true), ou não (false).
-   * @param df DataFormatter a ser utilizado no campo. Se for passado NULL o método criará o DataFormatter Padrão conforme a BISMetaAnnotation do atributo.
+   * @param df DataFormatter a ser utilizado no campo. Se for passado NULL o método criará o DataFormatter Padrão conforme a RFWMetaAnnotation do atributo.
    * @param fieldAlignment Define o alinhamento da coluna. Se passado NULL, a coluna será alinhada a Esquerda (Alinhamento padrão do GRID).
    * @param field Permite passar o campo que será utilizado para editar as linhas do Grid. Se for passado null o UIFactory cria um campo com base nos padrões do UIFactory para o atributo do VO.
    * @return coluna adicionada do GRID
@@ -3377,8 +3393,8 @@ public class UIFactory<VO extends RFWVO> {
    * NOTE que o grid só se torna editável se for definido como editável. Para isso utilize o método {@link #setupGridEditor(Grid)}.
    *
    * @param column Coluna do GRID para ser configurada para edição.
-   * @param attribute Coluna (propriedade do VO) a ser adicionada no grid. Aceita atributos "nestead" separados por '.'. Não acieta a notação do bis para listas ou hash com '[]'.
-   * @param df DataFormatter a ser utilizado no campo. Se for passado NULL o método criará o DataFormatter Padrão conforme a BISMetaAnnotation do atributo.
+   * @param attribute Coluna (propriedade do VO) a ser adicionada no grid. Aceita atributos "nestead" separados por '.'. Não acieta a notação do rfw para listas ou hash com '[]'.
+   * @param df DataFormatter a ser utilizado no campo. Se for passado NULL o método criará o DataFormatter Padrão conforme a RFWMetaAnnotation do atributo.
    * @param fieldAlignment Define o alinhamento da coluna. Se passado NULL, a coluna será alinhada a Esquerda (Alinhamento padrão do GRID).
    * @param field Permite passar o campo que será utilizado para editar as linhas do Grid. Se for passado null o UIFactory cria um campo com base nos padrões do UIFactory para o atributo do VO.
    * @param nullValue Valor a ser exibido no componente que representa o valor NULL no VO.
@@ -3386,7 +3402,7 @@ public class UIFactory<VO extends RFWVO> {
    */
   @SuppressWarnings("unchecked")
   public static <VO extends RFWVO, BEAN, FIELDTYPE, BEANTYPE> void setGridColumnEditable(Column<BEAN, Object> column, Class<VO> voClass, Grid<BEAN> grid, final String attribute, RFWDataFormatter<FIELDTYPE, BEANTYPE> df, FieldAlignment fieldAlignment, HasValue<FIELDTYPE> field, FIELDTYPE nullValue) throws RFWException {
-    if (df == null) df = getDataFormatterByBISMetaAnnotation(voClass, attribute);
+    if (df == null) df = getDataFormatterByRFWMetaAnnotation(voClass, attribute);
     if (field == null) field = createField(voClass, attribute, null, null, fieldAlignment, null, null, null, null, null, df, null);
     if (nullValue == null && field instanceof AbstractTextField) {
       nullValue = (FIELDTYPE) ""; // Nos campos do tipo TextField o valor de "nulo" no VO, é representado por uma String vazia no componente
@@ -3422,7 +3438,7 @@ public class UIFactory<VO extends RFWVO> {
   public void applyMOOnGrid(RFWDBProvider dbProvider) throws RFWException {
     if (this.moGrid == null) throw new RFWCriticalException("Não há nenhum GRID para MO criado na UIFactory!");
 
-    RFWMO mo = createBISMO();
+    RFWMO mo = createRFWMO();
 
     final DataProvider<GVO<VO>, ?> provider = this.moGrid.getDataProvider();
     if (provider instanceof UIGridDataProvider) {
@@ -3571,7 +3587,7 @@ public class UIFactory<VO extends RFWVO> {
     final FieldMetaData fieldMetaData = this.moFieldHash.get(attribute);
 
     if (fieldMetaData.component instanceof RFWAssociativeComponent) {
-      // Não é capaz de obter o valor do BISAssociative, emitimos uma exception identificada para que o erro possa ser tratado e reconhecido em outras partes do sistema.
+      // Não é capaz de obter o valor do RFWAssociative, emitimos uma exception identificada para que o erro possa ser tratado e reconhecido em outras partes do sistema.
       throw new RFWCriticalException("BIS10_000013");
     }
     Object value = fieldMetaData.component.getValue();
@@ -3828,12 +3844,12 @@ public class UIFactory<VO extends RFWVO> {
   }
 
   /**
-   * Este método faz o Bind de um Field no VO (assim como o {@link #bind(HasValue, RFWVO, String, RFWDataFormatter, boolean, Object)}, mas extrai todas as informações necessarias para o Bind a partir das BISMetaAnnotation dos atributos do RFWVO.
+   * Este método faz o Bind de um Field no VO (assim como o {@link #bind(HasValue, RFWVO, String, RFWDataFormatter, boolean, Object)}, mas extrai todas as informações necessarias para o Bind a partir das RFWMetaAnnotation dos atributos do RFWVO.
    *
    * @param field Campo/Field que será ligado à propriedade do VO.
    * @param vo VOcom a propriedade a ser conectada.
    * @param propertyPath Propriedade do VO que será anexada ao campo da tela.
-   * @param df DataFormatter a ser utilizado no campo. Se for passado NULL o método criará o DataFormatter Padrão conforme a BISMetaAnnotation do atributo.
+   * @param df DataFormatter a ser utilizado no campo. Se for passado NULL o método criará o DataFormatter Padrão conforme a RFWMetaAnnotation do atributo.
    * @return Objeto do Bind entre o campo e o VO.
    * @throws RFWException
    */
@@ -3842,12 +3858,12 @@ public class UIFactory<VO extends RFWVO> {
   }
 
   /**
-   * Este método faz o Bind de um Field no VO (assim como o {@link #bind(HasValue, RFWVO, String, RFWDataFormatter, boolean, Object)}, mas extrai todas as informações necessarias para o Bind a partir das BISMetaAnnotation dos atributos do RFWVO.
+   * Este método faz o Bind de um Field no VO (assim como o {@link #bind(HasValue, RFWVO, String, RFWDataFormatter, boolean, Object)}, mas extrai todas as informações necessarias para o Bind a partir das RFWMetaAnnotation dos atributos do RFWVO.
    *
    * @param field Campo/Field que será ligado à propriedade do VO.
    * @param vo VOcom a propriedade a ser conectada.
    * @param propertyPath Propriedade do VO que será anexada ao campo da tela.
-   * @param df DataFormatter a ser utilizado no campo. Se for passado NULL o método criará o DataFormatter Padrão conforme a BISMetaAnnotation do atributo.
+   * @param df DataFormatter a ser utilizado no campo. Se for passado NULL o método criará o DataFormatter Padrão conforme a RFWMetaAnnotation do atributo.
    * @param forceRequired Se passado nulo será utilizado a definição da Annotation. Se definido TRUE o campo será deifnido como brigatório, se definido como FALSE o campo será definido como opcional.
    * @return Objeto do Bind entre o campo e o VO.
    * @throws RFWException
@@ -3873,7 +3889,7 @@ public class UIFactory<VO extends RFWVO> {
         // Não permite criar um DataFormatter automaticamente para ComboBox pq ComboBox permite utilizar o objeto diretamente. Casos em que os objetos precisem de dataformatter, este precisa ser definido manualmente. Esta alteração foi feita em 27/10/2021
       } else {
         // Não faz o bind para os tipos de campos acima, pois eles tratam o objeto diretamente
-        df = getDataFormatterByBISMetaAnnotation(voClass, propertyPath);
+        df = getDataFormatterByRFWMetaAnnotation(voClass, propertyPath);
       }
     }
 
@@ -3977,7 +3993,7 @@ public class UIFactory<VO extends RFWVO> {
 
         if (sumWithoutSelection && grid.getSelectedItems().size() == 0) {
           // TODO para sumarizar os itens não selecionados de um GRID precisamos implementar alguma consulta no UIDataProvider para ele buscar direto do banco, já que não temos todos os objetos em memória. E até fazer um cache lá para que ele só atualize o valor quando ouver mudança no Where sendo aplicado.
-          throw new RFWCriticalException("BIS não preparado para realizar a soma dos itens não selecionados!");
+          throw new RFWCriticalException("RFW não preparado para realizar a soma dos itens não selecionados!");
         } else {
           BigDecimal sum = null;
 
@@ -4014,8 +4030,8 @@ public class UIFactory<VO extends RFWVO> {
    *
    * @return the define um RFWMO "base" padrão para ser utilizado no GRID do MO {@link #moGrid}
    */
-  public RFWMO getBaseBISMO() {
-    return baseBISMO;
+  public RFWMO getBaseRFWMO() {
+    return baseRFWMO;
   }
 
   /**
@@ -4024,8 +4040,8 @@ public class UIFactory<VO extends RFWVO> {
    *
    * @param moGridDefaultMO the new define um RFWMO "base" padrão para ser utilizado no GRID do MO {@link #moGrid}
    */
-  public void setBaseBISMO(RFWMO moGridDefaultMO) {
-    this.baseBISMO = moGridDefaultMO;
+  public void setBaseRFWMO(RFWMO moGridDefaultMO) {
+    this.baseRFWMO = moGridDefaultMO;
   }
 
   /**
