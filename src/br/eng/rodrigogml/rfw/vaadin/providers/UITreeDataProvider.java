@@ -14,6 +14,7 @@ import com.vaadin.data.provider.HierarchicalQuery;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWRunTimeException;
 import br.eng.rodrigogml.rfw.kernel.interfaces.RFWDBProvider;
+import br.eng.rodrigogml.rfw.kernel.preprocess.PreProcess;
 import br.eng.rodrigogml.rfw.kernel.utils.RUReflex;
 import br.eng.rodrigogml.rfw.kernel.vo.GVO;
 import br.eng.rodrigogml.rfw.kernel.vo.RFWMO;
@@ -60,8 +61,9 @@ public class UITreeDataProvider<VO extends RFWVO> extends AbstractBackEndHierarc
    * @param voClass Classe do Objeto da Hierarquia
    * @param parentAttribute Atributo do objeto onde encontramos o objeto pai.
    * @param orderBy utilizado para ordernar os itens
+   * @throws RFWException caso os dados sejam inválidos ou incoerentes.
    */
-  public UITreeDataProvider(Class<VO> voClass, String parentAttribute, RFWOrderBy orderBy, RFWDBProvider dataProvider) {
+  public UITreeDataProvider(Class<VO> voClass, String parentAttribute, RFWOrderBy orderBy, RFWDBProvider dataProvider) throws RFWException {
     this(voClass, parentAttribute, orderBy, null, null, dataProvider);
   }
 
@@ -72,8 +74,9 @@ public class UITreeDataProvider<VO extends RFWVO> extends AbstractBackEndHierarc
    * @param parentAttribute Atributo do objeto onde encontramos o objeto pai.
    * @param orderBy utilizado para ordernar os itens
    * @param ignoreIDs Array com os IDs que devem "desaparecer" do provider. Util quando estamos editando algum objeto da hierarquia e não queremos que ele (ou seus filhos) sejam exibidos para serem selecionados como pai. Note que ao definir que um ID não deve aparecer, todo o nó abaixo dele desaparecerá também.
+   * @throws RFWException Lançado caso os dados sejam inválidos ou incoerentes.
    */
-  public UITreeDataProvider(Class<VO> voClass, String parentAttribute, RFWOrderBy orderBy, Long[] ignoreIDs, RFWDBProvider dataProvider) {
+  public UITreeDataProvider(Class<VO> voClass, String parentAttribute, RFWOrderBy orderBy, Long[] ignoreIDs, RFWDBProvider dataProvider) throws RFWException {
     this(voClass, parentAttribute, orderBy, ignoreIDs, null, dataProvider);
   }
 
@@ -85,8 +88,10 @@ public class UITreeDataProvider<VO extends RFWVO> extends AbstractBackEndHierarc
    * @param orderBy utilizado para ordernar os itens
    * @param ignoreIDs Array com os IDs que devem "desaparecer" do provider. Util quando estamos editando algum objeto da hierarquia e não queremos que ele (ou seus filhos) sejam exibidos para serem selecionados como pai. Note que ao definir que um ID não deve aparecer, todo o nó abaixo dele desaparecerá também.
    * @param rootSubSetIDs Array com o conjunto de IDs que devem ser recuperados do banco de dados. Note que se este atributo for informado, apenas esses objetos serão exibidos como objetos raiz, mesmo que eles tenham hierarquia acima deles. <B>NOTE: QUE MESMO QUE O ID FOR COLOCADO COMO OBJETO RAIZ, MAS ELE CONSTAR NO ATRIBUTO DE ignoreIDs, O OBJETO SERÁ IGNORADO!</B>
+   * @throws RFWException Lançado caso os dados sejam inválidos ou incoerentes.
    */
-  public UITreeDataProvider(Class<VO> voClass, String parentAttribute, RFWOrderBy orderBy, Long[] ignoreIDs, Long[] rootSubSetIDs, RFWDBProvider dataProvider) {
+  public UITreeDataProvider(Class<VO> voClass, String parentAttribute, RFWOrderBy orderBy, Long[] ignoreIDs, Long[] rootSubSetIDs, RFWDBProvider dataProvider) throws RFWException {
+    PreProcess.requiredNonNull(dataProvider, "Data Provider não pode ser nulo para o UITreeDataProvider funcioanr corretamente!");
     this.voClass = voClass;
     this.parentAttribute = parentAttribute;
     this.orderBy = orderBy;

@@ -1310,6 +1310,23 @@ public class UIFactory<VO extends RFWVO> {
    *          <b>ATENÇÃO:</B> Note que o atributo passado aqui é em relação ao objeto que estará no Provider do ComboBox e não do objeto sobre o qual estamos criando os campos.<br>
    *          Por exemplo, o ItemVO tem um relaiconamento com o ItemTypeVO e utiliza este método paracriar o campo. O valor passado aqui deve ser o 'name' ou ItemTypeVO_.vo().name(), e não o caminho a partir do ItemVO, utilizado para gerar o campo.
    * @param filterAttributes Lista de atributos (ou atributo único) que serão utilizados para realizar o filtro do componente. Se passado nulo ou vazio, será utilizado o atributo passado em captionAttribute.
+   * @param dbProvider Provedor de dados para que o componente consiga acessar os outros objetos do sistema.
+   * @return Component criado conforme atributos passados
+   * @throws RFWException
+   */
+  public Component createVOField(String propertyPath, String helpPopupKey, String captionAttribute, List<String> filterAttributes, RFWDBProvider dbProvider) throws RFWException {
+    return (Component) createVOFieldImp(propertyPath, helpPopupKey, null, null, captionAttribute, filterAttributes, null, null, null, null, dbProvider);
+  }
+
+  /**
+   * Este método cria um campo padrão conforme o RFWMetaAnnotation o tipo do atributo do VO.
+   *
+   * @param propertyPath Atributo / Caminho do Atributo para gerar o campo.
+   * @param helpPopupKey Chave do Bundle com o texto de ajuda/explicação para o campo
+   * @param captionAttribute Usado quando o componente criado refere-se à um {@link RFWMetaRelationshipField} e o objeto em questão é um RFWVO. Aqui devemos passar qual o atributo do VO será utilizado como Caption no ComboBox Criado.<br>
+   *          <b>ATENÇÃO:</B> Note que o atributo passado aqui é em relação ao objeto que estará no Provider do ComboBox e não do objeto sobre o qual estamos criando os campos.<br>
+   *          Por exemplo, o ItemVO tem um relaiconamento com o ItemTypeVO e utiliza este método paracriar o campo. O valor passado aqui deve ser o 'name' ou ItemTypeVO_.vo().name(), e não o caminho a partir do ItemVO, utilizado para gerar o campo.
+   * @param filterAttributes Lista de atributos (ou atributo único) que serão utilizados para realizar o filtro do componente. Se passado nulo ou vazio, será utilizado o atributo passado em captionAttribute.
    * @param forceRequired Indica se devemos sobrepor a definição de obrigatório presente no VO. True indica que é obrigatório, False indica que não é obrigatório, null utiliza a definição do RFWMeta existente no VO.
    * @return Component criado conforme atributos passados
    * @throws RFWException
