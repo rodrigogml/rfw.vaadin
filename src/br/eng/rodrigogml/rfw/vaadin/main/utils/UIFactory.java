@@ -2901,12 +2901,13 @@ public class UIFactory<VO extends RFWVO> {
    *
    * @param parentAttribute nome do atributo que identifica o pai do objeto na Hierarquia.
    * @param orderBy utilizado para ordenar a lista inicialmente.
+   * @param dbProvider Provedor de dados para que o componente consiga acessar os outros objetos do sistema.
    *
    * @return Component criado conforme atributos passados
    * @throws RFWException
    */
-  public TreeGrid<GVO<VO>> createTreeGridForMO(String parentAttribute, RFWOrderBy orderBy) throws RFWException {
-    return createTreeGridForMO(SelectionMode.MULTI, orderBy, null, parentAttribute);
+  public TreeGrid<GVO<VO>> createTreeGridForMO(String parentAttribute, RFWOrderBy orderBy, RFWDBProvider dbProvider) throws RFWException {
+    return createTreeGridForMO(SelectionMode.MULTI, orderBy, null, parentAttribute, dbProvider);
   }
 
   /**
@@ -2916,18 +2917,15 @@ public class UIFactory<VO extends RFWVO> {
    * @param orderBy Objeto para definir a ordem inicial do Grid
    * @param doubleClickListener Listener para o caso de duplo click em algum item do Grid. Para obter o item que recebeu o duplo click utilize o método event.getItem().
    * @param parentAttribute nome do atributo que identifica o pai do objeto na Hierarquia.
+   * @param dbProvider Provedor de dados para que o componente consiga acessar os outros objetos do sistema.
    * @return Component criado conforme atributos passados
    * @throws RFWException
    */
-  public TreeGrid<GVO<VO>> createTreeGridForMO(SelectionMode selectionMode, RFWOrderBy orderBy, RFWGridDoubleClickListener<GVO<VO>> doubleClickListener, String parentAttribute) throws RFWException {
+  public TreeGrid<GVO<VO>> createTreeGridForMO(SelectionMode selectionMode, RFWOrderBy orderBy, RFWGridDoubleClickListener<GVO<VO>> doubleClickListener, String parentAttribute, RFWDBProvider dbProvider) throws RFWException {
     moGrid = new TreeGrid<>();
-
-    UITreeDataProvider<VO> provider = new UITreeDataProvider<>(this.voClass, parentAttribute, orderBy, null);
-
+    UITreeDataProvider<VO> provider = new UITreeDataProvider<>(this.voClass, parentAttribute, orderBy, dbProvider);
     setUpGrid(moGrid, selectionMode, true, doubleClickListener, provider);
-
     moGrid.setStyleGenerator(new UIGridRowHighlight<VO>());
-
     return (TreeGrid<GVO<VO>>) moGrid;
   }
 
