@@ -1618,7 +1618,7 @@ public class UIFactory<VO extends RFWVO> {
 
     // Verifica o tipo de RFWMeta para criar o campo adequado
     if (ann instanceof RFWMetaStringField) {
-      if (!ignoreTextArea && ((RFWMetaStringField) ann).maxlength() >= 1000) {
+      if (!ignoreTextArea && ((RFWMetaStringField) ann).maxLength() >= 1000) {
         c = (HasValue<FIELDTYPE>) createField_TextArea(voClass, attribute, helpPopupKey, forceRequired, fieldAlignment, df);
       } else {
         c = (HasValue<FIELDTYPE>) createField_TextField(voClass, attribute, helpPopupKey, forceRequired, fieldAlignment, masked, df);
@@ -2242,7 +2242,7 @@ public class UIFactory<VO extends RFWVO> {
         t = new TextField(((RFWMetaStringField) ann).caption() + ':');
       }
       t.setRequiredIndicatorVisible(forceRequired);
-      t.setMaxLength(((RFWMetaStringField) ann).maxlength());
+      t.setMaxLength(((RFWMetaStringField) ann).maxLength());
       t.setWidth("100%");
     } else if (ann instanceof RFWMetaIntegerField) {
       t = new TextField(((RFWMetaIntegerField) ann).caption() + ':');
@@ -2383,7 +2383,7 @@ public class UIFactory<VO extends RFWVO> {
             break;
         }
       }
-      t.setMaxLength(((RFWMetaStringField) ann).maxlength());
+      t.setMaxLength(((RFWMetaStringField) ann).maxLength());
       // Se tiver um df, e tiver um maxlength utilizamos ele, pois normalmente com a formatação é necessário mais caracteres
       if (df != null && df.getMaxLenght() > 0) t.setMaxLength(df.getMaxLenght());
       t.setWidth("100%");
