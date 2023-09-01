@@ -1370,6 +1370,23 @@ public class UIFactory<VO extends RFWVO> {
   }
 
   /**
+   * Este método registra um campo criado externamente para ser utilizado com o UIFactory.<Br>
+   * Chamar este método tem a mesma função que registrar o componente no UIFactory com o {@link #createVOField_Custom(String, HasValue)} e realizar o bind com algum dos métodos de Bind no VO que está em edição no UIFactory.<Br>
+   *
+   * @param <FIELDTYPE> Classe do Atributo do VO que o campo está relacionado.
+   * @param attribute caminho do atributo que será associado e editado com este campo.
+   * @param field Campo para edição do atributo.
+   * @param formatter Formatador para apresentação dos valores do campo. Muitas vezes não obrigatório e pode ser passado nulo.
+   * @param required Indica se este campo deve ser obrigatório para a validação de preenchimento (e exibição como obrigatório, se suportado pelo campo).
+   * @param nullValue Valor que será utilizado para exibição de nulo. Por exemplo, para Strings o valor "" pode ser considerado como nulo.
+   * @throws RFWException
+   */
+  public <FIELDTYPE> void registerField(String attribute, HasValue<FIELDTYPE> field, RFWDataFormatter<FIELDTYPE, VO> formatter, boolean required, FIELDTYPE nullValue) throws RFWException {
+    this.voFieldHash.put(attribute, field);
+    bind(field, attribute, formatter, required, nullValue);
+  }
+
+  /**
    * Este método cria um campo para ser usado como campo de edição de um VO.<br>
    * Força a criação de um ComboBox para valores Booleanos do VO. Útil quando temos só duas opções (representadas por um Boolean no VO), mas queremos exibir como uma caixa de seleção de opções para o usuário.
    *
