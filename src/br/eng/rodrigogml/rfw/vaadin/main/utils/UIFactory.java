@@ -97,6 +97,7 @@ import br.eng.rodrigogml.rfw.kernel.interfaces.RFWDBProvider;
 import br.eng.rodrigogml.rfw.kernel.logger.RFWLogger;
 import br.eng.rodrigogml.rfw.kernel.measureruler.interfaces.MeasureUnit;
 import br.eng.rodrigogml.rfw.kernel.measureruler.interfaces.MeasureUnit.MeasureDimension;
+import br.eng.rodrigogml.rfw.kernel.preprocess.PreProcess;
 import br.eng.rodrigogml.rfw.kernel.rfwmeta.RFWMetaBigDecimalCurrencyField;
 import br.eng.rodrigogml.rfw.kernel.rfwmeta.RFWMetaBigDecimalField;
 import br.eng.rodrigogml.rfw.kernel.rfwmeta.RFWMetaBigDecimalPercentageField;
@@ -1781,28 +1782,6 @@ public class UIFactory<VO extends RFWVO> {
               break;
           }
         }
-
-        // RadioButtonGroup<Boolean> opt = new RadioButtonGroup<>(annBool.caption() + '?', list);
-        // opt.setItemCaptionGenerator(i -> (i ? annBool.trueCaption() : annBool.falseCaption()));
-        // opt.setRequiredIndicatorVisible(annBool.required());
-        // if (helpPopupKey != null) opt.setDescription(createHelpDescription(helpPopupKey), ContentMode.HTML);
-
-        // opt.setWidth("100%");
-        // opt.addStyleName(ValoTheme.OPTIONGROUP_HORIZONTAL);
-        // if (fieldAlignment != null) {
-        // opt.removeStyleName(FWVad.STYLE_ALIGN_CENTER);
-        // opt.removeStyleName(FWVad.STYLE_ALIGN_RIGHT);
-        // switch (fieldAlignment) {
-        // case CENTER:
-        // opt.addStyleName(FWVad.STYLE_ALIGN_CENTER);
-        // break;
-        // case LEFT:
-        // break; // Já é o padrão, não é preciso fazer nada além de remover os outros styles
-        // case RIGHT:
-        // opt.addStyleName(FWVad.STYLE_ALIGN_RIGHT);
-        // break;
-        // }
-        // }
         return opt;
       }
     } else {
@@ -2046,7 +2025,10 @@ public class UIFactory<VO extends RFWVO> {
       cb.setRequiredIndicatorVisible(forceRequired);
       if (helpPopupKey != null) cb.setDescription(createHelpDescription(helpPopupKey), ContentMode.HTML);
 
-      if (provider == null) provider = new UIDataProvider(providerClass, orderBy, attributes, dbProvider);
+      if (provider == null) {
+        PreProcess.requiredNonNull(dbProvider);
+        provider = new UIDataProvider(providerClass, orderBy, attributes, dbProvider);
+      }
       if (filterAttributes == null || filterAttributes.size() == 0) {
         filterAttributes = new LinkedList<>();
         filterAttributes.add(captionAttribute);
