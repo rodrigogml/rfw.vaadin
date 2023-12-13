@@ -709,11 +709,12 @@ public class UIFactory<VO extends RFWVO> {
    *          <b>ATENÇÃO:</B> Note que o atributo passado aqui é em relação ao objeto que estará no Provider do ComboBox e não do objeto sobre o qual estamos criando os campos.<br>
    *          Por exemplo, o ItemVO tem um relaiconamento com o ItemTypeVO e utiliza este método paracriar o campo. O valor passado aqui deve ser o 'name' ou ItemTypeVO_.vo().name(), e não o caminho a partir do ItemVO, utilizado para gerar o campo.
    * @param filterAttributes Lista de atributos (ou atributo único) que serão utilizados para realizar o filtro do componente. Se passado nulo ou vazio, será utilizado o atributo passado em captionAttribute.
+   * @param dbProvider Provedor de dados para que o componente consiga acessar os outros objetos do sistema.
    * @return
    * @throws RFWException
    */
-  public HasValue<?> createMOField(String propertyPath, String minWidth, String maxWidth, String captionAttribute, LinkedList<String> filterAttributes) throws RFWException {
-    return createMOFieldImp(propertyPath, minWidth, maxWidth, null, captionAttribute, filterAttributes, null, null, null);
+  public HasValue<?> createMOField(String propertyPath, String minWidth, String maxWidth, String captionAttribute, LinkedList<String> filterAttributes, RFWDBProvider dbProvider) throws RFWException {
+    return createMOFieldImp(propertyPath, minWidth, maxWidth, null, captionAttribute, filterAttributes, null, null, dbProvider);
   }
 
   /**
