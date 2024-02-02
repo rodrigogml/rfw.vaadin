@@ -2027,7 +2027,7 @@ public class UIFactory<VO extends RFWVO> {
       if (helpPopupKey != null) cb.setDescription(createHelpDescription(helpPopupKey), ContentMode.HTML);
 
       if (provider == null) {
-        PreProcess.requiredNonNull(dbProvider);
+        PreProcess.requiredNonNullCritical(dbProvider);
         provider = new UIDataProvider(providerClass, orderBy, attributes, dbProvider);
       }
       if (filterAttributes == null || filterAttributes.size() == 0) {
