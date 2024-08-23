@@ -118,7 +118,7 @@ public class UIDataProvider<VO extends RFWVO> extends AbstractBackEndDataProvide
       }
 
       // Converte o QueryFilter em um RFWMO
-      RFWMO tmpMO = writeBISMO(query.getFilter());
+      RFWMO tmpMO = writeRFWMO(query.getFilter());
       if (tmpMO != null) {
         updatePending = true;
       } else {
@@ -161,7 +161,7 @@ public class UIDataProvider<VO extends RFWVO> extends AbstractBackEndDataProvide
     }
   }
 
-  private RFWMO writeBISMO(Optional<String> filter) throws RFWException {
+  private RFWMO writeRFWMO(Optional<String> filter) throws RFWException {
     RFWMO mo = null; // MO a ser utilizado na busca
     RFWMO subMO = null; // MO onde as condições do filtro devem ser colocadas. Utilizado quando temos busca combinada em mais de um atributo, já que as condições são colocadas em um SUB-MO com condição OR
     // Só vamos atualizar o VO se tivermos um atributo de filtro definido.
@@ -230,7 +230,7 @@ public class UIDataProvider<VO extends RFWVO> extends AbstractBackEndDataProvide
       }
 
       // Converte o QueryFilter em um RFWMO
-      RFWMO tmpMO = writeBISMO(query.getFilter());
+      RFWMO tmpMO = writeRFWMO(query.getFilter());
       if (tmpMO != null) {
         updatePending = true;
       } else {
