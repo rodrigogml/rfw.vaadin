@@ -110,7 +110,7 @@ public class UIDataProvider<VO extends RFWVO> extends AbstractBackEndDataProvide
       boolean updatePending = false;
 
       // Converte o QuerySort em RFWOrderBy
-      RFWOrderBy tmpOrderBy = writeBISorderBy(query.getSortOrders());
+      RFWOrderBy tmpOrderBy = writeRFWOrderBy(query.getSortOrders());
       // Verificamos se recebemos um OrderBy do componente, e se houve alteração no orderBy, se houve temos que atualizar a lista
       if (tmpOrderBy != null && !tmpOrderBy.equals(this.orderBy)) {
         this.orderBy = tmpOrderBy;
@@ -204,7 +204,7 @@ public class UIDataProvider<VO extends RFWVO> extends AbstractBackEndDataProvide
     return mo;
   }
 
-  private RFWOrderBy writeBISorderBy(final List<QuerySortOrder> sortOrders) {
+  private RFWOrderBy writeRFWOrderBy(final List<QuerySortOrder> sortOrders) {
     RFWOrderBy tmpOrderBy = null;
     for (QuerySortOrder qSO : sortOrders) {
       if (tmpOrderBy == null) {
@@ -222,7 +222,7 @@ public class UIDataProvider<VO extends RFWVO> extends AbstractBackEndDataProvide
       boolean updatePending = false;
 
       // Converte o QuerySort em RFWOrderBy
-      RFWOrderBy tmpOrderBy = writeBISorderBy(query.getSortOrders());
+      RFWOrderBy tmpOrderBy = writeRFWOrderBy(query.getSortOrders());
       // Verificamos se recebemos um OrderBy do componente, e se houve alteração no orderBy, se houve temos que atualizar a lista
       if (tmpOrderBy != null && !tmpOrderBy.equals(this.orderBy)) {
         this.orderBy = tmpOrderBy;
@@ -280,18 +280,18 @@ public class UIDataProvider<VO extends RFWVO> extends AbstractBackEndDataProvide
   }
 
   /**
-   * Recupera o bISOrderBy sendo utilizado no momento.
+   * Recupera o RFWOrderBy sendo utilizado no momento.
    *
-   * @return the bISOrderBy sendo utilizado no momento
+   * @return the RFWOrderBy sendo utilizado no momento
    */
   public RFWOrderBy getOrderBy() {
     return orderBy;
   }
 
   /**
-   * Define o bISOrderBy sendo utilizado no momento.
+   * Define o RFWOrderBy sendo utilizado no momento.
    *
-   * @param orderBy the new bISOrderBy sendo utilizado no momento
+   * @param orderBy the new RFWOrderBy sendo utilizado no momento
    */
   public void setOrderBy(RFWOrderBy orderBy) throws RFWException {
     this.orderBy = orderBy;
