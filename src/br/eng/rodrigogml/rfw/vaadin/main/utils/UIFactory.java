@@ -121,6 +121,7 @@ import br.eng.rodrigogml.rfw.kernel.utils.RUArray;
 import br.eng.rodrigogml.rfw.kernel.utils.RUDateTime;
 import br.eng.rodrigogml.rfw.kernel.utils.RUNumber;
 import br.eng.rodrigogml.rfw.kernel.utils.RUReflex;
+import br.eng.rodrigogml.rfw.kernel.utils.RUTypes;
 import br.eng.rodrigogml.rfw.kernel.vo.GVO;
 import br.eng.rodrigogml.rfw.kernel.vo.RFWMO;
 import br.eng.rodrigogml.rfw.kernel.vo.RFWMO.AppendMethod;
@@ -293,7 +294,7 @@ public class UIFactory<VO extends RFWVO> {
           } else if (value != null && LocalDate.class.isAssignableFrom(value.getClass())) { // Faz a conversão automática entre LocalDateTime e LocalDate
             Class<?> type = RUReflex.getPropertyTypeByType(bean.getClass(), property);
             if (LocalDateTime.class.isAssignableFrom(type)) {
-              value = RUDateTime.toLocalDate((LocalDateTime) value);
+              value = RUTypes.toLocalDate((LocalDateTime) value);
             }
           } else if (value != null && LocalDateTime.class.isAssignableFrom(value.getClass())) { // Faz a conversão automática entre LocalDateTime e LocalDate
             Class<?> type = RUReflex.getPropertyTypeByType(bean.getClass(), property);
@@ -491,7 +492,9 @@ public class UIFactory<VO extends RFWVO> {
    * Para os campos que suportam, deixa o seu conteúdo alinhado.
    */
   public static enum FieldAlignment {
-    LEFT, CENTER, RIGHT
+    LEFT,
+    CENTER,
+    RIGHT
   }
 
   /**
