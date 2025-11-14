@@ -1556,7 +1556,7 @@ public class UIFactory<VO extends RFWVO> {
       df = (RFWDataFormatter<FIELDTYPE, BEANTYPE>) new RFWCurrencyBigDecimalDataFormatter(RFW.getRoundingMode(), intAnn.scale(), scaleMax, min, max, intAnn.absolute());
     } else if (ann instanceof RFWMetaIntegerField) {
       final RFWMetaIntegerField intAnn = (RFWMetaIntegerField) ann;
-      df = (RFWDataFormatter<FIELDTYPE, BEANTYPE>) new RFWIntegerDataFormatter(intAnn.minvalue(), intAnn.maxvalue(), intAnn.minvalue() >= 0);
+      df = (RFWDataFormatter<FIELDTYPE, BEANTYPE>) new RFWIntegerDataFormatter(intAnn.minValue(), intAnn.maxValue(), intAnn.minValue() >= 0);
     } else if (ann instanceof RFWMetaLongField) {
       final RFWMetaLongField intAnn = (RFWMetaLongField) ann;
       df = (RFWDataFormatter<FIELDTYPE, BEANTYPE>) new RFWLongDataFormatter(intAnn.minvalue(), intAnn.maxvalue(), intAnn.minvalue() >= 0);
