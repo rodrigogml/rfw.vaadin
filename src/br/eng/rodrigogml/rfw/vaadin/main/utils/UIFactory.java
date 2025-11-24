@@ -294,7 +294,7 @@ public class UIFactory<VO extends RFWVO> {
           } else if (value != null && LocalDate.class.isAssignableFrom(value.getClass())) { // Faz a conversão automática entre LocalDateTime e LocalDate
             Class<?> type = RUReflex.getPropertyTypeByType(bean.getClass(), property);
             if (LocalDateTime.class.isAssignableFrom(type)) {
-              value = RUTypes.toLocalDate((LocalDateTime) value);
+              value = RUTypes.parseLocalDate((LocalDateTime) value);
             }
           } else if (value != null && LocalDateTime.class.isAssignableFrom(value.getClass())) { // Faz a conversão automática entre LocalDateTime e LocalDate
             Class<?> type = RUReflex.getPropertyTypeByType(bean.getClass(), property);
