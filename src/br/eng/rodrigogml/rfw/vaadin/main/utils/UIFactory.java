@@ -119,7 +119,6 @@ import br.eng.rodrigogml.rfw.kernel.rfwmeta.RFWMetaStringIEField;
 import br.eng.rodrigogml.rfw.kernel.rfwmeta.RFWMetaStringPhoneField;
 import br.eng.rodrigogml.rfw.kernel.utils.RUArray;
 import br.eng.rodrigogml.rfw.kernel.utils.RUDateTime;
-import br.eng.rodrigogml.rfw.kernel.utils.RUNumber;
 import br.eng.rodrigogml.rfw.kernel.utils.RUReflex;
 import br.eng.rodrigogml.rfw.kernel.utils.RUTypes;
 import br.eng.rodrigogml.rfw.kernel.vo.GVO;
@@ -492,9 +491,7 @@ public class UIFactory<VO extends RFWVO> {
    * Para os campos que suportam, deixa o seu conteúdo alinhado.
    */
   public static enum FieldAlignment {
-    LEFT,
-    CENTER,
-    RIGHT
+    LEFT, CENTER, RIGHT
   }
 
   /**
@@ -2272,7 +2269,7 @@ public class UIFactory<VO extends RFWVO> {
     } else if (ann instanceof RFWMetaBigDecimalField) {
       t = new TextField(((RFWMetaBigDecimalField) ann).caption() + ':');
       t.setRequiredIndicatorVisible(forceRequired);
-      t.setMaxLength(((RFWMetaBigDecimalField) ann).maxValue().length() + RUNumber.max(((RFWMetaBigDecimalField) ann).scaleMax(), ((RFWMetaBigDecimalField) ann).scale()));
+      t.setMaxLength(((RFWMetaBigDecimalField) ann).maxValue().length() + RUTypes.max(((RFWMetaBigDecimalField) ann).scaleMax(), ((RFWMetaBigDecimalField) ann).scale()));
       t.setWidth("130px");
     } else if (ann instanceof RFWMetaStringCNPJField) {
       t = new TextField(((RFWMetaStringCNPJField) ann).caption() + ':');
@@ -3854,10 +3851,7 @@ public class UIFactory<VO extends RFWVO> {
    */
   @SuppressWarnings("unchecked")
   public static <BEAN> UIBinder<LocalDateTime, LocalDateTime, BEAN>[] bind(RFWDateRangeComponent field, BEAN bean, String startDatePropertyPath, String endDatePropertyPath, boolean required, LocalDateTime nullValue) throws RFWException {
-    UIBinder<LocalDateTime, LocalDateTime, BEAN>[] binds = new UIBinder[] {
-        new UIBinder<>(field.getStartDateTime(), bean, startDatePropertyPath, null, required, nullValue, false),
-        new UIBinder<>(field.getEndDateTime(), bean, endDatePropertyPath, null, required, nullValue, false),
-    };
+    UIBinder<LocalDateTime, LocalDateTime, BEAN>[] binds = new UIBinder[] { new UIBinder<>(field.getStartDateTime(), bean, startDatePropertyPath, null, required, nullValue, false), new UIBinder<>(field.getEndDateTime(), bean, endDatePropertyPath, null, required, nullValue, false), };
     return binds;
   }
 
