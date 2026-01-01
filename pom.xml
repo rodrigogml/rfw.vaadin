@@ -7,6 +7,8 @@
 	<name>RFW.Vaadin</name>
 
 	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<vaadin.version>8.14.1</vaadin.version>
 		<vaadin.plugin.version>8.14.1</vaadin.plugin.version>
 		<vaadin.widgetset.mode>local</vaadin.widgetset.mode>
@@ -38,7 +40,7 @@
 					<source>1.8</source>
 					<target>1.8</target>
 <!--					<release>20</release>-->
-<!--					<encoding>UTF-8</encoding>-->
+					<encoding>${project.build.sourceEncoding}</encoding>
 				</configuration>
 			</plugin>
 			<!-- Copy project dependency -->

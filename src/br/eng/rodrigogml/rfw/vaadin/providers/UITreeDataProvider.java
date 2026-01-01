@@ -24,7 +24,7 @@ import br.eng.rodrigogml.rfw.kernel.vo.RFWVO;
 /**
  * Description: Classe que monta um Data provider buscando os objetos diretamente no banco de dados.<br>
  *
- * @author Rodrigo Leit„o
+ * @author Rodrigo Leit√£o
  * @since 10.0.0 (13 de nov de 2018)
  */
 public class UITreeDataProvider<VO extends RFWVO> extends AbstractBackEndHierarchicalDataProvider<GVO<VO>, Object> {
@@ -39,59 +39,59 @@ public class UITreeDataProvider<VO extends RFWVO> extends AbstractBackEndHierarc
 
   /**
    * Esta hash armazena a Lista de IDs dos objetos filhos, para cada objeto.<br>
-   * Chave ID do objeto pai, conte˙do lista de IDs dos objetos filhos.
+   * Chave ID do objeto pai, conte√∫do lista de IDs dos objetos filhos.
    */
   private final HashMap<Long, List<Long>> childrenHash = new HashMap<>();
 
   /**
-   * Hash com os IDs do objeto pai. Esta Hash permite que possamamos navegar no sentido da "raiz" da ·rvore. Descobrindo o objeto pai de um objeto.<br>
-   * Chave: ID do objeto, Valor: ID do objeto pai, ou NULL caso seja um objeto raÌz.<br>
-   * Note que o valor nulo indica que o objeto È raiz, a "n„o presenÁa" da chave na hash indica que o objeto È desconhecido.
+   * Hash com os IDs do objeto pai. Esta Hash permite que possamamos navegar no sentido da "raiz" da √°rvore. Descobrindo o objeto pai de um objeto.<br>
+   * Chave: ID do objeto, Valor: ID do objeto pai, ou NULL caso seja um objeto ra√≠z.<br>
+   * Note que o valor nulo indica que o objeto √© raiz, a "n√£o presen√ßa" da chave na hash indica que o objeto √© desconhecido.
    */
   private final HashMap<Long, Long> parentHash = new HashMap<>();
 
   /**
-   * Inst‚ncia do DataProvider fornecido pela aplicaÁ„o para busca das informaÁıes.
+   * Inst√¢ncia do DataProvider fornecido pela aplica√ß√£o para busca das informa√ß√µes.
    */
   private RFWDBProvider dataProvider = null;
 
   /**
-   * Cria um TreeDataProvider que busca os objetos automaticamente no banco de dados a medida que s„o solicitados pelos componentes. Note que esta implementaÁ„o N√O far· cache DOS OBJETOS
+   * Cria um TreeDataProvider que busca os objetos automaticamente no banco de dados a medida que s√£o solicitados pelos componentes. Note que esta implementa√ß√£o N√ÉO far√° cache DOS OBJETOS
    *
    * @param voClass Classe do Objeto da Hierarquia
    * @param parentAttribute Atributo do objeto onde encontramos o objeto pai.
    * @param orderBy utilizado para ordernar os itens
-   * @throws RFWException caso os dados sejam inv·lidos ou incoerentes.
+   * @throws RFWException caso os dados sejam inv√°lidos ou incoerentes.
    */
   public UITreeDataProvider(Class<VO> voClass, String parentAttribute, RFWOrderBy orderBy, RFWDBProvider dataProvider) throws RFWException {
     this(voClass, parentAttribute, orderBy, null, null, dataProvider);
   }
 
   /**
-   * Cria um TreeDataProvider que busca os objetos automaticamente no banco de dados a medida que s„o solicitados pelos componentes. Note que esta implementaÁ„o N√O far· cache DOS OBJETOS
+   * Cria um TreeDataProvider que busca os objetos automaticamente no banco de dados a medida que s√£o solicitados pelos componentes. Note que esta implementa√ß√£o N√ÉO far√° cache DOS OBJETOS
    *
    * @param voClass Classe do Objeto da Hierarquia
    * @param parentAttribute Atributo do objeto onde encontramos o objeto pai.
    * @param orderBy utilizado para ordernar os itens
-   * @param ignoreIDs Array com os IDs que devem "desaparecer" do provider. Util quando estamos editando algum objeto da hierarquia e n„o queremos que ele (ou seus filhos) sejam exibidos para serem selecionados como pai. Note que ao definir que um ID n„o deve aparecer, todo o nÛ abaixo dele desaparecer· tambÈm.
-   * @throws RFWException LanÁado caso os dados sejam inv·lidos ou incoerentes.
+   * @param ignoreIDs Array com os IDs que devem "desaparecer" do provider. Util quando estamos editando algum objeto da hierarquia e n√£o queremos que ele (ou seus filhos) sejam exibidos para serem selecionados como pai. Note que ao definir que um ID n√£o deve aparecer, todo o n√≥ abaixo dele desaparecer√° tamb√©m.
+   * @throws RFWException Lan√ßado caso os dados sejam inv√°lidos ou incoerentes.
    */
   public UITreeDataProvider(Class<VO> voClass, String parentAttribute, RFWOrderBy orderBy, Long[] ignoreIDs, RFWDBProvider dataProvider) throws RFWException {
     this(voClass, parentAttribute, orderBy, ignoreIDs, null, dataProvider);
   }
 
   /**
-   * Cria um TreeDataProvider que busca os objetos automaticamente no banco de dados a medida que s„o solicitados pelos componentes. Note que esta implementaÁ„o N√O far· cache DOS OBJETOS
+   * Cria um TreeDataProvider que busca os objetos automaticamente no banco de dados a medida que s√£o solicitados pelos componentes. Note que esta implementa√ß√£o N√ÉO far√° cache DOS OBJETOS
    *
    * @param voClass Classe do Objeto da Hierarquia
    * @param parentAttribute Atributo do objeto onde encontramos o objeto pai.
    * @param orderBy utilizado para ordernar os itens
-   * @param ignoreIDs Array com os IDs que devem "desaparecer" do provider. Util quando estamos editando algum objeto da hierarquia e n„o queremos que ele (ou seus filhos) sejam exibidos para serem selecionados como pai. Note que ao definir que um ID n„o deve aparecer, todo o nÛ abaixo dele desaparecer· tambÈm.
-   * @param rootSubSetIDs Array com o conjunto de IDs que devem ser recuperados do banco de dados. Note que se este atributo for informado, apenas esses objetos ser„o exibidos como objetos raiz, mesmo que eles tenham hierarquia acima deles. <B>NOTE: QUE MESMO QUE O ID FOR COLOCADO COMO OBJETO RAIZ, MAS ELE CONSTAR NO ATRIBUTO DE ignoreIDs, O OBJETO SER¡ IGNORADO!</B>
-   * @throws RFWException LanÁado caso os dados sejam inv·lidos ou incoerentes.
+   * @param ignoreIDs Array com os IDs que devem "desaparecer" do provider. Util quando estamos editando algum objeto da hierarquia e n√£o queremos que ele (ou seus filhos) sejam exibidos para serem selecionados como pai. Note que ao definir que um ID n√£o deve aparecer, todo o n√≥ abaixo dele desaparecer√° tamb√©m.
+   * @param rootSubSetIDs Array com o conjunto de IDs que devem ser recuperados do banco de dados. Note que se este atributo for informado, apenas esses objetos ser√£o exibidos como objetos raiz, mesmo que eles tenham hierarquia acima deles. <B>NOTE: QUE MESMO QUE O ID FOR COLOCADO COMO OBJETO RAIZ, MAS ELE CONSTAR NO ATRIBUTO DE ignoreIDs, O OBJETO SER√Å IGNORADO!</B>
+   * @throws RFWException Lan√ßado caso os dados sejam inv√°lidos ou incoerentes.
    */
   public UITreeDataProvider(Class<VO> voClass, String parentAttribute, RFWOrderBy orderBy, Long[] ignoreIDs, Long[] rootSubSetIDs, RFWDBProvider dataProvider) throws RFWException {
-    PreProcess.requiredNonNull(dataProvider, "Data Provider n„o pode ser nulo para o UITreeDataProvider funcioanr corretamente!");
+    PreProcess.requiredNonNull(dataProvider, "Data Provider n√£o pode ser nulo para o UITreeDataProvider funcioanr corretamente!");
     this.voClass = voClass;
     this.parentAttribute = parentAttribute;
     this.orderBy = orderBy;
@@ -104,10 +104,10 @@ public class UITreeDataProvider<VO extends RFWVO> extends AbstractBackEndHierarc
   public int getChildCount(HierarchicalQuery<GVO<VO>, Object> query) {
     try {
       if (Optional.empty().equals(query.getFilter())) {
-        // Se n„o temos filtros, retornamos o total de objetos raÌz
+        // Se n√£o temos filtros, retornamos o total de objetos ra√≠z
         return getChildrenList(null).size();
       }
-      // Verificamos se j· temos esse objeto carregado na Hash
+      // Verificamos se j√° temos esse objeto carregado na Hash
       // return getChildrenList(item.getId()).size() > 0;
       System.out.println("getChildCount!");
       return 10;
@@ -119,7 +119,7 @@ public class UITreeDataProvider<VO extends RFWVO> extends AbstractBackEndHierarc
   @Override
   public boolean hasChildren(GVO<VO> item) {
     try {
-      // Verificamos se j· temos esse objeto carregado na Hash
+      // Verificamos se j√° temos esse objeto carregado na Hash
       return getChildrenList(item.getVO().getId()).size() > 0;
     } catch (RFWException e) {
       throw new RFWRunTimeException(e);
@@ -133,9 +133,9 @@ public class UITreeDataProvider<VO extends RFWVO> extends AbstractBackEndHierarc
       if (itemID != null) {
         mo.equal(this.parentAttribute + ".id", itemID);
       } else {
-        // Se n„o recebemos um ID de filtro, È pq devemos retornar os objetos raiz
+        // Se n√£o recebemos um ID de filtro, √© pq devemos retornar os objetos raiz
         if (this.rootSubSetIDs == null) {
-          // Se n„o temos um subconjunto de objetos raiz, retornamos todos os objetos raiz existentes no banco de dados
+          // Se n√£o temos um subconjunto de objetos raiz, retornamos todos os objetos raiz existentes no banco de dados
           mo.isNull(this.parentAttribute + ".id");
         } else {
           // Se temos um novo subconjunto de "raiz" definido, vamos recuperar esse conjunto de objetos
@@ -143,7 +143,7 @@ public class UITreeDataProvider<VO extends RFWVO> extends AbstractBackEndHierarc
         }
       }
 
-      // N„o permite selecionar os objetos indesejados
+      // N√£o permite selecionar os objetos indesejados
       if (this.ignoreIDs != null) mo.notIn("id", this.ignoreIDs);
 
       children = this.dataProvider.findIDs(this.voClass, mo, this.orderBy);
@@ -160,18 +160,18 @@ public class UITreeDataProvider<VO extends RFWVO> extends AbstractBackEndHierarc
     try {
       final List<Long> childrenList;
       if (query.getParent() == null) {
-        // Se n„o temos filtros, retornamos o total de objetos raÌz
+        // Se n√£o temos filtros, retornamos o total de objetos ra√≠z
         childrenList = getChildrenList(null);
       } else {
         childrenList = getChildrenList(query.getParent().getVO().getId());
       }
 
-      // Se n„o temos filhos, retornamos o Stream de uma lista vazia. N„o deixamos ir para o banco.
+      // Se n√£o temos filhos, retornamos o Stream de uma lista vazia. N√£o deixamos ir para o banco.
       if (childrenList.size() == 0) {
         return new ArrayList<GVO<VO>>().stream();
       } else {
 
-        // Recuperamos todos os objetos que est„o na lista
+        // Recuperamos todos os objetos que est√£o na lista
         RFWMO mo = new RFWMO();
         // mo.in("id", childrenList.subList(query.getOffset(), query.getOffset() + query.getLimit()).toArray(new Long[0]));
         mo.in("id", childrenList.toArray(new Long[0]));
@@ -189,39 +189,39 @@ public class UITreeDataProvider<VO extends RFWVO> extends AbstractBackEndHierarc
   }
 
   /**
-   * MÈtodo que permite saber se um determinado objeto (pelo seu ID) est· presente na atual coleÁ„o do DataProvider.<br>
-   * <B>ATEN«√O:</B> Note que este mÈtodo sÛ retornar· true caso o objeto j· esteja carregado no cache, caso contr·rio o valor retornado ser· false.
+   * M√©todo que permite saber se um determinado objeto (pelo seu ID) est√° presente na atual cole√ß√£o do DataProvider.<br>
+   * <B>ATEN√á√ÉO:</B> Note que este m√©todo s√≥ retornar√° true caso o objeto j√° esteja carregado no cache, caso contr√°rio o valor retornado ser√° false.
    *
    * @param id ID do objeto a ser verificado.
-   * @return retorna true caso esteja, retorna false caso contr·rio.<br>
-   *         <b>N„o retorna erro ou null pointer. Mesmo que o conjunto de dados ainda esteja nulo, È considerado que o objeto n„o est· presente nesses casos.</b>
+   * @return retorna true caso esteja, retorna false caso contr√°rio.<br>
+   *         <b>N√£o retorna erro ou null pointer. Mesmo que o conjunto de dados ainda esteja nulo, √© considerado que o objeto n√£o est√° presente nesses casos.</b>
    * @throws RFWException
    */
   public boolean contains(Long id) throws RFWException {
-    // Utilizamos a parentHash ao invÈs da ChildrenHash, pois a children sÛ tem os objetos cujo os filhos foram carregados, a parent tem todos os objetos, pais ou filhos j· "conhecidos"
+    // Utilizamos a parentHash ao inv√©s da ChildrenHash, pois a children s√≥ tem os objetos cujo os filhos foram carregados, a parent tem todos os objetos, pais ou filhos j√° "conhecidos"
     boolean isLoaded = this.parentHash.containsKey(id);
-    // Se n„o encontramos ele carregado, vamos procura-lo na base de dados
+    // Se n√£o encontramos ele carregado, vamos procura-lo na base de dados
     if (!isLoaded) {
       final List<Long> parentList = getParentPath(id);
-      // Se a lista de caminho retornar nula, significa que ele n„o foi encontrado nem na base. Quand o objeto È raiz, o mÈtodo getParentPath retorna seu ID.
+      // Se a lista de caminho retornar nula, significa que ele n√£o foi encontrado nem na base. Quand o objeto √© raiz, o m√©todo getParentPath retorna seu ID.
       isLoaded = parentList != null;
     }
     return isLoaded;
   }
 
   /**
-   * Este mÈtodo busca o caminho atÈ um determinado objeto na estrutura de ·rvore.
+   * Este m√©todo busca o caminho at√© um determinado objeto na estrutura de √°rvore.
    *
    * @param id ID do objeto desejado
-   * @return Lista com os IDs dos objetos, sendo o primeiro ID o objeto raiz, o segundo o de segundo nÌvel e assim por diante atÈ chegar no objeto desejado. Retorna nulo caso o objeto n„o seja encontrado
+   * @return Lista com os IDs dos objetos, sendo o primeiro ID o objeto raiz, o segundo o de segundo n√≠vel e assim por diante at√© chegar no objeto desejado. Retorna nulo caso o objeto n√£o seja encontrado
    * @throws RFWException
    */
   @SuppressWarnings("unchecked")
   public List<Long> getParentPath(Long id) throws RFWException {
     List<Long> list = null;
-    // Verificamos se o objeto È conhecido do provider
+    // Verificamos se o objeto √© conhecido do provider
     if (!this.parentHash.containsKey(id)) {
-      // Se ainda n„o È conhecido, buscamos o objeto para inclui-lo na estrutura do provider
+      // Se ainda n√£o √© conhecido, buscamos o objeto para inclui-lo na estrutura do provider
       final VO vo = (VO) this.dataProvider.findByID(this.voClass, id, new String[] { this.parentAttribute + ".id" });
       if (vo != null) {
         final VO parent = (VO) RUReflex.getPropertyValue(vo, this.parentAttribute);
@@ -233,17 +233,17 @@ public class UITreeDataProvider<VO extends RFWVO> extends AbstractBackEndHierarc
       }
     }
 
-    // Se ainda n„o encontramos o objeto, ser· retonada a lista vazia
+    // Se ainda n√£o encontramos o objeto, ser√° retonada a lista vazia
     if (this.parentHash.containsKey(id)) {
 
       // Recuperamos o ID do pai do objeto
       final Long parentID = this.parentHash.get(id);
       if (parentID == null) {
-        // Se n„o temos um pai, estamos no objeto raÌz, logo È o primeiro objeto a ser encontrado, comeÁamos a lista e retornamos
+        // Se n√£o temos um pai, estamos no objeto ra√≠z, logo √© o primeiro objeto a ser encontrado, come√ßamos a lista e retornamos
         list = new LinkedList<>();
         list.add(id);
       } else {
-        // Se temos um ID do pai, solicitamos o caminho atÈ o pai recursivamente e nos incluimos no fim da lista
+        // Se temos um ID do pai, solicitamos o caminho at√© o pai recursivamente e nos incluimos no fim da lista
         list = getParentPath(parentID);
         list.add(id);
       }
@@ -262,7 +262,7 @@ public class UITreeDataProvider<VO extends RFWVO> extends AbstractBackEndHierarc
 
   @Override
   public void refreshAll() {
-    // limpamos o cache para forÁar uma completa releitura
+    // limpamos o cache para for√ßar uma completa releitura
     this.parentHash.clear();
     this.childrenHash.clear();
     super.refreshAll();
@@ -313,18 +313,18 @@ public class UITreeDataProvider<VO extends RFWVO> extends AbstractBackEndHierarc
   }
 
   /**
-   * # inst‚ncia do DataProvider fornecido pela aplicaÁ„o para busca das informaÁıes.
+   * # inst√¢ncia do DataProvider fornecido pela aplica√ß√£o para busca das informa√ß√µes.
    *
-   * @return # inst‚ncia do DataProvider fornecido pela aplicaÁ„o para busca das informaÁıes
+   * @return # inst√¢ncia do DataProvider fornecido pela aplica√ß√£o para busca das informa√ß√µes
    */
   public RFWDBProvider getDataProvider() {
     return dataProvider;
   }
 
   /**
-   * # inst‚ncia do DataProvider fornecido pela aplicaÁ„o para busca das informaÁıes.
+   * # inst√¢ncia do DataProvider fornecido pela aplica√ß√£o para busca das informa√ß√µes.
    *
-   * @param dataProvider # inst‚ncia do DataProvider fornecido pela aplicaÁ„o para busca das informaÁıes
+   * @param dataProvider # inst√¢ncia do DataProvider fornecido pela aplica√ß√£o para busca das informa√ß√µes
    */
   public void setDataProvider(RFWDBProvider dataProvider) {
     this.dataProvider = dataProvider;

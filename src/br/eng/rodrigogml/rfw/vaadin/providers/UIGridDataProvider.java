@@ -21,9 +21,9 @@ import br.eng.rodrigogml.rfw.kernel.vo.RFWVO;
 import br.eng.rodrigogml.rfw.vaadin.utils.TreatException;
 
 /**
- * Description: Classe utilizada para prover os dados para o Grid (encapsulando o VO no GVO) da UI atravÈs de lazy load.<br>
+ * Description: Classe utilizada para prover os dados para o Grid (encapsulando o VO no GVO) da UI atrav√©s de lazy load.<br>
  *
- * @author Rodrigo Leit„o
+ * @author Rodrigo Leit√£o
  * @since 10.0.0 (9 de ago de 2018)
  */
 public class UIGridDataProvider<VO extends RFWVO> extends AbstractBackEndDataProvider<GVO<VO>, String> {
@@ -41,51 +41,51 @@ public class UIGridDataProvider<VO extends RFWVO> extends AbstractBackEndDataPro
   private RFWOrderBy orderBy = null;
 
   /**
-   * Define a lista de atributos que precisam devem ser recuperados nos objetos recuperados. Por padr„o mantemos null que recupera sÛ os atributos do objeto, sem nenhum relacionamento.
+   * Define a lista de atributos que precisam devem ser recuperados nos objetos recuperados. Por padr√£o mantemos null que recupera s√≥ os atributos do objeto, sem nenhum relacionamento.
    */
   private String[] attributes = null;
 
   /**
-   * ReferÍncia da Classe do VO que a inst‚ncia do UIDataProvider esta operando.
+   * Refer√™ncia da Classe do VO que a inst√¢ncia do UIDataProvider esta operando.
    */
   private final Class<VO> voClass;
 
   /**
-   * Armazena os IDs da lista que est· sendo exibida no Data Provider. Essa lista È atualizada sempre que o Sort ou o MO for alterado.
+   * Armazena os IDs da lista que est√° sendo exibida no Data Provider. Essa lista √© atualizada sempre que o Sort ou o MO for alterado.
    */
   private List<Long> ids = null;
 
   /**
-   * Se definido, este atributo ser· utilizado para realizar um filtro (alÈm do RFWMO j· definido) nos elementos do Provider.
+   * Se definido, este atributo ser√° utilizado para realizar um filtro (al√©m do RFWMO j√° definido) nos elementos do Provider.
    */
   private String filterAttribute = null;
 
   /**
-   * Salva a referÍncia do ˙ltimo filtro utilizado, evitando que, caso o filtro n„o seja alterado n„o sejam feitas novas consultas sem necessidade.
+   * Salva a refer√™ncia do √∫ltimo filtro utilizado, evitando que, caso o filtro n√£o seja alterado n√£o sejam feitas novas consultas sem necessidade.
    */
   private String lastFilter = null;
 
   /**
-   * Se definido, limita a quantidade de resultados que È retornado ao realizar a busca no banco de dados.<br>
-   * ⁄til quando a tabela contÈm muitos dados e n„o queremos sobrecarregar os resultados, forÁanco a aplicaÁ„o de um filtro melhor.
+   * Se definido, limita a quantidade de resultados que √© retornado ao realizar a busca no banco de dados.<br>
+   * √ötil quando a tabela cont√©m muitos dados e n√£o queremos sobrecarregar os resultados, for√ßanco a aplica√ß√£o de um filtro melhor.
    */
   private Integer limitResults = null;
 
   /**
    * Quando {@link #limitResults} estiver definido este atrinuto indica se o retorno do banco de dados atingiu a quantidade limite.<br>
-   * <li>True quando a consulta retornou a quantidade limite (podendo ou n„o haver mais objetos no banco - caso o banco tenha exatamente a quantidade limite este atributo ter· true pq chegou no valor limite, mas o banco n„o tem mais nenhum para exibir)
+   * <li>True quando a consulta retornou a quantidade limite (podendo ou n√£o haver mais objetos no banco - caso o banco tenha exatamente a quantidade limite este atributo ter√° true pq chegou no valor limite, mas o banco n√£o tem mais nenhum para exibir)
    * <li>False Caso a quantidade de objetos retornados seja menor que o limite.
-   * <li>False caso {@link #limitResults} n„o esteja definido.
+   * <li>False caso {@link #limitResults} n√£o esteja definido.
    */
   private boolean limitedResults = false;
 
   /**
-   * Inst‚ncia do DataProvider fornecido pela aplicaÁ„o para busca das informaÁıes.
+   * Inst√¢ncia do DataProvider fornecido pela aplica√ß√£o para busca das informa√ß√µes.
    */
   private RFWDBProvider dataProvider = null;
 
   /**
-   * Cria um provider sem orderBy inicial. Neste caso a ordernaÁ„o È definida pelo prÛprio Core quando retornar os objetos.
+   * Cria um provider sem orderBy inicial. Neste caso a orderna√ß√£o √© definida pelo pr√≥prio Core quando retornar os objetos.
    *
    * @throws RFWException
    */
@@ -95,9 +95,9 @@ public class UIGridDataProvider<VO extends RFWVO> extends AbstractBackEndDataPro
   }
 
   /**
-   * Cria um data provider com um orderBy inicial (ou para quando o Grid n„o definir nenhum)
+   * Cria um data provider com um orderBy inicial (ou para quando o Grid n√£o definir nenhum)
    *
-   * @param orderBy DefiniÁ„o de OrdemaÁ„o inicial.
+   * @param orderBy Defini√ß√£o de Ordema√ß√£o inicial.
    * @throws RFWException
    */
   public UIGridDataProvider(Class<VO> voClass, RFWOrderBy orderBy, String[] attributes, RFWDBProvider dataProvider) throws RFWException {
@@ -121,7 +121,7 @@ public class UIGridDataProvider<VO extends RFWVO> extends AbstractBackEndDataPro
 
       // Converte o QuerySort em RFWOrderBy
       RFWOrderBy tmpOrderBy = writeRFWOrderBy(query.getSortOrders());
-      // Verificamos se recebemos um OrderBy do componente, e se houve alteraÁ„o no orderBy, se houve temos que atualizar a lista
+      // Verificamos se recebemos um OrderBy do componente, e se houve altera√ß√£o no orderBy, se houve temos que atualizar a lista
       if (tmpOrderBy != null && !tmpOrderBy.equals(this.orderBy)) {
         this.orderBy = tmpOrderBy;
         updatePending = true;
@@ -135,16 +135,16 @@ public class UIGridDataProvider<VO extends RFWVO> extends AbstractBackEndDataPro
         tmpMO = this.rfwMO; // Deixamos definido caso o updatePending esteja true por conta do orderBy
       }
 
-      // Se mudou orderBy, Filtro, ou se ainda n„o temos os objetos atualizamos a lista antes de retornar os dados
+      // Se mudou orderBy, Filtro, ou se ainda n√£o temos os objetos atualizamos a lista antes de retornar os dados
       if (updatePending) updateDataIDs(tmpMO);
 
       final int offset = query.getOffset();
       final int limit = query.getLimit();
 
-      // Retornamos a lista vazia caso n„o tenhamos dado
+      // Retornamos a lista vazia caso n√£o tenhamos dado
       if (this.ids.size() == 0 || offset >= this.ids.size()) return new LinkedList<GVO<VO>>().stream();
 
-      // Convertemos a sublista em uma LinkedList pq o objeto retornado pelo SubList n„o È serializavel e n„o passa pela fachada.
+      // Convertemos a sublista em uma LinkedList pq o objeto retornado pelo SubList n√£o √© serializavel e n√£o passa pela fachada.
       LinkedList<Long> idsList = new LinkedList<>();
       idsList.addAll(this.ids.subList(offset, Math.min(this.ids.size(), offset + limit)));
 
@@ -160,7 +160,7 @@ public class UIGridDataProvider<VO extends RFWVO> extends AbstractBackEndDataPro
 
       return encapList.stream();
     } catch (RFWException t) {
-      // LanÁamos uma exception de RunTime pq retornar uma lista vazia deixa o Vaadin em loop infinito j· que a quantidade j· pode ter sido retornada em outro me¥todo
+      // Lan√ßamos uma exception de RunTime pq retornar uma lista vazia deixa o Vaadin em loop infinito j√° que a quantidade j√° pode ter sido retornada em outro me¬¥todo
       TreatException.treat(t);
       // throw new RFWRunTimeException(t);
       return new LinkedList<GVO<VO>>().stream(); // Retorna uma lista vazia para o GRID em caso de erro
@@ -173,11 +173,11 @@ public class UIGridDataProvider<VO extends RFWVO> extends AbstractBackEndDataPro
 
   private RFWMO writeRFWMO(Optional<String> filter) throws RFWException {
     RFWMO mo = null;
-    // SÛ vamos atualizar o VO se tivermos um atributo de filtro definido.
+    // S√≥ vamos atualizar o VO se tivermos um atributo de filtro definido.
     if (this.filterAttribute != null) {
       if (filter.isPresent()) {
         if (this.lastFilter == null || !this.lastFilter.equals(filter.get())) {
-          // Se temos um filtro do componente e ele È diferente do ˙ltimo filtro, criamos um novo MO com o filtro adicional
+          // Se temos um filtro do componente e ele √© diferente do √∫ltimo filtro, criamos um novo MO com o filtro adicional
           if (this.rfwMO != null) {
             mo = this.rfwMO.cloneRecursive();
           } else {
@@ -187,7 +187,7 @@ public class UIGridDataProvider<VO extends RFWVO> extends AbstractBackEndDataPro
           this.lastFilter = filter.get();
         }
       } else {
-        // Se n„o temos mais filtro, mas antes tinhamos, retornamos o MO padr„o para realizar a nova busca "sem filtros"
+        // Se n√£o temos mais filtro, mas antes tinhamos, retornamos o MO padr√£o para realizar a nova busca "sem filtros"
         if (this.lastFilter != null) {
           if (this.rfwMO != null) {
             mo = this.rfwMO;
@@ -221,7 +221,7 @@ public class UIGridDataProvider<VO extends RFWVO> extends AbstractBackEndDataPro
 
       // Converte o QuerySort em RFWOrderBy
       RFWOrderBy tmpOrderBy = writeRFWOrderBy(query.getSortOrders());
-      // Verificamos se recebemos um OrderBy do componente, e se houve alteraÁ„o no orderBy, se houve temos que atualizar a lista
+      // Verificamos se recebemos um OrderBy do componente, e se houve altera√ß√£o no orderBy, se houve temos que atualizar a lista
       if (tmpOrderBy != null && !tmpOrderBy.equals(this.orderBy)) {
         this.orderBy = tmpOrderBy;
         updatePending = true;
@@ -235,7 +235,7 @@ public class UIGridDataProvider<VO extends RFWVO> extends AbstractBackEndDataPro
         tmpMO = this.rfwMO; // Deixamos definido caso o updatePending esteja true por conta do orderBy
       }
 
-      // Se mudou orderBy, Filtro, ou se ainda n„o temos os objetos atualizamos a lista antes de retornar os dados
+      // Se mudou orderBy, Filtro, ou se ainda n√£o temos os objetos atualizamos a lista antes de retornar os dados
       if (updatePending || this.ids == null) updateDataIDs(tmpMO);
 
       return this.ids.size();
@@ -245,7 +245,7 @@ public class UIGridDataProvider<VO extends RFWVO> extends AbstractBackEndDataPro
   }
 
   /**
-   * MÈtodo utilizado para attualizar a lista de IDs dos objetos que o DataProvider tem.
+   * M√©todo utilizado para attualizar a lista de IDs dos objetos que o DataProvider tem.
    *
    * @param mo Atualiza o Provider com o MO recebido. Se for igual a NULL utiliza o rfwMO definido no escopo da classe.
    *
@@ -300,16 +300,16 @@ public class UIGridDataProvider<VO extends RFWVO> extends AbstractBackEndDataPro
   }
 
   /**
-   * # referÍncia da Classe do VO que a inst‚ncia do UIDataProvider esta operando.
+   * # refer√™ncia da Classe do VO que a inst√¢ncia do UIDataProvider esta operando.
    *
-   * @return the referÍncia da Classe do VO que a inst‚ncia do UIDataProvider esta operando
+   * @return the refer√™ncia da Classe do VO que a inst√¢ncia do UIDataProvider esta operando
    */
   public Class<VO> getvoClass() {
     return voClass;
   }
 
   /**
-   * # define a lista de atributos que precisam devem ser recuperados nos objetos recuperados. Por padr„o mantemos null que recupera sÛ os atributos do objeto, sem nenhum relacionamento.
+   * # define a lista de atributos que precisam devem ser recuperados nos objetos recuperados. Por padr√£o mantemos null que recupera s√≥ os atributos do objeto, sem nenhum relacionamento.
    *
    * @return the define a lista de atributos que precisam devem ser recuperados nos objetos recuperados
    */
@@ -318,7 +318,7 @@ public class UIGridDataProvider<VO extends RFWVO> extends AbstractBackEndDataPro
   }
 
   /**
-   * # define a lista de atributos que precisam devem ser recuperados nos objetos recuperados. Por padr„o mantemos null que recupera sÛ os atributos do objeto, sem nenhum relacionamento.
+   * # define a lista de atributos que precisam devem ser recuperados nos objetos recuperados. Por padr√£o mantemos null que recupera s√≥ os atributos do objeto, sem nenhum relacionamento.
    *
    * @param attributes the new define a lista de atributos que precisam devem ser recuperados nos objetos recuperados
    */
@@ -328,29 +328,29 @@ public class UIGridDataProvider<VO extends RFWVO> extends AbstractBackEndDataPro
   }
 
   /**
-   * MÈtodo que permite saber se um determineo objeto (pelo seu ID) est· presente na atual coleÁ„o do DataProvider. <B>ATEN«√O:</B> Note que este mÈtodo sÛ retornar· true caso o objeto j· esteja carregado no cache, caso contr·rio o valor retornado ser· false.
+   * M√©todo que permite saber se um determineo objeto (pelo seu ID) est√° presente na atual cole√ß√£o do DataProvider. <B>ATEN√á√ÉO:</B> Note que este m√©todo s√≥ retornar√° true caso o objeto j√° esteja carregado no cache, caso contr√°rio o valor retornado ser√° false.
    *
    * @param id ID do objeto a ser verificado.
-   * @return retorna true caso esteja, retorna false caso contr·rio.<br>
-   *         <b>N„o retorna erro ou null pointer. Mesmo que o conjunto de dados ainda esteja nulo, È considerado que o objeto n„o est· presente nesses casos.</b>
+   * @return retorna true caso esteja, retorna false caso contr√°rio.<br>
+   *         <b>N√£o retorna erro ou null pointer. Mesmo que o conjunto de dados ainda esteja nulo, √© considerado que o objeto n√£o est√° presente nesses casos.</b>
    */
   public boolean contains(Long id) {
     return (this.ids != null && this.ids.contains(id));
   }
 
   /**
-   * # se definido, este atributo ser· utilizado para realizar um filtro (alÈm do RFWMO j· definido) nos elementos do Provider.
+   * # se definido, este atributo ser√° utilizado para realizar um filtro (al√©m do RFWMO j√° definido) nos elementos do Provider.
    *
-   * @return the se definido, este atributo ser· utilizado para realizar um filtro (alÈm do RFWMO j· definido) nos elementos do Provider
+   * @return the se definido, este atributo ser√° utilizado para realizar um filtro (al√©m do RFWMO j√° definido) nos elementos do Provider
    */
   public String getFilterAttribute() {
     return filterAttribute;
   }
 
   /**
-   * # se definido, este atributo ser· utilizado para realizar um filtro (alÈm do RFWMO j· definido) nos elementos do Provider.
+   * # se definido, este atributo ser√° utilizado para realizar um filtro (al√©m do RFWMO j√° definido) nos elementos do Provider.
    *
-   * @param filterAttribute the new se definido, este atributo ser· utilizado para realizar um filtro (alÈm do RFWMO j· definido) nos elementos do Provider
+   * @param filterAttribute the new se definido, este atributo ser√° utilizado para realizar um filtro (al√©m do RFWMO j√° definido) nos elementos do Provider
    */
   public void setFilterAttribute(String filterAttribute) {
     this.filterAttribute = filterAttribute;
@@ -358,13 +358,13 @@ public class UIGridDataProvider<VO extends RFWVO> extends AbstractBackEndDataPro
 
   @Override
   public void refreshAll() {
-    // Caso seja feita uma solicitaÁ„o de atualizar todos os itens zeramos a listagem para garantir que o provider n„o usar· o cache de IDs
+    // Caso seja feita uma solicita√ß√£o de atualizar todos os itens zeramos a listagem para garantir que o provider n√£o usar√° o cache de IDs
     this.ids = null;
     super.refreshAll();
   }
 
   /**
-   * Retorna a quantidade atual de itens no Provider. Note que retorna conforme a quantidade de IDs que foram obtidos desde o ˙ltimo refresh() (o que compıe os dados do provider atualmente) e que podem ser afetados pelo {@link #limitedResults}. Pode ou n„o representar o total de itens existente no banco de dados se {@link #limitedResults} for definido.
+   * Retorna a quantidade atual de itens no Provider. Note que retorna conforme a quantidade de IDs que foram obtidos desde o √∫ltimo refresh() (o que comp√µe os dados do provider atualmente) e que podem ser afetados pelo {@link #limitedResults}. Pode ou n√£o representar o total de itens existente no banco de dados se {@link #limitedResults} for definido.
    *
    * @return Quantidade atual de Itens no Provider.
    */
@@ -374,20 +374,20 @@ public class UIGridDataProvider<VO extends RFWVO> extends AbstractBackEndDataPro
   }
 
   /**
-   * # se definido, limita a quantidade de resultados que È retornado ao realizar a busca no banco de dados.<br>
-   * ⁄til quando a tabela contÈm muitos dados e n„o queremos sobrecarregar os resultados, forÁanco a aplicaÁ„o de um filtro melhor.
+   * # se definido, limita a quantidade de resultados que √© retornado ao realizar a busca no banco de dados.<br>
+   * √ötil quando a tabela cont√©m muitos dados e n√£o queremos sobrecarregar os resultados, for√ßanco a aplica√ß√£o de um filtro melhor.
    *
-   * @return the se definido, limita a quantidade de resultados que È retornado ao realizar a busca no banco de dados
+   * @return the se definido, limita a quantidade de resultados que √© retornado ao realizar a busca no banco de dados
    */
   public Integer getLimitResults() {
     return limitResults;
   }
 
   /**
-   * # se definido, limita a quantidade de resultados que È retornado ao realizar a busca no banco de dados.<br>
-   * ⁄til quando a tabela contÈm muitos dados e n„o queremos sobrecarregar os resultados, forÁanco a aplicaÁ„o de um filtro melhor.
+   * # se definido, limita a quantidade de resultados que √© retornado ao realizar a busca no banco de dados.<br>
+   * √ötil quando a tabela cont√©m muitos dados e n√£o queremos sobrecarregar os resultados, for√ßanco a aplica√ß√£o de um filtro melhor.
    *
-   * @param limitResults the new se definido, limita a quantidade de resultados que È retornado ao realizar a busca no banco de dados
+   * @param limitResults the new se definido, limita a quantidade de resultados que √© retornado ao realizar a busca no banco de dados
    */
   public void setLimitResults(Integer limitResults) {
     this.limitResults = limitResults;
@@ -395,9 +395,9 @@ public class UIGridDataProvider<VO extends RFWVO> extends AbstractBackEndDataPro
 
   /**
    * # quando {@link #limitResults} estiver definido este atrinuto indica se o retorno do banco de dados atingiu a quantidade limite.<br>
-   * <li>True quando a consulta retornou a quantidade limite (podendo ou n„o haver mais objetos no banco - caso o banco tenha exatamente a quantidade limite este atributo ter· true pq chegou no valor limite, mas o banco n„o tem mais nenhum para exibir)
+   * <li>True quando a consulta retornou a quantidade limite (podendo ou n√£o haver mais objetos no banco - caso o banco tenha exatamente a quantidade limite este atributo ter√° true pq chegou no valor limite, mas o banco n√£o tem mais nenhum para exibir)
    * <li>False Caso a quantidade de objetos retornados seja menor que o limite.
-   * <li>False caso {@link #limitResults} n„o esteja definido.
+   * <li>False caso {@link #limitResults} n√£o esteja definido.
    *
    * @return the quando {@link #limitResults} estiver definido este atrinuto indica se o retorno do banco de dados atingiu a quantidade limite
    */
@@ -406,18 +406,18 @@ public class UIGridDataProvider<VO extends RFWVO> extends AbstractBackEndDataPro
   }
 
   /**
-   * # inst‚ncia do DataProvider fornecido pela aplicaÁ„o para busca das informaÁıes.
+   * # inst√¢ncia do DataProvider fornecido pela aplica√ß√£o para busca das informa√ß√µes.
    *
-   * @return # inst‚ncia do DataProvider fornecido pela aplicaÁ„o para busca das informaÁıes
+   * @return # inst√¢ncia do DataProvider fornecido pela aplica√ß√£o para busca das informa√ß√µes
    */
   public RFWDBProvider getDataProvider() {
     return dataProvider;
   }
 
   /**
-   * # inst‚ncia do DataProvider fornecido pela aplicaÁ„o para busca das informaÁıes.
+   * # inst√¢ncia do DataProvider fornecido pela aplica√ß√£o para busca das informa√ß√µes.
    *
-   * @param dataProvider # inst‚ncia do DataProvider fornecido pela aplicaÁ„o para busca das informaÁıes
+   * @param dataProvider # inst√¢ncia do DataProvider fornecido pela aplica√ß√£o para busca das informa√ß√µes
    */
   public void setDataProvider(RFWDBProvider dataProvider) {
     this.dataProvider = dataProvider;

@@ -23,7 +23,7 @@ import br.eng.rodrigogml.rfw.vaadin.utils.FWVad.ButtonType;
 /**
  * Description: Componente Uitlizado para exibir um Range da Datas, utilizado principalmente para filtros..<br>
  *
- * @author Rodrigo Leitão
+ * @author Rodrigo LeitÃ£o
  * @since 7.1.0 (5 de mai de 2019)
  */
 public class RFWDateRangeComponent extends CustomField<LocalDateTime> {
@@ -32,15 +32,15 @@ public class RFWDateRangeComponent extends CustomField<LocalDateTime> {
 
   public static enum RFWDateRangeScope {
     /**
-     * Define as sugestões somente com períodos Futuros
+     * Define as sugestÃµes somente com perÃ­odos Futuros
      */
     FUTURE,
     /**
-     * Define as sugestões somente com períodos Passados
+     * Define as sugestÃµes somente com perÃ­odos Passados
      */
     PAST,
     /**
-     * Define as sugestões com todos os períodos existentes.
+     * Define as sugestÃµes com todos os perÃ­odos existentes.
      */
     ALL
   }
@@ -50,11 +50,11 @@ public class RFWDateRangeComponent extends CustomField<LocalDateTime> {
   final RFWDateRangeScope scope;
 
   /**
-   * Componente {@link DateTimeField} utilizado para entrada do início do período.
+   * Componente {@link DateTimeField} utilizado para entrada do inÃ­cio do perÃ­odo.
    */
   final DateTimeField startDateTime = new DateTimeField();
   /**
-   * Componente {@link DateTimeField} utilizado para entrada do final do período.
+   * Componente {@link DateTimeField} utilizado para entrada do final do perÃ­odo.
    */
   final DateTimeField endDateTime = new DateTimeField();
 
@@ -108,9 +108,9 @@ public class RFWDateRangeComponent extends CustomField<LocalDateTime> {
         });
         vl.addComponent(optbt);
       }
-      // Mês anterior
+      // MÃªs anterior
       if (this.scope == RFWDateRangeScope.ALL || this.scope == RFWDateRangeScope.PAST) {
-        Button optbt = new Button("Mês Anterior");
+        Button optbt = new Button("MÃªs Anterior");
         optbt.addStyleName(ValoTheme.BUTTON_LINK);
         optbt.setCaptionAsHtml(true);
         optbt.addClickListener(e -> {
@@ -119,9 +119,9 @@ public class RFWDateRangeComponent extends CustomField<LocalDateTime> {
         });
         vl.addComponent(optbt);
       }
-      // Mês Atual
+      // MÃªs Atual
       {
-        Button optbt = new Button("Mês Atual");
+        Button optbt = new Button("MÃªs Atual");
         optbt.addStyleName(ValoTheme.BUTTON_LINK);
         optbt.setCaptionAsHtml(true);
         optbt.addClickListener(e -> {
@@ -130,9 +130,9 @@ public class RFWDateRangeComponent extends CustomField<LocalDateTime> {
         });
         vl.addComponent(optbt);
       }
-      // Mês Próximo
+      // MÃªs PrÃ³ximo
       if (this.scope == RFWDateRangeScope.ALL || this.scope == RFWDateRangeScope.FUTURE) {
-        Button optbt = new Button("Próximo Mês");
+        Button optbt = new Button("PrÃ³ximo MÃªs");
         optbt.addStyleName(ValoTheme.BUTTON_LINK);
         optbt.setCaptionAsHtml(true);
         optbt.addClickListener(e -> {
@@ -156,7 +156,7 @@ public class RFWDateRangeComponent extends CustomField<LocalDateTime> {
       endDateTime.setValue(startDateTime.getValue());
     });
     repeatValue.setWidth("57px");
-    repeatValue.setDescription("Repete o valor de início do período no campo de final do período.");
+    repeatValue.setDescription("Repete o valor de inÃ­cio do perÃ­odo no campo de final do perÃ­odo.");
 
     this.hl.addComponent(startDateTime);
     this.hl.addComponent(endDateTime);
@@ -182,7 +182,7 @@ public class RFWDateRangeComponent extends CustomField<LocalDateTime> {
   }
 
   /**
-   * Define o período como sendo o mês corrente.
+   * Define o perÃ­odo como sendo o mÃªs corrente.
    */
   public void setMonthCurrent() {
     LocalDate now = RFW.getDate();
@@ -193,7 +193,7 @@ public class RFWDateRangeComponent extends CustomField<LocalDateTime> {
   }
 
   /**
-   * Define o período como sendo o mês anterior.
+   * Define o perÃ­odo como sendo o mÃªs anterior.
    */
   public void setMonthLast() {
     LocalDate now = RFW.getDate();
@@ -248,18 +248,18 @@ public class RFWDateRangeComponent extends CustomField<LocalDateTime> {
   }
 
   /**
-   * Recupera o componente {@link DateTimeField} utilizado para entrada do início do período.
+   * Recupera o componente {@link DateTimeField} utilizado para entrada do inÃ­cio do perÃ­odo.
    *
-   * @return the componente {@link DateTimeField} utilizado para entrada do início do período
+   * @return the componente {@link DateTimeField} utilizado para entrada do inÃ­cio do perÃ­odo
    */
   public DateTimeField getStartDateTime() {
     return startDateTime;
   }
 
   /**
-   * Recupera o componente {@link DateTimeField} utilizado para entrada do final do período.
+   * Recupera o componente {@link DateTimeField} utilizado para entrada do final do perÃ­odo.
    *
-   * @return the componente {@link DateTimeField} utilizado para entrada do final do período
+   * @return the componente {@link DateTimeField} utilizado para entrada do final do perÃ­odo
    */
   public DateTimeField getEndDateTime() {
     return endDateTime;

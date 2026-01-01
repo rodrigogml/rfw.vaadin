@@ -5,9 +5,9 @@ import com.vaadin.ui.Grid.ItemClick;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 
 /**
- * Description: Interface de Evento de Duplo click (j· tratado) no GRID de dados criado pelo UIFactory.<br>
+ * Description: Interface de Evento de Duplo click (j√° tratado) no GRID de dados criado pelo UIFactory.<br>
  *
- * @author Rodrigo Leit„o
+ * @author Rodrigo Leit√£o
  * @since 10.0.0 (31 de ago de 2018)
  */
 public interface RFWGridDoubleClickListener<BEAN> {
