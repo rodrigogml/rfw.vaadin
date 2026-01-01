@@ -4,11 +4,11 @@ import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Button;
 
 /**
- * Description: Componente que transforma o {@link Button} em um bot„o de estado do tipo "liga/desliga".<br>
- * O estado de selecionado/desselecionado pode ser verificado pelo mÈtodo {@link #isSelected()} e/ou definido por {@link #setSelected(boolean)}.<br>
- * AlÈm disso o componente pode ser configurado um valor em {@link #setSelectedValue(Object)} e {@link #setUnselectedValue(Object)}, que podem ser retornados atravÈs do mÈtodo {@link #getValue()} conforme o bot„o estiver ou n„o selecionado.
+ * Description: Componente que transforma o {@link Button} em um bot√£o de estado do tipo "liga/desliga".<br>
+ * O estado de selecionado/desselecionado pode ser verificado pelo m√©todo {@link #isSelected()} e/ou definido por {@link #setSelected(boolean)}.<br>
+ * Al√©m disso o componente pode ser configurado um valor em {@link #setSelectedValue(Object)} e {@link #setUnselectedValue(Object)}, que podem ser retornados atrav√©s do m√©todo {@link #getValue()} conforme o bot√£o estiver ou n√£o selecionado.
  *
- * @author Rodrigo Leit„o
+ * @author Rodrigo Leit√£o
  * @since 7.1.0 (28/03/2016)
  */
 public class RFWButtonToggle<T extends Object> extends Button {
@@ -20,27 +20,27 @@ public class RFWButtonToggle<T extends Object> extends Button {
   public static final String STYLE_DANGER_PUSHED = "rfwButtonToggleDownDanger";
 
   /**
-   * Valor definido como valor a ser utilizado quando bot„o est· selecionado.
+   * Valor definido como valor a ser utilizado quando bot√£o est√° selecionado.
    */
   private T selectedValue = null;
 
   /**
-   * Valor definido como valor a ser utilizado quando bot„o N√O est· selecionado.
+   * Valor definido como valor a ser utilizado quando bot√£o N√ÉO est√° selecionado.
    */
   private T unselectedValue = null;
 
   /**
-   * Define o Style a ser aplicado no bot„o quando estiver pressionado.
+   * Define o Style a ser aplicado no bot√£o quando estiver pressionado.
    */
   private String pushedStyle = STYLE_DEFAULT_PUSHED;
 
   /**
-   * Define o Style a ser aplicado no bot„o quando n„o estiver pressionado.
+   * Define o Style a ser aplicado no bot√£o quando n√£o estiver pressionado.
    */
   private String unpushedStyle = null;
 
   /**
-   * Indicador se o bot„o est· selecionado (apertado ou n„o)
+   * Indicador se o bot√£o est√° selecionado (apertado ou n√£o)
    */
   private boolean selected = false;
 
@@ -66,37 +66,37 @@ public class RFWButtonToggle<T extends Object> extends Button {
   }
 
   /**
-   * MÈtodo usado para configura o BISButton em um Toggle
+   * M√©todo usado para configura o BISButton em um Toggle
    */
   private void configure() {
-    // Coloca o listener para que a cada clique o bot„o troque de status
+    // Coloca o listener para que a cada clique o bot√£o troque de status
     this.addClickListener(e -> clickButton());
   }
 
   /**
-   * MÈtodo chamado a cada clique do bot„o para trocar o seu valor
+   * M√©todo chamado a cada clique do bot√£o para trocar o seu valor
    */
   private void clickButton() {
     this.selected = !this.selected; // Inverte o valor atual
-    updateButtonStyle(); // Atualiza a aparÍncia do componente
+    updateButtonStyle(); // Atualiza a apar√™ncia do componente
   }
 
   /*
    * Retorna o valor definido em {@link #setSelectedValue(Object)} e {@link #setUnselectedValue(Object)} de acordo com o status de {@link #isSelected()}.
    *
-   * @return O valor do objeto de acordo com o status se seleÁ„o.
+   * @return O valor do objeto de acordo com o status se sele√ß√£o.
    */
   /**
    * Retorna o valor definido em {@link #setSelectedValue(Object)} e {@link #setUnselectedValue(Object)} de acordo com o status de {@link #isSelected()}.
    *
-   * @return O valor do objeto de acordo com o status se seleÁ„o.
+   * @return O valor do objeto de acordo com o status se sele√ß√£o.
    */
   public T getValue() {
     return (this.selected ? this.selectedValue : this.unselectedValue);
   }
 
   /**
-   * Este mÈtodo atualiza a aparÍncia do bot„o de acordo com o valor em {@link #value2}.
+   * Este m√©todo atualiza a apar√™ncia do bot√£o de acordo com o valor em {@link #value2}.
    */
   private void updateButtonStyle() {
     if (this.pushedStyle != null) this.removeStyleName(this.pushedStyle);
@@ -109,36 +109,36 @@ public class RFWButtonToggle<T extends Object> extends Button {
   }
 
   /**
-   * # indicador se o bot„o est· selecionado (apertado ou n„o).
+   * # indicador se o bot√£o est√° selecionado (apertado ou n√£o).
    *
-   * @return the indicador se o bot„o est· selecionado (apertado ou n„o)
+   * @return the indicador se o bot√£o est√° selecionado (apertado ou n√£o)
    */
   public boolean isSelected() {
     return selected;
   }
 
   /**
-   * # valor definido como valor a ser utilizado quando bot„o est· selecionado.
+   * # valor definido como valor a ser utilizado quando bot√£o est√° selecionado.
    *
-   * @param selectedValue the new valor definido como valor a ser utilizado quando bot„o est· selecionado
+   * @param selectedValue the new valor definido como valor a ser utilizado quando bot√£o est√° selecionado
    */
   public void setSelectedValue(T selectedValue) {
     this.selectedValue = selectedValue;
   }
 
   /**
-   * # valor definido como valor a ser utilizado quando bot„o N√O est· selecionado.
+   * # valor definido como valor a ser utilizado quando bot√£o N√ÉO est√° selecionado.
    *
-   * @param unselectedValue the new valor definido como valor a ser utilizado quando bot„o N√O est· selecionado
+   * @param unselectedValue the new valor definido como valor a ser utilizado quando bot√£o N√ÉO est√° selecionado
    */
   public void setUnselectedValue(T unselectedValue) {
     this.unselectedValue = unselectedValue;
   }
 
   /**
-   * # indicador se o bot„o est· selecionado (apertado ou n„o).
+   * # indicador se o bot√£o est√° selecionado (apertado ou n√£o).
    *
-   * @param selected the new indicador se o bot„o est· selecionado (apertado ou n„o)
+   * @param selected the new indicador se o bot√£o est√° selecionado (apertado ou n√£o)
    */
   public void setSelected(boolean selected) {
     this.selected = selected;
@@ -146,60 +146,60 @@ public class RFWButtonToggle<T extends Object> extends Button {
   }
 
   /**
-   * # valor definido como valor a ser utilizado quando bot„o est· selecionado.
+   * # valor definido como valor a ser utilizado quando bot√£o est√° selecionado.
    *
-   * @return the valor definido como valor a ser utilizado quando bot„o est· selecionado
+   * @return the valor definido como valor a ser utilizado quando bot√£o est√° selecionado
    */
   public Object getSelectedValue() {
     return selectedValue;
   }
 
   /**
-   * # valor definido como valor a ser utilizado quando bot„o N√O est· selecionado.
+   * # valor definido como valor a ser utilizado quando bot√£o N√ÉO est√° selecionado.
    *
-   * @return the valor definido como valor a ser utilizado quando bot„o N√O est· selecionado
+   * @return the valor definido como valor a ser utilizado quando bot√£o N√ÉO est√° selecionado
    */
   public Object getUnselectedValue() {
     return unselectedValue;
   }
 
   /**
-   * # define o Style a ser aplicado no bot„o quando estiver pressionado.
+   * # define o Style a ser aplicado no bot√£o quando estiver pressionado.
    *
-   * @return the define o Style a ser aplicado no bot„o quando estiver pressionado
+   * @return the define o Style a ser aplicado no bot√£o quando estiver pressionado
    */
   public String getPushedStyle() {
     return pushedStyle;
   }
 
   /**
-   * # define o Style a ser aplicado no bot„o quando estiver pressionado.
+   * # define o Style a ser aplicado no bot√£o quando estiver pressionado.
    *
-   * @param pushedStyle the new define o Style a ser aplicado no bot„o quando estiver pressionado
+   * @param pushedStyle the new define o Style a ser aplicado no bot√£o quando estiver pressionado
    */
   public void setPushedStyle(String pushedStyle) {
-    // Remove o estilo anterior para que n„o fique perdido no objeto
+    // Remove o estilo anterior para que n√£o fique perdido no objeto
     if (this.pushedStyle != null) this.removeStyleName(this.pushedStyle);
     this.pushedStyle = pushedStyle;
     updateButtonStyle();
   }
 
   /**
-   * # define o Style a ser aplicado no bot„o quando n„o estiver pressionado.
+   * # define o Style a ser aplicado no bot√£o quando n√£o estiver pressionado.
    *
-   * @return the define o Style a ser aplicado no bot„o quando n„o estiver pressionado
+   * @return the define o Style a ser aplicado no bot√£o quando n√£o estiver pressionado
    */
   public String getUnpushedStyle() {
     return unpushedStyle;
   }
 
   /**
-   * # define o Style a ser aplicado no bot„o quando n„o estiver pressionado.
+   * # define o Style a ser aplicado no bot√£o quando n√£o estiver pressionado.
    *
-   * @param unpushedStyle the new define o Style a ser aplicado no bot„o quando n„o estiver pressionado
+   * @param unpushedStyle the new define o Style a ser aplicado no bot√£o quando n√£o estiver pressionado
    */
   public void setUnpushedStyle(String unpushedStyle) {
-    // Remove o estilo anterior para que n„o fique perdido no objeto
+    // Remove o estilo anterior para que n√£o fique perdido no objeto
     if (this.unpushedStyle != null) this.removeStyleName(this.unpushedStyle);
     this.unpushedStyle = unpushedStyle;
     updateButtonStyle();

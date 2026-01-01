@@ -22,9 +22,9 @@ import br.eng.rodrigogml.rfw.kernel.vo.RFWVO;
 import br.eng.rodrigogml.rfw.vaadin.utils.TreatException;
 
 /**
- * Description: Classe utilizada para prover os dados apra os componentes da UI atravÈs de lazy load.<br>
+ * Description: Classe utilizada para prover os dados apra os componentes da UI atrav√©s de lazy load.<br>
  *
- * @author Rodrigo Leit„o
+ * @author Rodrigo Leit√£o
  * @since 10.0.0 (9 de ago de 2018)
  */
 public class UIDataProvider<VO extends RFWVO> extends AbstractBackEndDataProvider<VO, String> {
@@ -42,51 +42,51 @@ public class UIDataProvider<VO extends RFWVO> extends AbstractBackEndDataProvide
   private RFWOrderBy orderBy = null;
 
   /**
-   * Define a lista de atributos que precisam devem ser recuperados nos objetos recuperados. Por padr„o mantemos null que recupera sÛ os atributos do objeto, sem nenhum relacionamento.
+   * Define a lista de atributos que precisam devem ser recuperados nos objetos recuperados. Por padr√£o mantemos null que recupera s√≥ os atributos do objeto, sem nenhum relacionamento.
    */
   private String[] attributes = null;
 
   /**
-   * ReferÍncia da Classe do VO que a inst‚ncia do UIDataProvider esta operando.
+   * Refer√™ncia da Classe do VO que a inst√¢ncia do UIDataProvider esta operando.
    */
   private final Class<VO> voClass;
 
   /**
-   * Armazena os IDs da lista que est· sendo exibida no Data Provider. Essa lista È atualizada sempre que o Sort ou o MO for alterado.
+   * Armazena os IDs da lista que est√° sendo exibida no Data Provider. Essa lista √© atualizada sempre que o Sort ou o MO for alterado.
    */
   private List<Long> ids = null;
 
   /**
-   * Se definido, este atributo ser· utilizado para realizar um filtro (alÈm do RFWMO j· definido) nos elementos do Provider.<br>
-   * Quando h· mais de um objeto na lista, o texto do filtro È procurado em todos os atributos aqui definidos em um MO com a condiÁıes (OR) definida.
+   * Se definido, este atributo ser√° utilizado para realizar um filtro (al√©m do RFWMO j√° definido) nos elementos do Provider.<br>
+   * Quando h√° mais de um objeto na lista, o texto do filtro √© procurado em todos os atributos aqui definidos em um MO com a condi√ß√µes (OR) definida.
    */
   private List<String> filterAttributes = new LinkedList<>();
 
   /**
-   * Salva a referÍncia do ˙ltimo filtro utilizado, evitando que, caso o filtro n„o seja alterado n„o sejam feitas novas consultas sem necessidade.
+   * Salva a refer√™ncia do √∫ltimo filtro utilizado, evitando que, caso o filtro n√£o seja alterado n√£o sejam feitas novas consultas sem necessidade.
    */
   private String lastFilter = null;
 
   /**
-   * Inst‚ncia do DataProvider fornecido pela aplicaÁ„o para busca das informaÁıes.
+   * Inst√¢ncia do DataProvider fornecido pela aplica√ß√£o para busca das informa√ß√µes.
    */
   private RFWDBProvider dataProvider = null;
 
   /**
-   * Cria um provider sem orderBy inicial. Neste caso a ordernaÁ„o È definida pelo prÛprio Core quando retornar os objetos.
+   * Cria um provider sem orderBy inicial. Neste caso a orderna√ß√£o √© definida pelo pr√≥prio Core quando retornar os objetos.
    *
    * @throws RFWException
    */
   public UIDataProvider(Class<VO> voClass, RFWDBProvider dataProvider) throws RFWException {
     this.voClass = voClass;
     this.dataProvider = dataProvider;
-    // N„o forÁa atualizar os IDs no construtor pois podemos ter outros filtros sendo alterado em seguida. A atualizaÁ„o È realizada sempre que this.ids == null.
+    // N√£o for√ßa atualizar os IDs no construtor pois podemos ter outros filtros sendo alterado em seguida. A atualiza√ß√£o √© realizada sempre que this.ids == null.
   }
 
   /**
-   * Cria um data provider com um orderBy inicial (ou para quando o Grid n„o definir nenhum)
+   * Cria um data provider com um orderBy inicial (ou para quando o Grid n√£o definir nenhum)
    *
-   * @param orderBy DefiniÁ„o de OrdemaÁ„o inicial.
+   * @param orderBy Defini√ß√£o de Ordema√ß√£o inicial.
    * @throws RFWException
    */
   public UIDataProvider(Class<VO> voClass, RFWOrderBy orderBy, String[] attributes, RFWDBProvider dataProvider) throws RFWException {
@@ -101,7 +101,7 @@ public class UIDataProvider<VO extends RFWVO> extends AbstractBackEndDataProvide
     this.attributes = attributes;
     this.rfwMO = bisMO;
     this.dataProvider = dataProvider;
-    // N„o forÁa atualizar os IDs no construtor pois podemos ter outros filtros sendo alterado em seguida. A atualizaÁ„o È realizada sempre que this.ids == null.
+    // N√£o for√ßa atualizar os IDs no construtor pois podemos ter outros filtros sendo alterado em seguida. A atualiza√ß√£o √© realizada sempre que this.ids == null.
   }
 
   @Override
@@ -111,7 +111,7 @@ public class UIDataProvider<VO extends RFWVO> extends AbstractBackEndDataProvide
 
       // Converte o QuerySort em RFWOrderBy
       RFWOrderBy tmpOrderBy = writeRFWOrderBy(query.getSortOrders());
-      // Verificamos se recebemos um OrderBy do componente, e se houve alteraÁ„o no orderBy, se houve temos que atualizar a lista
+      // Verificamos se recebemos um OrderBy do componente, e se houve altera√ß√£o no orderBy, se houve temos que atualizar a lista
       if (tmpOrderBy != null && !tmpOrderBy.equals(this.orderBy)) {
         this.orderBy = tmpOrderBy;
         updatePending = true;
@@ -125,16 +125,16 @@ public class UIDataProvider<VO extends RFWVO> extends AbstractBackEndDataProvide
         tmpMO = this.rfwMO; // Deixamos definido caso o updatePending esteja true por conta do orderBy
       }
 
-      // Se mudou orderBy, Filtro, ou se ainda n„o temos os objetos atualizamos a lista antes de retornar os dados
+      // Se mudou orderBy, Filtro, ou se ainda n√£o temos os objetos atualizamos a lista antes de retornar os dados
       if (updatePending || this.ids == null) updateDataIDs(tmpMO);
 
-      // Retornamos a lista vazia caso n„o tenhamos dado
+      // Retornamos a lista vazia caso n√£o tenhamos dado
       if (this.ids.size() == 0) return new LinkedList<VO>().stream();
 
       final int offset = query.getOffset();
       final int limit = query.getLimit();
 
-      // Convertemos a sublista em uma LinkedList pq o objeto retornado pelo SubList n„o È serializavel e n„o passa pela fachada.
+      // Convertemos a sublista em uma LinkedList pq o objeto retornado pelo SubList n√£o √© serializavel e n√£o passa pela fachada.
       LinkedList<Long> idsList = new LinkedList<>();
       idsList.addAll(this.ids.subList(offset, Math.min(this.ids.size(), offset + limit)));
 
@@ -151,7 +151,7 @@ public class UIDataProvider<VO extends RFWVO> extends AbstractBackEndDataProvide
 
       return encapList.stream();
     } catch (RFWException t) {
-      // LanÁamos uma exception de RunTime pq retornar uma lista vazia deixa o Vaadin em loop infinito j· que a quantidade j· pode ter sido retornada em outro me¥todo
+      // Lan√ßamos uma exception de RunTime pq retornar uma lista vazia deixa o Vaadin em loop infinito j√° que a quantidade j√° pode ter sido retornada em outro me¬¥todo
       // return new LinkedList<VO>().stream(); // Retorna uma lista vazia para o GRID em caso de erro
       TreatException.treat(t);
       throw new RFWRunTimeException(t);
@@ -163,20 +163,20 @@ public class UIDataProvider<VO extends RFWVO> extends AbstractBackEndDataProvide
 
   private RFWMO writeRFWMO(Optional<String> filter) throws RFWException {
     RFWMO mo = null; // MO a ser utilizado na busca
-    RFWMO subMO = null; // MO onde as condiÁıes do filtro devem ser colocadas. Utilizado quando temos busca combinada em mais de um atributo, j· que as condiÁıes s„o colocadas em um SUB-MO com condiÁ„o OR
-    // SÛ vamos atualizar o VO se tivermos um atributo de filtro definido.
+    RFWMO subMO = null; // MO onde as condi√ß√µes do filtro devem ser colocadas. Utilizado quando temos busca combinada em mais de um atributo, j√° que as condi√ß√µes s√£o colocadas em um SUB-MO com condi√ß√£o OR
+    // S√≥ vamos atualizar o VO se tivermos um atributo de filtro definido.
     if (this.filterAttributes != null && this.filterAttributes.size() > 0) {
       if (filter.isPresent()) {
         if (this.lastFilter == null || !this.lastFilter.equals(filter.get())) {
-          // Se temos um filtro do componente e ele È diferente do ˙ltimo filtro, criamos um novo MO com o filtro adicional
+          // Se temos um filtro do componente e ele √© diferente do √∫ltimo filtro, criamos um novo MO com o filtro adicional
           if (this.rfwMO != null) {
             if (this.filterAttributes.size() > 1) {
-              // Se temos mais de um atributo para encontrar, criamos um SUBMO com a condiÁıes OR para procurar o conteudm "em qualquer um dos atributos".
+              // Se temos mais de um atributo para encontrar, criamos um SUBMO com a condi√ß√µes OR para procurar o conteudm "em qualquer um dos atributos".
               mo = this.rfwMO.cloneRecursive();
               subMO = new RFWMO(AppendMethod.OR);
               mo.getSubmo().add(subMO);
             } else {
-              // Se sÛ temos 1, colocamos a busca direta sem a necessidade de criar um SUBMO.5
+              // Se s√≥ temos 1, colocamos a busca direta sem a necessidade de criar um SUBMO.5
               mo = this.rfwMO.cloneRecursive();
               subMO = mo;
             }
@@ -190,7 +190,7 @@ public class UIDataProvider<VO extends RFWVO> extends AbstractBackEndDataProvide
           this.lastFilter = filter.get();
         }
       } else {
-        // Se n„o temos mais filtro, mas antes tinhamos, retornamos o MO padr„o para realizar a nova busca "sem filtros"
+        // Se n√£o temos mais filtro, mas antes tinhamos, retornamos o MO padr√£o para realizar a nova busca "sem filtros"
         if (this.lastFilter != null) {
           if (this.rfwMO != null) {
             mo = this.rfwMO;
@@ -223,7 +223,7 @@ public class UIDataProvider<VO extends RFWVO> extends AbstractBackEndDataProvide
 
       // Converte o QuerySort em RFWOrderBy
       RFWOrderBy tmpOrderBy = writeRFWOrderBy(query.getSortOrders());
-      // Verificamos se recebemos um OrderBy do componente, e se houve alteraÁ„o no orderBy, se houve temos que atualizar a lista
+      // Verificamos se recebemos um OrderBy do componente, e se houve altera√ß√£o no orderBy, se houve temos que atualizar a lista
       if (tmpOrderBy != null && !tmpOrderBy.equals(this.orderBy)) {
         this.orderBy = tmpOrderBy;
         updatePending = true;
@@ -237,7 +237,7 @@ public class UIDataProvider<VO extends RFWVO> extends AbstractBackEndDataProvide
         tmpMO = this.rfwMO; // Deixamos definido caso o updatePending esteja true por conta do orderBy
       }
 
-      // Se mudou orderBy, Filtro, ou se ainda n„o temos os objetos atualizamos a lista antes de retornar os dados
+      // Se mudou orderBy, Filtro, ou se ainda n√£o temos os objetos atualizamos a lista antes de retornar os dados
       if (updatePending || this.ids == null) updateDataIDs(tmpMO);
 
       return this.ids.size();
@@ -247,7 +247,7 @@ public class UIDataProvider<VO extends RFWVO> extends AbstractBackEndDataProvide
   }
 
   /**
-   * MÈtodo utilizado para attualizar a lista de IDs dos objetos que o DataProvider tem.
+   * M√©todo utilizado para attualizar a lista de IDs dos objetos que o DataProvider tem.
    *
    * @param mo Atualiza o Provider com o MO recebido. Se for igual a NULL utiliza o bisMO definido no escopo da classe.
    *
@@ -299,16 +299,16 @@ public class UIDataProvider<VO extends RFWVO> extends AbstractBackEndDataProvide
   }
 
   /**
-   * Recupera o referÍncia da Classe do VO que a inst‚ncia do UIDataProvider esta operando.
+   * Recupera o refer√™ncia da Classe do VO que a inst√¢ncia do UIDataProvider esta operando.
    *
-   * @return the referÍncia da Classe do VO que a inst‚ncia do UIDataProvider esta operando
+   * @return the refer√™ncia da Classe do VO que a inst√¢ncia do UIDataProvider esta operando
    */
   public Class<VO> getvoClass() {
     return voClass;
   }
 
   /**
-   * Recupera o define a lista de atributos que precisam devem ser recuperados nos objetos recuperados. Por padr„o mantemos null que recupera sÛ os atributos do objeto, sem nenhum relacionamento.
+   * Recupera o define a lista de atributos que precisam devem ser recuperados nos objetos recuperados. Por padr√£o mantemos null que recupera s√≥ os atributos do objeto, sem nenhum relacionamento.
    *
    * @return the define a lista de atributos que precisam devem ser recuperados nos objetos recuperados
    */
@@ -317,7 +317,7 @@ public class UIDataProvider<VO extends RFWVO> extends AbstractBackEndDataProvide
   }
 
   /**
-   * Define o define a lista de atributos que precisam devem ser recuperados nos objetos recuperados. Por padr„o mantemos null que recupera sÛ os atributos do objeto, sem nenhum relacionamento.
+   * Define o define a lista de atributos que precisam devem ser recuperados nos objetos recuperados. Por padr√£o mantemos null que recupera s√≥ os atributos do objeto, sem nenhum relacionamento.
    *
    * @param attributes the new define a lista de atributos que precisam devem ser recuperados nos objetos recuperados
    */
@@ -327,11 +327,11 @@ public class UIDataProvider<VO extends RFWVO> extends AbstractBackEndDataProvide
   }
 
   /**
-   * MÈtodo que permite saber se um determineo objeto (pelo seu ID) est· presente na atual coleÁ„o do DataProvider. <B>ATEN«√O:</B> Note que este mÈtodo sÛ retornar· true caso o objeto j· esteja carregado no cache, caso contr·rio o valor retornado ser· false.
+   * M√©todo que permite saber se um determineo objeto (pelo seu ID) est√° presente na atual cole√ß√£o do DataProvider. <B>ATEN√á√ÉO:</B> Note que este m√©todo s√≥ retornar√° true caso o objeto j√° esteja carregado no cache, caso contr√°rio o valor retornado ser√° false.
    *
    * @param id ID do objeto a ser verificado.
-   * @return retorna true caso esteja, retorna false caso contr·rio.<br>
-   *         <b>N„o retorna erro ou null pointer. Mesmo que o conjunto de dados ainda esteja nulo, È considerado que o objeto n„o est· presente nesses casos.</b>
+   * @return retorna true caso esteja, retorna false caso contr√°rio.<br>
+   *         <b>N√£o retorna erro ou null pointer. Mesmo que o conjunto de dados ainda esteja nulo, √© considerado que o objeto n√£o est√° presente nesses casos.</b>
    */
   public boolean contains(Long id) {
     return (this.ids != null && this.ids.contains(id));
@@ -339,35 +339,35 @@ public class UIDataProvider<VO extends RFWVO> extends AbstractBackEndDataProvide
 
   @Override
   public void refreshAll() {
-    // Caso seja feita uma solicitaÁ„o de atualizar todos os itens zeramos a listagem para garantir que o provider n„o usar· o cache de IDs
+    // Caso seja feita uma solicita√ß√£o de atualizar todos os itens zeramos a listagem para garantir que o provider n√£o usar√° o cache de IDs
     this.ids = null;
     super.refreshAll();
   }
 
   /**
-   * Recupera o se definido, este atributo ser· utilizado para realizar um filtro (alÈm do RFWMO j· definido) nos elementos do Provider.<br>
-   * Quando h· mais de um objeto na lista, o texto do filtro È procurado em todos os atributos aqui definidos em um MO com a condiÁıes (OR) definida.
+   * Recupera o se definido, este atributo ser√° utilizado para realizar um filtro (al√©m do RFWMO j√° definido) nos elementos do Provider.<br>
+   * Quando h√° mais de um objeto na lista, o texto do filtro √© procurado em todos os atributos aqui definidos em um MO com a condi√ß√µes (OR) definida.
    *
-   * @return the se definido, este atributo ser· utilizado para realizar um filtro (alÈm do RFWMO j· definido) nos elementos do Provider
+   * @return the se definido, este atributo ser√° utilizado para realizar um filtro (al√©m do RFWMO j√° definido) nos elementos do Provider
    */
   public List<String> getFilterAttributes() {
     return filterAttributes;
   }
 
   /**
-   * Define o se definido, este atributo ser· utilizado para realizar um filtro (alÈm do RFWMO j· definido) nos elementos do Provider.<br>
-   * Quando h· mais de um objeto na lista, o texto do filtro È procurado em todos os atributos aqui definidos em um MO com a condiÁıes (OR) definida.
+   * Define o se definido, este atributo ser√° utilizado para realizar um filtro (al√©m do RFWMO j√° definido) nos elementos do Provider.<br>
+   * Quando h√° mais de um objeto na lista, o texto do filtro √© procurado em todos os atributos aqui definidos em um MO com a condi√ß√µes (OR) definida.
    *
-   * @param filterAttributes the new se definido, este atributo ser· utilizado para realizar um filtro (alÈm do RFWMO j· definido) nos elementos do Provider
+   * @param filterAttributes the new se definido, este atributo ser√° utilizado para realizar um filtro (al√©m do RFWMO j√° definido) nos elementos do Provider
    */
   public void setFilterAttributes(List<String> filterAttributes) {
     this.filterAttributes = filterAttributes;
   }
 
   /**
-   * MÈtodo auxiliar, permite definir diretamente um ˙nico atributo (cria a lista de qualquer forma internamente ‡ este mÈtodo, por isso n„o h· mÈtodo get equivalente.
+   * M√©todo auxiliar, permite definir diretamente um √∫nico atributo (cria a lista de qualquer forma internamente √† este m√©todo, por isso n√£o h√° m√©todo get equivalente.
    *
-   * @param attribute Atributo a ser utilizado no filtro de forma "singular" (sem busca combinada com v·rios atributos). Se passado nulo, deixa sem atributos e consequentemente sem filtro.
+   * @param attribute Atributo a ser utilizado no filtro de forma "singular" (sem busca combinada com v√°rios atributos). Se passado nulo, deixa sem atributos e consequentemente sem filtro.
    */
   public void setFilterAttribute(String attribute) {
     if (attribute != null) {
@@ -379,7 +379,7 @@ public class UIDataProvider<VO extends RFWVO> extends AbstractBackEndDataProvide
   }
 
   /**
-   * Retorna a lista de IDs dos objetos que est„o atualmente no Provider. Retorna uma lista clonada para seguranÁa contra manipulaÁ„o externa dos dados.
+   * Retorna a lista de IDs dos objetos que est√£o atualmente no Provider. Retorna uma lista clonada para seguran√ßa contra manipula√ß√£o externa dos dados.
    *
    * @throws RFWException
    */
@@ -390,10 +390,10 @@ public class UIDataProvider<VO extends RFWVO> extends AbstractBackEndDataProvide
 
   /**
    * Retorna um indicador se temos o objeto desejado atualmente no provider.<br>
-   * Note que "ter o objeto" indica apenas se o ID faz parte da lista do provider, o objeto n„o fica na memÛria do Provider.
+   * Note que "ter o objeto" indica apenas se o ID faz parte da lista do provider, o objeto n√£o fica na mem√≥ria do Provider.
    *
    * @param id Identificador do objeto a ser verificado.
-   * @return true caso o objeto esteja no provider, false caso contr·rio.
+   * @return true caso o objeto esteja no provider, false caso contr√°rio.
    * @throws RFWException
    */
   public boolean hasId(long id) throws RFWException {

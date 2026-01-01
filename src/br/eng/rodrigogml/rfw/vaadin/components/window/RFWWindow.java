@@ -6,9 +6,9 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.themes.ValoTheme;
 
 /**
- * Description: Classe base para montar uma janela para o sistema que È aceita pelo SystemFrame.<br>
+ * Description: Classe base para montar uma janela para o sistema que √© aceita pelo SystemFrame.<br>
  *
- * @author Rodrigo Leit„o
+ * @author Rodrigo Leit√£o
  * @since 10.0.0 (6 de ago de 2018)
  */
 public abstract class RFWWindow extends Panel {
@@ -18,34 +18,34 @@ public abstract class RFWWindow extends Panel {
   public RFWWindow() {
     super();
 
-    // Configura o Painel que extendemos para fincar invisÌvel e aceitar as teclas de atalho
+    // Configura o Painel que extendemos para fincar invis√≠vel e aceitar as teclas de atalho
     this.setSizeFull();
     this.addStyleName(ValoTheme.PANEL_BORDERLESS);
   }
 
   /**
-   * MÈtodo chamado quando a janela perde o foco.
+   * M√©todo chamado quando a janela perde o foco.
    */
   public void blur(BlurEvent blurEvent) {
   }
 
   /**
-   * MÈtodo chamado quando a janela ganha o foco.
+   * M√©todo chamado quando a janela ganha o foco.
    */
   public void focus(FocusEvent focusEvent) {
   }
 
   /**
-   * Deve retornar o caminho do Ìcone da janela.
+   * Deve retornar o caminho do √≠cone da janela.
    *
-   * @return … experado o caminho do Ìcone relativo ao caminho do thema. Por exmeplo: "icon/calc_24.png"
+   * @return √â experado o caminho do √≠cone relativo ao caminho do thema. Por exmeplo: "icon/calc_24.png"
    */
   public abstract String getWindowIcon();
 
   /**
    * Deve retornar o caption da Janela.
    *
-   * @return Esperado o tÌtulo da janela. Recomend·vel um nome mais sintÈtico possÌvel que seja suficiente para diferenciar das outras janelas.
+   * @return Esperado o t√≠tulo da janela. Recomend√°vel um nome mais sint√©tico poss√≠vel que seja suficiente para diferenciar das outras janelas.
    */
   public abstract String getWindowCaption();
 

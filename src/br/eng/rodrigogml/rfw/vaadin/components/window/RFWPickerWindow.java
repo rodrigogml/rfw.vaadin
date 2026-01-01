@@ -29,7 +29,7 @@ import br.eng.rodrigogml.rfw.vaadin.utils.FWVad.ButtonType;
 import br.eng.rodrigogml.rfw.vaadin.utils.TreatException;
 
 /**
- * Description: Classe que implementa uma janela de "picker" utilizada para exibir uma lista de objetos para selaÁ„o.<br>
+ * Description: Classe que implementa uma janela de "picker" utilizada para exibir uma lista de objetos para sela√ß√£o.<br>
  * Geralmente utilizada quando precisamos associar um objeto a outro.
  *
  * @author Rodrigo GML
@@ -41,7 +41,7 @@ public class RFWPickerWindow<VO extends RFWVO> extends Window {
   private static final long serialVersionUID = 2823391896172773258L;
 
   /**
-   * Inst‚ncia da {@link UIFactory} para controlar os campos desta janela.
+   * Inst√¢ncia da {@link UIFactory} para controlar os campos desta janela.
    */
   private final UIFactory<VO> uiFac;
 
@@ -52,30 +52,30 @@ public class RFWPickerWindow<VO extends RFWVO> extends Window {
   private final VerticalLayout listLayout;
 
   /**
-   * ReferÍncia para o bot„o de cancelar da janela.
+   * Refer√™ncia para o bot√£o de cancelar da janela.
    */
   final Button buttonCancel;
 
   /**
-   * ReferÍncia para o bot„o de confirmar
+   * Refer√™ncia para o bot√£o de confirmar
    */
   final Button buttonConfirm;
 
   /**
-   * DBProvider Fornecido na construÁ„o da classe.
+   * DBProvider Fornecido na constru√ß√£o da classe.
    */
   private final RFWDBProvider dbProvider;
 
   /**
    * Lista dos itens selecionados antes da tela ser fechada.<br>
-   * Estar· nula caso a tela n„o tenha sido confirmada (seja fechada ou cancelada).
+   * Estar√° nula caso a tela n√£o tenha sido confirmada (seja fechada ou cancelada).
    */
   private List<VO> selectedItems = null;
 
   public RFWPickerWindow(Class<VO> voClass, String caption, ThemeResource icon, final RFWDBProvider dbProvider) throws RFWException {
     super(caption);
 
-    PreProcess.requiredNonNull(dbProvider, "O RFWPickerWindow necessita um DBProvider v·lido para funcionar corretamente!");
+    PreProcess.requiredNonNull(dbProvider, "O RFWPickerWindow necessita um DBProvider v√°lido para funcionar corretamente!");
 
     this.setIcon(icon);
     this.setModal(true);
@@ -97,7 +97,7 @@ public class RFWPickerWindow<VO extends RFWVO> extends Window {
 
     this.searchPanel.setIcon(VaadinIcons.FILTER);
 
-    // ==>>> Cria os botıes e coloca no layout horizontal para ficarem na hodem
+    // ==>>> Cria os bot√µes e coloca no layout horizontal para ficarem na hodem
     HorizontalLayout buttonBar = new HorizontalLayout();
     buttonBar.setMargin(true);
     buttonBar.setSpacing(false);
@@ -134,7 +134,7 @@ public class RFWPickerWindow<VO extends RFWVO> extends Window {
    * @throws RFWException the RFW exception
    */
   protected void setGrid(Grid<GVO<VO>> grid) throws RFWException {
-    // Remove os componentes iniciais atÈ sÛ sÛ sobrar o ˙ltimo (que È a barra de botıes cancelar a confirmar.
+    // Remove os componentes iniciais at√© s√≥ s√≥ sobrar o √∫ltimo (que √© a barra de bot√µes cancelar a confirmar.
     while (listLayout.getComponentCount() > 1) {
       listLayout.removeComponent(listLayout.getComponent(0));
     }
@@ -151,31 +151,31 @@ public class RFWPickerWindow<VO extends RFWVO> extends Window {
   }
 
   /**
-   * Permite a troca do componente da Barra de botıes de confirmar a cancelar.
+   * Permite a troca do componente da Barra de bot√µes de confirmar a cancelar.
    *
    * @param component
    * @throws RFWException
    */
   protected void setButtonBar(Component component) throws RFWException {
-    // Garante que o componente n„o È nulo para n„o perdermos a conta dos componentes no layout, j· que a substituiÁ„o È feita com base na posiÁ„o dele no verticallayout
-    PreProcess.requiredNonNullCritical(component, "O componente da barra de botıes n„o pode ser nulo e deve incluir ao menos o bot„o de confirmar!");
-    // A barra de botıes sempre est· no componente, mas o grid pode n„o ter sido alocado ainda. Assim a barra pode estar na posiÁ„o 0 ou 1.
+    // Garante que o componente n√£o √© nulo para n√£o perdermos a conta dos componentes no layout, j√° que a substitui√ß√£o √© feita com base na posi√ß√£o dele no verticallayout
+    PreProcess.requiredNonNullCritical(component, "O componente da barra de bot√µes n√£o pode ser nulo e deve incluir ao menos o bot√£o de confirmar!");
+    // A barra de bot√µes sempre est√° no componente, mas o grid pode n√£o ter sido alocado ainda. Assim a barra pode estar na posi√ß√£o 0 ou 1.
     int index = listLayout.getComponentCount() - 1;
     listLayout.removeComponent(listLayout.getComponent(index));
     listLayout.addComponent(component, index);
   }
 
   /**
-   * ForÁa a atualizaÁ„o do painel de busca de acordo com os campos criados no UIFactory para o MO da listagem.
+   * For√ßa a atualiza√ß√£o do painel de busca de acordo com os campos criados no UIFactory para o MO da listagem.
    */
   protected void updateSearchPanel() {
-    // Atualiza o conte˙do do searchPanel
+    // Atualiza o conte√∫do do searchPanel
     searchPanel.setContent(this.uiFac.createSearchPanel(1, null, this.dbProvider));
   }
 
   private void clickedButtonConfirm() {
     try {
-      // Verificamos se h· 1 objeto selecionado no Grid
+      // Verificamos se h√° 1 objeto selecionado no Grid
       final Set<GVO<VO>> sels = getUiFac().getMOGrid().getSelectedItems();
       if (sels.size() == 0) throw new RFWValidationException("Selecione o item desejado antes de confirmar.");
       this.selectedItems = RUReflex.collectGVOToVOList(sels);
@@ -186,9 +186,9 @@ public class RFWPickerWindow<VO extends RFWVO> extends Window {
   }
 
   /**
-   * # inst‚ncia da {@link UIFactory} para controlar os campos desta janela.
+   * # inst√¢ncia da {@link UIFactory} para controlar os campos desta janela.
    *
-   * @return # inst‚ncia da {@link UIFactory} para controlar os campos desta janela
+   * @return # inst√¢ncia da {@link UIFactory} para controlar os campos desta janela
    */
   public UIFactory<VO> getUiFac() {
     return uiFac;
@@ -196,7 +196,7 @@ public class RFWPickerWindow<VO extends RFWVO> extends Window {
 
   /**
    * # lista dos itens selecionados antes da tela ser fechada.<br>
-   * Estar· nula caso a tela n„o tenha sido confirmada (seja fechada ou cancelada).
+   * Estar√° nula caso a tela n√£o tenha sido confirmada (seja fechada ou cancelada).
    *
    * @return # lista dos itens selecionados antes da tela ser fechada
    */
@@ -205,34 +205,34 @@ public class RFWPickerWindow<VO extends RFWVO> extends Window {
   }
 
   /**
-   * # dBProvider Fornecido na construÁ„o da classe.
+   * # dBProvider Fornecido na constru√ß√£o da classe.
    *
-   * @return # dBProvider Fornecido na construÁ„o da classe
+   * @return # dBProvider Fornecido na constru√ß√£o da classe
    */
   public RFWDBProvider getDbProvider() {
     return dbProvider;
   }
 
   /**
-   * # referÍncia para o bot„o de cancelar da janela.
+   * # refer√™ncia para o bot√£o de cancelar da janela.
    *
-   * @return # referÍncia para o bot„o de cancelar da janela
+   * @return # refer√™ncia para o bot√£o de cancelar da janela
    */
   public Button getButtonCancel() {
     return buttonCancel;
   }
 
   /**
-   * # referÍncia para o bot„o de confirmar.
+   * # refer√™ncia para o bot√£o de confirmar.
    *
-   * @return # referÍncia para o bot„o de confirmar
+   * @return # refer√™ncia para o bot√£o de confirmar
    */
   public Button getButtonConfirm() {
     return buttonConfirm;
   }
 
   /**
-   * Este mÈtodo retorna o primeiro item da lista dos itens retornados por {@link #getSelectedItems()}, n„o È necessaraimente o primeiro item que o usu·rio selecionou. O objectivo deste mÈtodo È evitar ter que lhe dar com a lista quando temos apenas um item selecionado.
+   * Este m√©todo retorna o primeiro item da lista dos itens retornados por {@link #getSelectedItems()}, n√£o √© necessaraimente o primeiro item que o usu√°rio selecionou. O objectivo deste m√©todo √© evitar ter que lhe dar com a lista quando temos apenas um item selecionado.
    *
    * @return null se {@link #getSelectedItems()} for nulo, o primeiro item da lista de {@link #getSelectedItems()}.
    */

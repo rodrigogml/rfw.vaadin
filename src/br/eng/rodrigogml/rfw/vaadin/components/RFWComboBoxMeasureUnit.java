@@ -14,9 +14,9 @@ import br.eng.rodrigogml.rfw.kernel.utils.RUArray;
 import br.eng.rodrigogml.rfw.vaadin.utils.FWVad;
 
 /**
- * Description: Cria um componente a partir de 2 ComboBox utilizado para escolher a dimens„o e a unidade de medida.<br>
+ * Description: Cria um componente a partir de 2 ComboBox utilizado para escolher a dimens√£o e a unidade de medida.<br>
  *
- * @author Rodrigo Leit„o
+ * @author Rodrigo Leit√£o
  * @since 7.1.0 (7 de nov de 2018)
  */
 public class RFWComboBoxMeasureUnit extends CustomField<MeasureUnit> {
@@ -47,7 +47,7 @@ public class RFWComboBoxMeasureUnit extends CustomField<MeasureUnit> {
   }
 
   private void changedDimensionValue() {
-    // Se o valor da dimens„o mudou temos que refazer todo o conte˙do do combo de unidades
+    // Se o valor da dimens√£o mudou temos que refazer todo o conte√∫do do combo de unidades
     unitCB.setValue(null);
     unitCB.setItems(new MeasureUnit[0]);
     final MeasureDimension dValue = this.dimensionCB.getValue();
@@ -68,7 +68,7 @@ public class RFWComboBoxMeasureUnit extends CustomField<MeasureUnit> {
 
   @Override
   protected void doSetValue(MeasureUnit value) {
-    // Ao definir um novo valor, primeiro temos de acertar o combo de Dimensıes pois ele altera o valor da unidade
+    // Ao definir um novo valor, primeiro temos de acertar o combo de Dimens√µes pois ele altera o valor da unidade
     if (value == null) {
       this.dimensionCB.setValue(null);
       this.unitCB.setValue(null);
@@ -79,7 +79,7 @@ public class RFWComboBoxMeasureUnit extends CustomField<MeasureUnit> {
   }
 
   /**
-   * Repassa o ValueChangeListener para o Combo de Unidade da Medida, j· que È o valor desse combo que realmente fica associado ao "value" deste componente associative
+   * Repassa o ValueChangeListener para o Combo de Unidade da Medida, j√° que √© o valor desse combo que realmente fica associado ao "value" deste componente associative
    */
   @Override
   public Registration addValueChangeListener(ValueChangeListener<MeasureUnit> listener) {

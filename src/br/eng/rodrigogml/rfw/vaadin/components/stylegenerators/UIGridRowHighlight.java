@@ -9,9 +9,9 @@ import br.eng.rodrigogml.rfw.kernel.vo.GVO;
 import br.eng.rodrigogml.rfw.kernel.vo.RFWVO;
 
 /**
- * Description: Style Generator utilizado no GRID para ressaltar algumas linhas. A linha È ressaltada sempre que o ID do objeto (esperado um RFWVO) estiver dentro da coleÁ„o de IDs definidos para HighLight.<br>
+ * Description: Style Generator utilizado no GRID para ressaltar algumas linhas. A linha √© ressaltada sempre que o ID do objeto (esperado um RFWVO) estiver dentro da cole√ß√£o de IDs definidos para HighLight.<br>
  *
- * @author Rodrigo Leit„o
+ * @author Rodrigo Leit√£o
  * @since 10.0.0 (22 de nov de 2018)
  */
 public class UIGridRowHighlight<VO extends RFWVO> implements StyleGenerator<GVO<VO>> {
@@ -21,14 +21,14 @@ public class UIGridRowHighlight<VO extends RFWVO> implements StyleGenerator<GVO<
   private final LinkedList<Long> highLightIDs = new LinkedList<>();
 
   /**
-   * Cria um novo StyleGenerator que identificar· no Grid linhas cujo ID do objeto correponda aos IDs definidos.<br>
-   * Note que este construtor cria o Style Generator mas a principio n„o destacar· nenhum objeto.
+   * Cria um novo StyleGenerator que identificar√° no Grid linhas cujo ID do objeto correponda aos IDs definidos.<br>
+   * Note que este construtor cria o Style Generator mas a principio n√£o destacar√° nenhum objeto.
    */
   public UIGridRowHighlight() {
   }
 
   /**
-   * Cria um novo StyleGenerator que identificar· no Grid linhas cujo ID do objeto correponda aos IDs definidos.
+   * Cria um novo StyleGenerator que identificar√° no Grid linhas cujo ID do objeto correponda aos IDs definidos.
    *
    * @param highLightIDs IDs dos objetos que devem ter a linha destacada no Grid.
    */
@@ -37,7 +37,7 @@ public class UIGridRowHighlight<VO extends RFWVO> implements StyleGenerator<GVO<
   }
 
   /**
-   * Cria um novo StyleGenerator que identificar· no Grid linhas cujo ID do objeto correponda aos IDs definidos.
+   * Cria um novo StyleGenerator que identificar√° no Grid linhas cujo ID do objeto correponda aos IDs definidos.
    *
    * @param highLightIDs IDs dos objetos que devem ter a linha destacada no Grid.
    */
@@ -55,7 +55,7 @@ public class UIGridRowHighlight<VO extends RFWVO> implements StyleGenerator<GVO<
   /**
    * Inclui novos IDs para serem destacados no Grid.
    *
-   * @param highLightIDs ColeÁ„o de IDs dos objetos a serem destacados
+   * @param highLightIDs Cole√ß√£o de IDs dos objetos a serem destacados
    */
   public void add(Collection<Long> highLightIDs) {
     this.highLightIDs.addAll(highLightIDs);
@@ -64,7 +64,7 @@ public class UIGridRowHighlight<VO extends RFWVO> implements StyleGenerator<GVO<
   /**
    * Inclui novos IDs para serem destacados no Grid.
    *
-   * @param highLightIDs ColeÁ„o de IDs dos objetos a serem destacados
+   * @param highLightIDs Cole√ß√£o de IDs dos objetos a serem destacados
    */
   public void add(Long[] highLightIDs) {
     for (Long id : highLightIDs)

@@ -39,7 +39,7 @@ import br.eng.rodrigogml.rfw.vaadin.interfaces.RFWDialogButtonClickListener.Dial
 import br.eng.rodrigogml.rfw.vaadin.interfaces.RFWUI;
 
 /**
- * Description: Classe est·tica com diversos mÈtodos para otimizar e facilitar a criaÁ„o e manipulaÁ„o da interface do Vaadin no padr„o do BIS.<br>
+ * Description: Classe est√°tica com diversos m√©todos para otimizar e facilitar a cria√ß√£o e manipula√ß√£o da interface do Vaadin no padr√£o do BIS.<br>
  *
  * @author Rodrigo GML
  * @since 10.0 (30 de out de 2020)
@@ -47,7 +47,7 @@ import br.eng.rodrigogml.rfw.vaadin.interfaces.RFWUI;
 public class FWVad {
 
   /**
-   * Deixa o cursor do mouse como o "pointer" (como chamado pela documentaÁ„o HTML) que na verdade È a "m„ozinha com o dedo", mesmo cursor de link.
+   * Deixa o cursor do mouse como o "pointer" (como chamado pela documenta√ß√£o HTML) que na verdade √© a "m√£ozinha com o dedo", mesmo cursor de link.
    */
   public static final String STYLE_CURSOR_POINTER = "biscursor-pointer";
   /**
@@ -67,16 +67,16 @@ public class FWVad {
    */
   public static final String STYLE_FONT_RED = "fontRed";
   /**
-   * Define a font com uma linha traÁada por cima do texto, como se o texto tivesse sido excluÌdo.
+   * Define a font com uma linha tra√ßada por cima do texto, como se o texto tivesse sido exclu√≠do.
    */
   public static final String STYLE_FONT_LINETHROUGH = "fontLineThrough";
   /**
-   * Define o alinhamento de algum conte˙do que suporte ao centro.
+   * Define o alinhamento de algum conte√∫do que suporte ao centro.
    */
   public static final String STYLE_ALIGN_CENTER = "alignmentCenter";
 
   /**
-   * Define o alinhamento de algum conte˙do que suporte · direita.
+   * Define o alinhamento de algum conte√∫do que suporte √° direita.
    */
   public static final String STYLE_ALIGN_RIGHT = "alignmentRight";
 
@@ -109,31 +109,31 @@ public class FWVad {
    */
   public static final String STYLE_BACKGROUND_LIGHTRED = "backgroundLightRed";
   /**
-   * Estilo para deixar a linha de um grid na cor verde claro. Utilizado por exemplo para indicar valores positivos (crÈdito) nas contas.
+   * Estilo para deixar a linha de um grid na cor verde claro. Utilizado por exemplo para indicar valores positivos (cr√©dito) nas contas.
    */
   public static final String STYLE_GRID_BACKGROUND_LIGHTGREEN = "gridBackgroundLightGreen";
   /**
-   * Estilo para deixar a linha de um grid na cor vermelho claro. Utilizado por exemplo para indicar valores positivos (crÈdito) nas contas.
+   * Estilo para deixar a linha de um grid na cor vermelho claro. Utilizado por exemplo para indicar valores positivos (cr√©dito) nas contas.
    */
   public static final String STYLE_GRID_BACKGROUND_LIGHTRED = "gridBackgroundLightRed";
   /**
-   * Define um style para a cÈlula ou linha de um Grid deixando a font com uma linha cortando o texto, representando uma informaÁ„o que foi cortada/ignorada/excluÌda.
+   * Define um style para a c√©lula ou linha de um Grid deixando a font com uma linha cortando o texto, representando uma informa√ß√£o que foi cortada/ignorada/exclu√≠da.
    */
   public static final String STYLE_GRID_FONT_LINETHROUGH = "gridFontLineThrough";
   /**
-   * Define o style na coluna para remover as margins internas padrıes. Recomendado o uso quando o conte˙do da cÈlula È personalizado com um layout prÛprio.
+   * Define o style na coluna para remover as margins internas padr√µes. Recomendado o uso quando o conte√∫do da c√©lula √© personalizado com um layout pr√≥prio.
    */
   public static final String STYLE_GRID_CELL_BORDLESS = "bisGridCellNoMargins";
   /**
-   * Define o Style a ser aplicado no label da barra de navegaÁ„o / PaginaÁ„o para configura-lo.
+   * Define o Style a ser aplicado no label da barra de navega√ß√£o / Pagina√ß√£o para configura-lo.
    */
   public static final String STYLE_NAVIGATOR_LABEL = "navigatorLabel";
   /**
-   * Define um Style no Label para deixar o texto HTML melhor formatado para exibiÁ„o na tela
+   * Define um Style no Label para deixar o texto HTML melhor formatado para exibi√ß√£o na tela
    */
   public static final String STYLE_LABEL_RICHTEXTFORMAT = "bisRichTextFormat";
   /**
-   * Deixa o Painel sem borda. Utilizado, por exemplo, como um container invisÌvel.
+   * Deixa o Painel sem borda. Utilizado, por exemplo, como um container invis√≠vel.
    */
   public static final String STYLE_PANEL_BORDERLESS = ValoTheme.PANEL_BORDERLESS;
 
@@ -145,356 +145,356 @@ public class FWVad {
   public static final String STYLE_COMPONENT_ASSOCIATIVE = "rfwAssociativeComponent";
 
   /**
-   * Diferente do ButtonType que cria alguns botıes padronizados usados por todo o sistema, o ButtonStyle tem a finalidade de modificar a aparÍncia do bot„o para que ele se encaixe em v·rias partes do sistema.
+   * Diferente do ButtonType que cria alguns bot√µes padronizados usados por todo o sistema, o ButtonStyle tem a finalidade de modificar a apar√™ncia do bot√£o para que ele se encaixe em v√°rias partes do sistema.
    */
   public enum ButtonStyle {
     /**
-     * Define o tipo de Bot„o com aparÍncia comum, mais utilizado no sistema.
+     * Define o tipo de Bot√£o com apar√™ncia comum, mais utilizado no sistema.
      */
     NONE,
     /**
-     * Cria um bot„o com as caracterÌsticas necess·rias apra ser incluido na barra de botıes de atalhos.<br>
-     * <B>AtenÁ„o: </b> Embora o tipo do bot„o seja criado, esse botıes tÍm apenas Ìcones distitintos, assim, diferente dos outros estilos que j· criam o bot„o completo, este deve ter o Tip e o Õcone redefeinido!
+     * Cria um bot√£o com as caracter√≠sticas necess√°rias apra ser incluido na barra de bot√µes de atalhos.<br>
+     * <B>Aten√ß√£o: </b> Embora o tipo do bot√£o seja criado, esse bot√µes t√™m apenas √≠cones distitintos, assim, diferente dos outros estilos que j√° criam o bot√£o completo, este deve ter o Tip e o √çcone redefeinido!
      */
     SHORTCUT_BUTTON,
     /**
-     * Cria um bot„o com a cara de "default", sendo o bot„o que chama a atenÁ„o entre os outros, indicando o caminho que o usu·rio provavelmente deve seguir.
+     * Cria um bot√£o com a cara de "default", sendo o bot√£o que chama a aten√ß√£o entre os outros, indicando o caminho que o usu√°rio provavelmente deve seguir.
      */
     PRIMARY,
     /**
-     * COnfigura o bot„o com uma aparÍncia amigavel, usado por exemplo em botıes de OK e confirmaÁıes em geral.
+     * COnfigura o bot√£o com uma apar√™ncia amigavel, usado por exemplo em bot√µes de OK e confirma√ß√µes em geral.
      */
     FRIENDLY,
     /**
-     * Configura o bot„o com uma aparÍncia de perigo, usado em botıes de cancelar ou de confirmaÁ„o de exclus„o/perda de dados.
+     * Configura o bot√£o com uma apar√™ncia de perigo, usado em bot√µes de cancelar ou de confirma√ß√£o de exclus√£o/perda de dados.
      */
     DANGER,
     /**
-     * Configura o bot„o para parecer com um link comum. Util por exemplo para mostrar botıes (ou mesmo links) em uma lista menos poluÌda de "gr·ficos UI".<br>
-     * Este modelo È usado por exemplo pra exibir os nomes dos relatÛrios das p·ginas.
+     * Configura o bot√£o para parecer com um link comum. Util por exemplo para mostrar bot√µes (ou mesmo links) em uma lista menos polu√≠da de "gr√°ficos UI".<br>
+     * Este modelo √© usado por exemplo pra exibir os nomes dos relat√≥rios das p√°ginas.
      */
     LINK,
   }
 
   /**
-   * Define alguns tipos de botıes que s„o usados pelo sistema todo, mantendo assim a mesma caracterÌstica e pedr„o visual em todas as telas.
+   * Define alguns tipos de bot√µes que s√£o usados pelo sistema todo, mantendo assim a mesma caracter√≠stica e pedr√£o visual em todas as telas.
    */
   public enum ButtonType {
     /**
-     * Bot„o de desfazer
+     * Bot√£o de desfazer
      */
     UNDO,
     /**
-     * Bot„o de Salvar alteraÁıes
+     * Bot√£o de Salvar altera√ß√µes
      */
     SAVE,
     /**
-     * Cria um bot„o utilizado para inticar um livro de endereÁos de URLs;Internet.
+     * Cria um bot√£o utilizado para inticar um livro de endere√ßos de URLs;Internet.
      */
     BOOKMARK,
     /**
-     * Bot„o de navegaÁ„o/paginaÁ„o usado para enviar o registro para o primeiro item da lista.
+     * Bot√£o de navega√ß√£o/pagina√ß√£o usado para enviar o registro para o primeiro item da lista.
      */
     MOVE_FIRST,
     /**
-     * Bot„o de navegaÁ„o/paginaÁ„o usado para enviar o registro para o item anterior da lista.
+     * Bot√£o de navega√ß√£o/pagina√ß√£o usado para enviar o registro para o item anterior da lista.
      */
     MOVE_PREVIOUS,
     /**
-     * Bot„o de navegaÁ„o/paginaÁ„o usado para enviar o registro para o prÛximo item da lista.
+     * Bot√£o de navega√ß√£o/pagina√ß√£o usado para enviar o registro para o pr√≥ximo item da lista.
      */
     MOVE_NEXT,
     /**
-     * Bot„o de navegaÁ„o/paginaÁ„o usado para enviar o registro para o ˙ltimo item da lista.
+     * Bot√£o de navega√ß√£o/pagina√ß√£o usado para enviar o registro para o √∫ltimo item da lista.
      */
     MOVE_LAST,
     /**
-     * Bot„o de navegaÁ„o/paginaÁ„o usado para enviar o registro para cima.
+     * Bot√£o de navega√ß√£o/pagina√ß√£o usado para enviar o registro para cima.
      */
     MOVE_UP,
     /**
-     * Bot„o de navegaÁ„o/paginaÁ„o usado para enviar o registro para baixo.
+     * Bot√£o de navega√ß√£o/pagina√ß√£o usado para enviar o registro para baixo.
      */
     MOVE_DOWN,
     /**
-     * Bot„o utilizado para adicionar Itens a uma lista/tabela.
+     * Bot√£o utilizado para adicionar Itens a uma lista/tabela.
      */
     ADD_LISTITEM,
     /**
-     * Bot„o utilizado apra remover itens de uma lista/tabela.
+     * Bot√£o utilizado apra remover itens de uma lista/tabela.
      */
     REMOVE_LISTITEM,
     /**
-     * Cria um bot„o utilizado para abrir/alterar prestaÁıes de parcelamento.
+     * Cria um bot√£o utilizado para abrir/alterar presta√ß√µes de parcelamento.
      */
     INSTALLMENTS,
     /**
-     * Bot„o utilizado para alterar/editar itens de uma lista/tabela.
+     * Bot√£o utilizado para alterar/editar itens de uma lista/tabela.
      */
     EDIT_LISTITEM,
     /**
-     * Bot„o utilizado para executar uma aÁ„o de busca de dados no sistema, como nos formul·rios de filtros dos dados.
+     * Bot√£o utilizado para executar uma a√ß√£o de busca de dados no sistema, como nos formul√°rios de filtros dos dados.
      */
     SEARCH,
     /**
-     * Bot„o utilizado para procurar um item para referÍncia, como abrir uma janela de picker e encontrar um objeto. Utilizado quando queremos encontrar um objeto para copia-lo ou edita-lo, quando utilizar o picker para "associar" os objetos, utilizar o bot„o {@link ButtonType#LINK}.
+     * Bot√£o utilizado para procurar um item para refer√™ncia, como abrir uma janela de picker e encontrar um objeto. Utilizado quando queremos encontrar um objeto para copia-lo ou edita-lo, quando utilizar o picker para "associar" os objetos, utilizar o bot√£o {@link ButtonType#LINK}.
      */
     SEARCH_ITEM,
     /**
-     * Bot„o utilizado nos formul·rios para indicar a limpeza dos campos dos formul·rios, deixando todos os campos em branco novamente.
+     * Bot√£o utilizado nos formul√°rios para indicar a limpeza dos campos dos formul√°rios, deixando todos os campos em branco novamente.
      */
     CLEARFIELDS,
     /**
-     * Bot„o de "Fechar". Utilizado para fechar caixas de di·logo ou janelas "popup" de informaÁ„o.
+     * Bot√£o de "Fechar". Utilizado para fechar caixas de di√°logo ou janelas "popup" de informa√ß√£o.
      */
     CLOSE,
     /**
-     * Cria o bot„o de "Inserir" Utilizado para iniciar as operaÁıes de realizar um novo cadastro de objeto.
+     * Cria o bot√£o de "Inserir" Utilizado para iniciar as opera√ß√µes de realizar um novo cadastro de objeto.
      */
     INSERTITEM,
     /**
-     * Bot„o utiliado para "Enviar alguma informaÁ„o" para servidor remoto (nuvem).
+     * Bot√£o utiliado para "Enviar alguma informa√ß√£o" para servidor remoto (nuvem).
      */
     CLOUNDSEND,
     /**
-     * Bot„o utiliado para "Recuperar alguma informaÁ„o" de servidor remoto (nuvem).
+     * Bot√£o utiliado para "Recuperar alguma informa√ß√£o" de servidor remoto (nuvem).
      */
     CLOUDGET,
     /**
-     * Bot„o utiliado para "Sincronizar alguma informaÁ„o" com um servidor remoto (nuvem).
+     * Bot√£o utiliado para "Sincronizar alguma informa√ß√£o" com um servidor remoto (nuvem).
      */
     CLOUNDSYNC,
     /**
-     * Bot„o de "Transmitir Dados", no sentido de enviar dados para outro sistema.
+     * Bot√£o de "Transmitir Dados", no sentido de enviar dados para outro sistema.
      */
     TRANSMIT,
     /**
-     * Cria o bot„o de "Auditar". Utilizado para marcar/desmarcar um item como auditado. De forma geral, um item auditado tem a finalidade de impedir que alteraÁıes sejam feitas por qualquer usu·rio.
+     * Cria o bot√£o de "Auditar". Utilizado para marcar/desmarcar um item como auditado. De forma geral, um item auditado tem a finalidade de impedir que altera√ß√µes sejam feitas por qualquer usu√°rio.
      */
     AUDITITEM,
     /**
-     * Cria o bot„o de "Ignorar" um item da listagem. Esse comando È utilizado em items que o usu·rio pode solicitar por ignorar (n„o excluir), similar a desabilitar, mas para outros contextos.<br>
-     * Utilizado a primeira vez para "ignorar" lanÁamentos de extratos importados por arquivos OFX.
+     * Cria o bot√£o de "Ignorar" um item da listagem. Esse comando √© utilizado em items que o usu√°rio pode solicitar por ignorar (n√£o excluir), similar a desabilitar, mas para outros contextos.<br>
+     * Utilizado a primeira vez para "ignorar" lan√ßamentos de extratos importados por arquivos OFX.
      */
     IGNOREITEM,
     /**
-     * Cria o bot„o de "TransferÍncia de Fundos (Valores)" Utilizado para simbolizar transferÍncia de valores em dinheiro.
+     * Cria o bot√£o de "Transfer√™ncia de Fundos (Valores)" Utilizado para simbolizar transfer√™ncia de valores em dinheiro.
      */
     TRANSFERFUNDS,
     /**
-     * Cria o bot„o de "Duplicar" Utilizado para iniciar as operaÁıes de realizar um novo cadastro de objeto baseado em outro que j· existe.
+     * Cria o bot√£o de "Duplicar" Utilizado para iniciar as opera√ß√µes de realizar um novo cadastro de objeto baseado em outro que j√° existe.
      */
     DUPLICATEITEM,
     /**
-     * Cria o bot„o de "Nova Vers„o". Utilizado quando os objetos s„o imut·veis, ou seja, n„o podem ser alterados mas podem ser desabilitados. Esta operaÁ„o pommite que o usu·rio crie um novo objeto baseando nos dados do objeto original. Mas ao confirmar a inclus„o o objeto anterior È automaticamente desativado ou excluÌdo.
+     * Cria o bot√£o de "Nova Vers√£o". Utilizado quando os objetos s√£o imut√°veis, ou seja, n√£o podem ser alterados mas podem ser desabilitados. Esta opera√ß√£o pommite que o usu√°rio crie um novo objeto baseando nos dados do objeto original. Mas ao confirmar a inclus√£o o objeto anterior √© automaticamente desativado ou exclu√≠do.
      */
     VERSIONITEM,
     /**
-     * Cria o bot„o de "Alterar" Utilizado para iniciar as operaÁıes de alterar cadastro de objeto.
+     * Cria o bot√£o de "Alterar" Utilizado para iniciar as opera√ß√µes de alterar cadastro de objeto.
      */
     EDITITEM,
     /**
-     * Cria o bot„o de "Excluir". Utilizado para excluir algum objeto de cadastro do banco de dados.
+     * Cria o bot√£o de "Excluir". Utilizado para excluir algum objeto de cadastro do banco de dados.
      */
     DELETEITEM,
     /**
-     * Cria o bot„o de "Visualizar". Utilizado para visualizar/detalhar um item.
+     * Cria o bot√£o de "Visualizar". Utilizado para visualizar/detalhar um item.
      */
     VIEWITEM,
     /**
-     * Cria o bot„o de "Ativar". Utilizado para a funÁ„o contr·ria do {@link #DEACTIVATEITEM}.
+     * Cria o bot√£o de "Ativar". Utilizado para a fun√ß√£o contr√°ria do {@link #DEACTIVATEITEM}.
      */
     ACTIVATEITEM,
     /**
-     * Cria o bot„o de "Desativar". Utilizado para desativar algum objeto de cadastro do banco de dados. Objetos s„o desativados quando n„o podem ser excluÌdos do sistema.
+     * Cria o bot√£o de "Desativar". Utilizado para desativar algum objeto de cadastro do banco de dados. Objetos s√£o desativados quando n√£o podem ser exclu√≠dos do sistema.
      */
     DEACTIVATEITEM,
     /**
-     * Cria o bot„o de "Importar Dados". Utilizado nas funÁıes em que o sistema deve importar alguma informaÁ„o externa.
+     * Cria o bot√£o de "Importar Dados". Utilizado nas fun√ß√µes em que o sistema deve importar alguma informa√ß√£o externa.
      */
     IMPORTDATA,
     /**
-     * Cria o bot„o de "Confirmar". Usado para confirmar as operaÁıes de confirmaÁ„o de operaÁıes.
+     * Cria o bot√£o de "Confirmar". Usado para confirmar as opera√ß√µes de confirma√ß√£o de opera√ß√µes.
      */
     CONFIRM,
     /**
-     * Cria o bot„o de "Confirmar Todos". Usado para confirmar diversas operaÁıes pendentes.
+     * Cria o bot√£o de "Confirmar Todos". Usado para confirmar diversas opera√ß√µes pendentes.
      */
     CONFIRMALL,
     /**
-     * Cria o bot„o de "Cancelar", Usado geralmente de forma a representar a aÁ„o contr·ria do bot„o {@link #CONFIRM}
+     * Cria o bot√£o de "Cancelar", Usado geralmente de forma a representar a a√ß√£o contr√°ria do bot√£o {@link #CONFIRM}
      */
     CANCEL,
     /**
-     * Cria o bot„o de "Cancelar Todos", Usado em situaÁıes que temos v·rias aÁıes ou situaÁ„o que podem ser canceladas, apresentando uma aÁ„o ˙nica para cancelar todos ao mesmo tempo.
+     * Cria o bot√£o de "Cancelar Todos", Usado em situa√ß√µes que temos v√°rias a√ß√µes ou situa√ß√£o que podem ser canceladas, apresentando uma a√ß√£o √∫nica para cancelar todos ao mesmo tempo.
      */
     CANCELALL,
     /**
-     * Cria o bot„o de "Help", Usado em algumas telas para exibir uma ajuda maior e mais detalhada que os "tooltips" dos campos.
+     * Cria o bot√£o de "Help", Usado em algumas telas para exibir uma ajuda maior e mais detalhada que os "tooltips" dos campos.
      */
     HELP,
     /**
-     * Cria o bot„o de "Picker". O bot„o de picker È utilizado quando desejamos "buscar" uma informaÁ„o para associaÁ„o em um campo. Por exemplo no campo CEP, colocamos o bot„o de picker para abrir uma tela e permitir que o usu·rio encontre um CEP, e ao confirmar ele j· traga os dados para o campo.
+     * Cria o bot√£o de "Picker". O bot√£o de picker √© utilizado quando desejamos "buscar" uma informa√ß√£o para associa√ß√£o em um campo. Por exemplo no campo CEP, colocamos o bot√£o de picker para abrir uma tela e permitir que o usu√°rio encontre um CEP, e ao confirmar ele j√° traga os dados para o campo.
      */
     PICKER,
     /**
-     * Cria o bot„o da "varinha m·gica". Esse bot„o È utilizado quando desejamos que o BIS faÁa alguma tarefa automatizada, como se fosse "m·gica", agilizando os processos e tarefas do usu·rio.
+     * Cria o bot√£o da "varinha m√°gica". Esse bot√£o √© utilizado quando desejamos que o BIS fa√ßa alguma tarefa automatizada, como se fosse "m√°gica", agilizando os processos e tarefas do usu√°rio.
      */
     MAGIC,
     /**
-     * Cria o bot„o para associar informaÁıes, usado quando queremos associar um cadastro (objeto do BIS) ‡ outro.
+     * Cria o bot√£o para associar informa√ß√µes, usado quando queremos associar um cadastro (objeto do BIS) √† outro.
      */
     LINK,
     /**
-     * Cria o bot„o para aÁ„o contr·ria do bot„o {@link ButtonType#LINK}.
+     * Cria o bot√£o para a√ß√£o contr√°ria do bot√£o {@link ButtonType#LINK}.
      */
     UNLINK,
     /**
-     * Cria um bot„o para a aÁ„o de recuperar mensagens no servidor de e-mail.
+     * Cria um bot√£o para a a√ß√£o de recuperar mensagens no servidor de e-mail.
      */
     FETCHMAIL,
     /**
-     * Cria um bot„o para a aÁ„o de recuperar senha.
+     * Cria um bot√£o para a a√ß√£o de recuperar senha.
      */
     PASSWORDRECOVERY,
     /**
-     * Cria um bot„o para a aÁ„o de incluir uma pessoa (jurÌdica ou fÌsica) no sistema de forma r·pida).
+     * Cria um bot√£o para a a√ß√£o de incluir uma pessoa (jur√≠dica ou f√≠sica) no sistema de forma r√°pida).
      */
     QUICKADD_PERSON,
     /**
-     * Bot„o com Ìcone de repetir valor do campo anterior.
+     * Bot√£o com √≠cone de repetir valor do campo anterior.
      */
     REPEATVALUE,
     /**
-     * Bot„o para realizar a aÁ„o de pagar alguma conta.
+     * Bot√£o para realizar a a√ß√£o de pagar alguma conta.
      */
     PAY,
     /**
-     * Bot„o criato para exibir um tipo de relatÛrio. Este bot„o deve ser agrupado dentro do bot„o {@link #REPORTACTIONS}.
+     * Bot√£o criato para exibir um tipo de relat√≥rio. Este bot√£o deve ser agrupado dentro do bot√£o {@link #REPORTACTIONS}.
      */
     REPORTITEM,
     /**
-     * Estilo do bot„o utilizado para o "Mais AÁıes"
+     * Estilo do bot√£o utilizado para o "Mais A√ß√µes"
      */
     MOREACTIONS,
     /**
-     * Estilo do bot„o utilizado para agrupar os RelatÛrios, deixa o bot„o no estilo do "Mais AÁıes" mas com a cara do bot„o de relatÛrios.
+     * Estilo do bot√£o utilizado para agrupar os Relat√≥rios, deixa o bot√£o no estilo do "Mais A√ß√µes" mas com a cara do bot√£o de relat√≥rios.
      */
     REPORTACTIONS,
     /**
-     * Cria um bot„o de "Swap", utilizado para inverter conte˙do de alguns campos, pasando o valor de A para B, e de B para A.
+     * Cria um bot√£o de "Swap", utilizado para inverter conte√∫do de alguns campos, pasando o valor de A para B, e de B para A.
      */
     SWAPCONTENT,
     /**
-     * Cria o bot„o com Ìcone de Download, utilizado para baixar qualquer tipo de arquivo do servidor para a m·quina do cliente.
+     * Cria o bot√£o com √≠cone de Download, utilizado para baixar qualquer tipo de arquivo do servidor para a m√°quina do cliente.
      */
     DOWNLOAD,
     /**
-     * Cria o bot„o com Ìcone de Download de arquivo ZIP, utilizado para baixar qualquer tipo de arquivo do servidor para a m·quina do cliente que seja compactado no formato ZIP.
+     * Cria o bot√£o com √≠cone de Download de arquivo ZIP, utilizado para baixar qualquer tipo de arquivo do servidor para a m√°quina do cliente que seja compactado no formato ZIP.
      */
     DOWNLOAD_ZIP,
     /**
-     * Cria um bot„o de envio de E-mail
+     * Cria um bot√£o de envio de E-mail
      */
     SENDMAIL,
     /**
-     * Cria o bot„o com Ìcone de Upload, utilizado para enviar qualquer tipo de arquivo da m·quina do cliente para o servidor.
+     * Cria o bot√£o com √≠cone de Upload, utilizado para enviar qualquer tipo de arquivo da m√°quina do cliente para o servidor.
      */
     UPLOAD,
     /**
-     * Cria um bot„o para "atualizar" no sentido de recarregar, ou refazer alguma tarefa.
+     * Cria um bot√£o para "atualizar" no sentido de recarregar, ou refazer alguma tarefa.
      */
     REFRESH,
     /**
-     * Bot„o utilizado na geraÁ„o dos DashIt. Indica a aÁ„o de pegar os filtros e dados fornecidos pelo usu·rio para gerar o relatÛrio.
+     * Bot√£o utilizado na gera√ß√£o dos DashIt. Indica a a√ß√£o de pegar os filtros e dados fornecidos pelo usu√°rio para gerar o relat√≥rio.
      */
     DASHIT_CREATE,
     /**
-     * Bot„o utilizado para abrir um DashIt. Utilizado nas telas de cadastro que abrem diretamente um relatÛrio, ou mesmo entre os relatÛrios quando migramos de um para outro.
+     * Bot√£o utilizado para abrir um DashIt. Utilizado nas telas de cadastro que abrem diretamente um relat√≥rio, ou mesmo entre os relat√≥rios quando migramos de um para outro.
      */
     DASHIT,
     /**
-     * Bot„o utilizado para abrir uma tela de configuraÁıes/definiÁıes.
+     * Bot√£o utilizado para abrir uma tela de configura√ß√µes/defini√ß√µes.
      */
     CONFIG,
     /**
-     * Cria um bot„o com o Ìncone do excel, utilizado normalmente para exportar dados em formato de planilha do excel
+     * Cria um bot√£o com o √≠ncone do excel, utilizado normalmente para exportar dados em formato de planilha do excel
      */
     EXCEL,
     /**
-     * Cria um bot„o para organizar dados em ordem
+     * Cria um bot√£o para organizar dados em ordem
      */
     SORT,
     /**
-     * Cria um bot„o com uma calculadora, normalmente utilizado associado ‡ campos de valores para que o BIS preencha o valor baseado em algum c·lculo predefinido.
+     * Cria um bot√£o com uma calculadora, normalmente utilizado associado √† campos de valores para que o BIS preencha o valor baseado em algum c√°lculo predefinido.
      */
     CALCULATOR,
     /**
-     * Cria o bot„o de 'play', utilizado para iniciar/resumir alguma aÁ„o/tarefa.
+     * Cria o bot√£o de 'play', utilizado para iniciar/resumir alguma a√ß√£o/tarefa.
      */
     PLAY,
     /**
-     * Cria o bot„o de 'pause', utilizado para pausar alguma aÁ„o/tarefa.
+     * Cria o bot√£o de 'pause', utilizado para pausar alguma a√ß√£o/tarefa.
      */
     PAUSE,
     /**
-     * Cria o bot„o de 'play', utilizado para finalizar alguma aÁ„o/tarefa.
+     * Cria o bot√£o de 'play', utilizado para finalizar alguma a√ß√£o/tarefa.
      */
     STOP,
     /**
-     * Cria o bot„o para executar uma rotina/tarefa de teste etc.
+     * Cria o bot√£o para executar uma rotina/tarefa de teste etc.
      */
     EXECUTE,
     /**
-     * Bot„o de avanÁar "next", bot„o utilizado para navegar entre p·ginas ou etapas, como as de um Wizard. N„o confundir com os botıes de barra de navegaÁ„o de itens {@link #MOVE_NEXT}.
+     * Bot√£o de avan√ßar "next", bot√£o utilizado para navegar entre p√°ginas ou etapas, como as de um Wizard. N√£o confundir com os bot√µes de barra de navega√ß√£o de itens {@link #MOVE_NEXT}.
      */
     NEXT,
     /**
-     * Bot„o de recuar "previous", bot„o utilizado para navegar entre p·ginas ou etapas, como as de um Wizard. N„o confundir com os botıes de barra de navegaÁ„o de itens {@link #MOVE_PREVIOUS}.
+     * Bot√£o de recuar "previous", bot√£o utilizado para navegar entre p√°ginas ou etapas, como as de um Wizard. N√£o confundir com os bot√µes de barra de navega√ß√£o de itens {@link #MOVE_PREVIOUS}.
      */
     PREVIOUS,
     /**
-     * Bot„o utilizado apra representar a aÁ„o de executar rotinas de manutenÁ„o do sistema.
+     * Bot√£o utilizado apra representar a a√ß√£o de executar rotinas de manuten√ß√£o do sistema.
      */
     MAINTENANCE,
   }
 
   /**
-   * Construtor privado para classe est·tica.
+   * Construtor privado para classe est√°tica.
    */
   private FWVad() {
   }
 
   /**
-   * Este mÈtodo cria uma janela de dialogo MODAL para exibir uma mensagem de opÁıes para o usu·rio, como uma tela de confirmar uma aÁ„o com botıes configur·veis.<br>
-   * O click em qualquer um dos botıes fechar· o dialog imediatamente, antes de chamar o evento no listener.
+   * Este m√©todo cria uma janela de dialogo MODAL para exibir uma mensagem de op√ß√µes para o usu√°rio, como uma tela de confirmar uma a√ß√£o com bot√µes configur√°veis.<br>
+   * O click em qualquer um dos bot√µes fechar√° o dialog imediatamente, antes de chamar o evento no listener.
    *
-   * @param title TÌtulo da Janela de Dialogo.
+   * @param title T√≠tulo da Janela de Dialogo.
    * @param message Mensagem a ser exibida.
-   * @param listener Listener para receber qual bot„o foi clicado.
-   * @param defaultButton Define o bot„o que ter· o foco. Podendo ser pressionado de imediato com o espaÁo ou ENTER. Se nulo, o primeiro bot„o receber· o foco. O bot„o passado aqui dever· estar entre os botıes do par‚metro buttons, ou n„o ter· efeito algum.
-   * @param cancelButton Define o bot„o que ser· acionado com a tecla ESC. Se nulo, nenhum bot„o recebe esta funÁ„o. O bot„o passado aqui dever· estar entre os botıes do par‚metro buttons, ou n„o ter· efeito algum.
-   * @param buttons Botıes a serem exibidos para o usu·rio. Se passado nulo, ser· exibido apenas o bot„o de OK. Os botıes ser„o colocados na ordem do array.
+   * @param listener Listener para receber qual bot√£o foi clicado.
+   * @param defaultButton Define o bot√£o que ter√° o foco. Podendo ser pressionado de imediato com o espa√ßo ou ENTER. Se nulo, o primeiro bot√£o receber√° o foco. O bot√£o passado aqui dever√° estar entre os bot√µes do par√¢metro buttons, ou n√£o ter√° efeito algum.
+   * @param cancelButton Define o bot√£o que ser√° acionado com a tecla ESC. Se nulo, nenhum bot√£o recebe esta fun√ß√£o. O bot√£o passado aqui dever√° estar entre os bot√µes do par√¢metro buttons, ou n√£o ter√° efeito algum.
+   * @param buttons Bot√µes a serem exibidos para o usu√°rio. Se passado nulo, ser√° exibido apenas o bot√£o de OK. Os bot√µes ser√£o colocados na ordem do array.
    *
-   * @return Janela no formato de caixa de di·logo pronta para se exibida.
+   * @return Janela no formato de caixa de di√°logo pronta para se exibida.
    */
   public static Window createDialogQuestion(String title, String message, RFWDialogButtonClickListener listener, DialogButton defaultButton, DialogButton cancelButton, DialogButton... buttons) {
     return createDialog(title, message, new ThemeResource("icon/dialog_64.png"), null, listener, defaultButton, cancelButton, buttons);
   }
 
   /**
-   * Este mÈtodo cria uma janela de dialogo MODAL para exibir uma mensagem de opÁıes para o usu·rio, como uma tela de confirmar uma aÁ„o com botıes configur·veis.<br>
-   * O click em qualquer um dos botıes fechar· o dialog imediatamente, antes de chamar o evento no listener.
+   * Este m√©todo cria uma janela de dialogo MODAL para exibir uma mensagem de op√ß√µes para o usu√°rio, como uma tela de confirmar uma a√ß√£o com bot√µes configur√°veis.<br>
+   * O click em qualquer um dos bot√µes fechar√° o dialog imediatamente, antes de chamar o evento no listener.
    *
-   * @param title TÌtulo da Janela de Dialogo.
+   * @param title T√≠tulo da Janela de Dialogo.
    * @param message Mensagem a ser exibida.
-   * @param icon Define o Ìcone a ser exibido no dialogo.
-   * @param listener Listener para receber qual bot„o foi clicado.
-   * @param defaultButton Define o bot„o que ter· o foco. Podendo ser pressionado de imediato com o espaÁo ou ENTER. Se nulo, o primeiro bot„o receber· o foco. O bot„o passado aqui dever· estar entre os botıes do par‚metro buttons, ou n„o ter· efeito algum.
-   * @param cancelButton Define o bot„o que ser· acionado com a tecla ESC. Se nulo, nenhum bot„o recebe esta funÁ„o. O bot„o passado aqui dever· estar entre os botıes do par‚metro buttons, ou n„o ter· efeito algum.
-   * @param buttons Botıes a serem exibidos para o usu·rio. Se passado nulo, ser· exibido apenas o bot„o de OK. Os botıes ser„o colocados na ordem do array.
+   * @param icon Define o √≠cone a ser exibido no dialogo.
+   * @param listener Listener para receber qual bot√£o foi clicado.
+   * @param defaultButton Define o bot√£o que ter√° o foco. Podendo ser pressionado de imediato com o espa√ßo ou ENTER. Se nulo, o primeiro bot√£o receber√° o foco. O bot√£o passado aqui dever√° estar entre os bot√µes do par√¢metro buttons, ou n√£o ter√° efeito algum.
+   * @param cancelButton Define o bot√£o que ser√° acionado com a tecla ESC. Se nulo, nenhum bot√£o recebe esta fun√ß√£o. O bot√£o passado aqui dever√° estar entre os bot√µes do par√¢metro buttons, ou n√£o ter√° efeito algum.
+   * @param buttons Bot√µes a serem exibidos para o usu√°rio. Se passado nulo, ser√° exibido apenas o bot√£o de OK. Os bot√µes ser√£o colocados na ordem do array.
    *
-   * @return Janela no formato de caixa de di·logo pronta para se exibida.
+   * @return Janela no formato de caixa de di√°logo pronta para se exibida.
    */
   private static Window createDialog(String title, String message, ThemeResource icon, String style, RFWDialogButtonClickListener listener, DialogButton defaultButton, DialogButton cancelButton, DialogButton... buttons) {
     final Window w = new Window(title);
@@ -507,7 +507,7 @@ public class FWVad {
     w.setIcon(icon);
     if (style != null) w.addStyleName(style);
 
-    // Conte˙do da Janela
+    // Conte√∫do da Janela
     VerticalLayout vl = new VerticalLayout();
     vl.setMargin(true);
 
@@ -547,7 +547,7 @@ public class FWVad {
             w.close();
             if (listener != null) listener.clickedButton(dBut);
           });
-          button.setCaption("N„o");
+          button.setCaption("N√£o");
           break;
         case YES:
           button = createButton(ButtonType.CONFIRM, e -> {
@@ -569,12 +569,12 @@ public class FWVad {
   }
 
   /**
-   * Este mÈtodo cria uma janela de dialogo MODAL para exibir uma mensagem de InfomaÁ„o.
+   * Este m√©todo cria uma janela de dialogo MODAL para exibir uma mensagem de Infoma√ß√£o.
    *
-   * @param title TÌtulo da Janela de Dialogo.
+   * @param title T√≠tulo da Janela de Dialogo.
    * @param message Mensagem a ser exibida.
    * @param iconPath
-   * @return Janela no formato de caixa de di·logo pronta para se exibida.
+   * @return Janela no formato de caixa de di√°logo pronta para se exibida.
    */
   public static Window createDialogInformation(String title, String message, String iconPath) {
     final Window w = new Window(title);
@@ -585,7 +585,7 @@ public class FWVad {
     w.center();
     w.setIcon(new ThemeResource(iconPath));
 
-    // Conte˙do da Janela
+    // Conte√∫do da Janela
     VerticalLayout vl = new VerticalLayout();
     vl.setMargin(true);
 
@@ -608,29 +608,29 @@ public class FWVad {
   }
 
   /**
-   * Exibe uma mensagem de Erro com o tÌtulo padr„o 'Erro no Sistema'.
+   * Exibe uma mensagem de Erro com o t√≠tulo padr√£o 'Erro no Sistema'.
    *
-   * @param message Mensagem a ser exibida ao usu·rio.
+   * @param message Mensagem a ser exibida ao usu√°rio.
    */
   public static void showWarningMessage(String message) {
-    Window dialog = createDialogWarning("Erro no Sistema :¥(", message);
+    Window dialog = createDialogWarning("Erro no Sistema :¬¥(", message);
     addWindow(dialog);
   }
 
   /**
-   * Exibe uma mensagem de Erro com o tÌtulo padr„o 'Erro no Sistema' e anexa a instruÁ„o de reiniciar a sess„o se o problema persistir ao fim da mensagem.
+   * Exibe uma mensagem de Erro com o t√≠tulo padr√£o 'Erro no Sistema' e anexa a instru√ß√£o de reiniciar a sess√£o se o problema persistir ao fim da mensagem.
    *
-   * @param message Mensagem a ser exibida ao usu·rio.
+   * @param message Mensagem a ser exibida ao usu√°rio.
    * @param ex
    */
   public static void showErrorMessage(String message, Throwable ex) {
-    showErrorMessage("Erro no Sistema :¥(", message + "<br><br><i>… recomend·vel reiniciar a sess„o. Se o problema persistir, contate o suporte.</i>", ex);
+    showErrorMessage("Erro no Sistema :¬¥(", message + "<br><br><i>√â recomend√°vel reiniciar a sess√£o. Se o problema persistir, contate o suporte.</i>", ex);
   }
 
   /**
-   * Exibe uma mensagem de erro para o usu·rio.
+   * Exibe uma mensagem de erro para o usu√°rio.
    *
-   * @param title TÌtulo da Caixa de mensagem.
+   * @param title T√≠tulo da Caixa de mensagem.
    * @param message Mensagem a ser exibida.
    * @param ex
    */
@@ -640,11 +640,11 @@ public class FWVad {
   }
 
   /**
-   * Este mÈtodo cria uma janela de dialogo MODAL para exibir uma mensagem de erro.
+   * Este m√©todo cria uma janela de dialogo MODAL para exibir uma mensagem de erro.
    *
-   * @param title TÌtulo da Janela de Dialogo.
+   * @param title T√≠tulo da Janela de Dialogo.
    * @param message Mensagem a ser exibida.
-   * @return Janela no formato de caixa de di·logo pronta para se exibida.
+   * @return Janela no formato de caixa de di√°logo pronta para se exibida.
    */
   public static Window createDialogError(String title, String message, Throwable ex) {
     final Window w = new Window(title);
@@ -656,7 +656,7 @@ public class FWVad {
     w.setIcon(new ThemeResource("icon/error_64.png"));
     w.addStyleName("bisErrorDialog");
 
-    // Conte˙do da Janela
+    // Conte√∫do da Janela
     VerticalLayout vl = new VerticalLayout();
     vl.setMargin(true);
 
@@ -678,7 +678,7 @@ public class FWVad {
     gl.setComponentAlignment(button, Alignment.MIDDLE_CENTER);
 
     if (ex != null) {
-      Button showLog = new Button("Registro TÈcnico");
+      Button showLog = new Button("Registro T√©cnico");
       showLog.addClickListener(evt -> addWindow(createDialogException(ex)));
       setButtonStyle(showLog, ButtonStyle.LINK);
       showLog.setWidth("140px");
@@ -698,11 +698,11 @@ public class FWVad {
   }
 
   /**
-   * Este mÈtodo cria uma janela de dialogo MODAL para exibir uma mensagem de Warnings.
+   * Este m√©todo cria uma janela de dialogo MODAL para exibir uma mensagem de Warnings.
    *
-   * @param title TÌtulo da Janela de Dialogo.
+   * @param title T√≠tulo da Janela de Dialogo.
    * @param message Mensagem a ser exibida.
-   * @return Janela no formato de caixa de di·logo pronta para se exibida.
+   * @return Janela no formato de caixa de di√°logo pronta para se exibida.
    */
   public static Window createDialogWarning(String title, String message) {
     final Window w = new Window(title);
@@ -714,7 +714,7 @@ public class FWVad {
     w.setIcon(new ThemeResource("icon/warning_64.png"));
     w.addStyleName("bisWarningDialog");
 
-    // Conte˙do da Janela
+    // Conte√∫do da Janela
     VerticalLayout vl = new VerticalLayout();
     vl.setMargin(true);
 
@@ -746,7 +746,7 @@ public class FWVad {
    * Mosta um dialog paca exibir uma pilha de uma exception.
    */
   public static Window createDialogException(Throwable ex) {
-    final Window w = new Window("Detalhes TÈcnicos do Erro");
+    final Window w = new Window("Detalhes T√©cnicos do Erro");
     w.setModal(true);
     w.addStyleName("bisErrorDialog");
     w.setClosable(true);
@@ -755,7 +755,7 @@ public class FWVad {
     w.center();
     w.setIcon(new ThemeResource("icon/bug_64.png"));
 
-    // Conte˙do da Janela
+    // Conte√∫do da Janela
     VerticalLayout vl = new VerticalLayout();
     vl.setMargin(true);
     vl.setSizeFull();
@@ -783,11 +783,11 @@ public class FWVad {
   }
 
   /**
-   * Cria um bot„o padr„o totalmente configurado.
+   * Cria um bot√£o padr√£o totalmente configurado.
    *
-   * @param buttonType DefiniÁ„o do bot„o a ser criado.
+   * @param buttonType Defini√ß√£o do bot√£o a ser criado.
    * @param listener
-   * @return Bot„o criado j· com as carecteristicas do padr„o visual.
+   * @return Bot√£o criado j√° com as carecteristicas do padr√£o visual.
    */
   public static Button createButton(ButtonType buttonType, ClickListener listener) {
     Button button = new Button();
@@ -797,10 +797,10 @@ public class FWVad {
   }
 
   /**
-   * Faz todas as definiÁıes no Objeto "button" conforme a definiÁ„o de UI padr„o do BIS.
+   * Faz todas as defini√ß√µes no Objeto "button" conforme a defini√ß√£o de UI padr√£o do BIS.
    *
-   * @param buttonType DefiniÁ„o da UI padr„o a ser aplicada no Bot„o.
-   * @param button Objeto "bot„o" para ser formatado conforme padr„o da UI do BIS.
+   * @param buttonType Defini√ß√£o da UI padr√£o a ser aplicada no Bot√£o.
+   * @param button Objeto "bot√£o" para ser formatado conforme padr√£o da UI do BIS.
    */
   public static void setButtonType(ButtonType buttonType, Button button) {
     switch (buttonType) {
@@ -819,12 +819,12 @@ public class FWVad {
         break;
       case SAVE:
         button.setCaption("Salvar");
-        button.setDescription("Salvar as AlteraÁıes");
+        button.setDescription("Salvar as Altera√ß√µes");
         button.setIcon(new ThemeResource("icon/save_24.png"));
         break;
       case BOOKMARK:
         button.setCaption(null);
-        button.setDescription("EndereÁos de Sites");
+        button.setDescription("Endere√ßos de Sites");
         button.setIcon(new ThemeResource("icon/bookmark_24.png"));
         break;
       case SWAPCONTENT:
@@ -890,7 +890,7 @@ public class FWVad {
         button.setIcon(new ThemeResource("icon/duplicate_24.png"));
         break;
       case VERSIONITEM:
-        button.setCaption("Nova Vers„o");
+        button.setCaption("Nova Vers√£o");
         setButtonStyle(button, ButtonStyle.NONE);
         button.setIcon(new ThemeResource("icon/version_24.png"));
         break;
@@ -990,7 +990,7 @@ public class FWVad {
         button.setIcon(new ThemeResource("icon/remove_24.png"));
         break;
       case INSTALLMENTS:
-        button.setCaption("PrestaÁ„o/Parcelas");
+        button.setCaption("Presta√ß√£o/Parcelas");
         setButtonStyle(button, ButtonStyle.NONE);
         button.setIcon(new ThemeResource("icon/installment2_24.png"));
         break;
@@ -1047,17 +1047,17 @@ public class FWVad {
         button.setIcon(new ThemeResource("icon/pay2_24.png"));
         break;
       case MOREACTIONS:
-        button.setCaption("Mais AÁıes");
+        button.setCaption("Mais A√ß√µes");
         setButtonStyle(button, ButtonStyle.NONE);
         button.setIcon(new ThemeResource("icon/moreactions_24.png"));
         break;
       case REPORTACTIONS:
-        button.setCaption("RelatÛrios");
+        button.setCaption("Relat√≥rios");
         setButtonStyle(button, ButtonStyle.NONE);
         button.setIcon(new ThemeResource("icon/report_24.png"));
         break;
       case REPORTITEM:
-        button.setCaption("RelatÛrio");
+        button.setCaption("Relat√≥rio");
         setButtonStyle(button, ButtonStyle.NONE);
         button.setIcon(new ThemeResource("icon/report_24.png"));
         break;
@@ -1079,12 +1079,12 @@ public class FWVad {
         break;
       case DASHIT_CREATE:
         button.setIcon(new ThemeResource("icon/dashitcreate_24.png"));
-        button.setCaption("Gerar RelatÛrio");
+        button.setCaption("Gerar Relat√≥rio");
         setButtonStyle(button, ButtonStyle.FRIENDLY);
         break;
       case DASHIT:
         button.setIcon(new ThemeResource("icon/dashit_24.png"));
-        button.setCaption("Abrir RelatÛrio");
+        button.setCaption("Abrir Relat√≥rio");
         break;
       case CONFIG:
         button.setIcon(new ThemeResource("icon/config_24.png"));
@@ -1129,8 +1129,8 @@ public class FWVad {
         button.setIcon(new ThemeResource("icon/previous_24.png"));
         break;
       case MAINTENANCE:
-        button.setCaption("ManutenÁ„o");
-        button.setDescription("Executar a rotina de manutenÁ„o dos dados.");
+        button.setCaption("Manuten√ß√£o");
+        button.setDescription("Executar a rotina de manuten√ß√£o dos dados.");
         setButtonStyle(button, ButtonStyle.NONE);
         button.setIcon(new ThemeResource("icon/maintenance_24.png"));
         break;
@@ -1138,12 +1138,12 @@ public class FWVad {
   }
 
   /**
-   * Define o estilo em algum bot„o.<br>
+   * Define o estilo em algum bot√£o.<br>
    *
-   * @param buttonStyle Estilo a ser definido no bot„o.
+   * @param buttonStyle Estilo a ser definido no bot√£o.
    */
   public static void setButtonStyle(Button button, ButtonStyle buttonStyle) {
-    // AtenÁ„o: Se n„o for passado o estilo None, n„o removemos estilos antigos, permitindo que os estilos se somem se necess·rio.
+    // Aten√ß√£o: Se n√£o for passado o estilo None, n√£o removemos estilos antigos, permitindo que os estilos se somem se necess√°rio.
     switch (buttonStyle) {
       case NONE:
         // Remove os estilos conhecidos
@@ -1175,16 +1175,16 @@ public class FWVad {
   }
 
   /**
-   * Exibe uma mensagem de notificaÁ„o que some sozinha depois de um tempo. <br>
-   * <B>ATEN«√O:</B> Nenhuma notificaÁ„o faz busca da mensagem por bundle, quando necess·rio fazer a busca antes da chamada deste mÈtodo.
+   * Exibe uma mensagem de notifica√ß√£o que some sozinha depois de um tempo. <br>
+   * <B>ATEN√á√ÉO:</B> Nenhuma notifica√ß√£o faz busca da mensagem por bundle, quando necess√°rio fazer a busca antes da chamada deste m√©todo.
    *
-   * @param caption TÌtulo da NotificaÁ„o
-   * @param text texto/conte˙do de exibiÁ„o da notificaÁ„o
-   * @param msec Tempo em milisegundos para exibiÁ„o da mensagem. Se passado -1 exige que se clique na mensagem.
-   * @param icon Õcone para ser exibido na notificaÁ„o, se nulo deixa sem Ìcone.
-   * @param type Tipo da notificaÁ„o conforme definiÁ„o do Vaadin. Veja em {@link Type}.
-   * @param position PosiÁ„o de aparÍncia da notificaÁ„o. Veja detalhes em {@link Position}.
-   * @param style Estilo do CSS a ser colocado na NotificaÁ„o. Permite um controle maior sobre a aparÍncia da notificaÁ„o.
+   * @param caption T√≠tulo da Notifica√ß√£o
+   * @param text texto/conte√∫do de exibi√ß√£o da notifica√ß√£o
+   * @param msec Tempo em milisegundos para exibi√ß√£o da mensagem. Se passado -1 exige que se clique na mensagem.
+   * @param icon √çcone para ser exibido na notifica√ß√£o, se nulo deixa sem √≠cone.
+   * @param type Tipo da notifica√ß√£o conforme defini√ß√£o do Vaadin. Veja em {@link Type}.
+   * @param position Posi√ß√£o de apar√™ncia da notifica√ß√£o. Veja detalhes em {@link Position}.
+   * @param style Estilo do CSS a ser colocado na Notifica√ß√£o. Permite um controle maior sobre a apar√™ncia da notifica√ß√£o.
    */
   public static void showNotification(String caption, String text, int msec, Resource icon, Type type, Position position, String style) {
     Notification notification = new Notification(caption, text, type);
@@ -1197,53 +1197,53 @@ public class FWVad {
   }
 
   /**
-   * Exibe uma notificaÁ„o com aspecto de sucesso.<br>
-   * Utilizada para operaÁıes bem sucessidas.<br>
-   * Assim informamos que tudo foi realizado com sucesso, mas n„o exigimos do usu·rio um clique para confirmar a informaÁ„o. Deixando assim o uso mais r·pido e simples.
+   * Exibe uma notifica√ß√£o com aspecto de sucesso.<br>
+   * Utilizada para opera√ß√µes bem sucessidas.<br>
+   * Assim informamos que tudo foi realizado com sucesso, mas n√£o exigimos do usu√°rio um clique para confirmar a informa√ß√£o. Deixando assim o uso mais r√°pido e simples.
    *
-   * @param msg Mensagem de confirmaÁ„o da operaÁ„o a ser exibida.
+   * @param msg Mensagem de confirma√ß√£o da opera√ß√£o a ser exibida.
    */
   public static void showNotificationSuccess(String msg) {
     showNotification("", msg, 1000, new ThemeResource("icon/success_64.png"), Type.HUMANIZED_MESSAGE, Position.TOP_CENTER, "bisNotificationSuccess");
   }
 
   /**
-   * Exibe uma notificaÁ„o com aspecto de sucesso.<br>
-   * Utilizada para operaÁıes bem sucessidas.<br>
-   * Assim informamos que tudo foi realizado com sucesso, mas n„o exigimos do usu·rio um clique para confirmar a informaÁ„o. Deixando assim o uso mais r·pido e simples.
+   * Exibe uma notifica√ß√£o com aspecto de sucesso.<br>
+   * Utilizada para opera√ß√µes bem sucessidas.<br>
+   * Assim informamos que tudo foi realizado com sucesso, mas n√£o exigimos do usu√°rio um clique para confirmar a informa√ß√£o. Deixando assim o uso mais r√°pido e simples.
    *
-   * @param msg Mensagem de confirmaÁ„o da operaÁ„o a ser exibida.
-   * @param subMsg Segunda linha da mensagem com uma fonte menor, permite exibir uma informaÁ„o adicional
+   * @param msg Mensagem de confirma√ß√£o da opera√ß√£o a ser exibida.
+   * @param subMsg Segunda linha da mensagem com uma fonte menor, permite exibir uma informa√ß√£o adicional
    */
   public static void showNotificationSuccess(String msg, String subMsg) {
     showNotification("", msg + "<br><small>" + subMsg + "</small>", 1000, new ThemeResource("icon/success_64.png"), Type.HUMANIZED_MESSAGE, Position.TOP_CENTER, "bisNotificationSuccess");
   }
 
   /**
-   * Cria uma notificaÁ„o de Bandeja de Sistema. Normalmente utilizada para emitir alertas do sistema de tarefas e eventos desrelacionados com a operaÁ„o atual do usu·rio. Como uma mensagem que chegou, um evento que ocorreu em segundo plano, etc.
+   * Cria uma notifica√ß√£o de Bandeja de Sistema. Normalmente utilizada para emitir alertas do sistema de tarefas e eventos desrelacionados com a opera√ß√£o atual do usu√°rio. Como uma mensagem que chegou, um evento que ocorreu em segundo plano, etc.
    *
-   * @param title TÌtulo da notificaÁ„o
-   * @param msg Mensagem da NotificaÁ„o
-   * @param icon Õcona da notificaÁ„o. Pode ser nulo para n„o exibir nenhum, mas È recomendado utilizar para identificaÁ„o mais r·pida do usu·rio de que se trata a notificaÁ„o.
+   * @param title T√≠tulo da notifica√ß√£o
+   * @param msg Mensagem da Notifica√ß√£o
+   * @param icon √çcona da notifica√ß√£o. Pode ser nulo para n√£o exibir nenhum, mas √© recomendado utilizar para identifica√ß√£o mais r√°pida do usu√°rio de que se trata a notifica√ß√£o.
    */
   public static void showNotificationTray(String title, String msg, Resource icon) {
     showNotification(title, msg, 1000, icon, Type.TRAY_NOTIFICATION, Position.TOP_RIGHT, "bisTrayNotification");
   }
 
   /**
-   * Recupera a inst‚ncia da UI de acordo com a Thread que chama o mÈtodo.
+   * Recupera a inst√¢ncia da UI de acordo com a Thread que chama o m√©todo.
    *
-   * @return Inst‚ncia do UI do Vaadin em execuÁ„o no momento.
+   * @return Inst√¢ncia do UI do Vaadin em execu√ß√£o no momento.
    */
   public static UI getUI() {
     return CurrentInstance.get(UI.class);
   }
 
   /**
-   * Recupera a inst‚ncia da UI de acordo com a Thread que chama o mÈtodo, desde que ela implemente a {@link RFWUI}.<br>
-   * Caso ela n„o implemente ou a UI n„o seja encontrada È retornado nulo, sem lanÁamento de exceptions.
+   * Recupera a inst√¢ncia da UI de acordo com a Thread que chama o m√©todo, desde que ela implemente a {@link RFWUI}.<br>
+   * Caso ela n√£o implemente ou a UI n√£o seja encontrada √© retornado nulo, sem lan√ßamento de exceptions.
    *
-   * @return Inst‚ncia do {@link RFWUI} do Vaadin em execuÁ„o no momento, caso a UI implemente a interface.
+   * @return Inst√¢ncia do {@link RFWUI} do Vaadin em execu√ß√£o no momento, caso a UI implemente a interface.
    */
   public static RFWUI getRFWUI() {
     UI ui = getUI();
@@ -1252,20 +1252,20 @@ public class FWVad {
   }
 
   /**
-   * Coloca uma nova janela na interface do usu·rio.
+   * Coloca uma nova janela na interface do usu√°rio.
    *
-   * @param window Janela a ser Exibida para o usu·rio
+   * @param window Janela a ser Exibida para o usu√°rio
    */
   public static void addWindow(Window window) {
     getUI().addWindow(window);
   }
 
   /**
-   * Define uma mensagem de erro em um campo da UI. Em geral utilizado para anexar mensagens de falha de validaÁ„o do seu conte˙do.
+   * Define uma mensagem de erro em um campo da UI. Em geral utilizado para anexar mensagens de falha de valida√ß√£o do seu conte√∫do.
    *
-   * @param field Campo que implemente {@link HasValue} do Vaadin. Se o campo n„o suportar a notificaÁ„o, nada È feito.
+   * @param field Campo que implemente {@link HasValue} do Vaadin. Se o campo n√£o suportar a notifica√ß√£o, nada √© feito.
    * @param msg Mensagem a ser exibida.
-   * @return true caso a mensagem tenha sido associada ao Field, false caso contr·rio.
+   * @return true caso a mensagem tenha sido associada ao Field, false caso contr√°rio.
    */
   public static boolean setComponentError(HasValue<?> field, String msg) {
     UserError error = null;
@@ -1281,20 +1281,20 @@ public class FWVad {
   }
 
   /**
-   * Mensagens de validaÁıes s„o as mensagens usadas para informar o usu·rio que algum dado fornecido est· com algum tipo de problema (errado, inconsistente, faltando, etc.) e que por isso a operaÁ„o n„o prosseguir·. Usado tambÈm quando a informaÁ„o n„o È fornecida pelo usu·rio, mas recuperada pelo sistema, como por exemplo, quando desejamos alterar um item selecionado na tela e durante sua busca
-   * descobrimos que o item n„o est· mais no banco de dados.<br>
-   * <B>ATEN«√O:</B> Nenhuma notificaÁ„o faz busca da mensagem por bundle, quando necess·rio fazer a busca antes da chamada deste mÈtodo.
+   * Mensagens de valida√ß√µes s√£o as mensagens usadas para informar o usu√°rio que algum dado fornecido est√° com algum tipo de problema (errado, inconsistente, faltando, etc.) e que por isso a opera√ß√£o n√£o prosseguir√°. Usado tamb√©m quando a informa√ß√£o n√£o √© fornecida pelo usu√°rio, mas recuperada pelo sistema, como por exemplo, quando desejamos alterar um item selecionado na tela e durante sua busca
+   * descobrimos que o item n√£o est√° mais no banco de dados.<br>
+   * <B>ATEN√á√ÉO:</B> Nenhuma notifica√ß√£o faz busca da mensagem por bundle, quando necess√°rio fazer a busca antes da chamada deste m√©todo.
    */
   public static void showValidationMessage(String msg) {
-    showInformationMessage("Problema de ValidaÁ„o", msg, "icon/validation_64.png");
+    showInformationMessage("Problema de Valida√ß√£o", msg, "icon/validation_64.png");
   }
 
   /**
-   * Exibe uma mensagem de informaÁ„o para o usu·rio.
+   * Exibe uma mensagem de informa√ß√£o para o usu√°rio.
    *
-   * @param title TÌtulo da Caixa de mensagem.
+   * @param title T√≠tulo da Caixa de mensagem.
    * @param message Mensagem a ser exibida.
-   * @param iconPath Caminho do Õcone a ser exibido na mensagem. Padr„o em 64x64px.
+   * @param iconPath Caminho do √çcone a ser exibido na mensagem. Padr√£o em 64x64px.
    */
   public static void showInformationMessage(String title, String message, String iconPath) {
     Window dialog = createDialogInformation(title, message, iconPath);
@@ -1302,8 +1302,8 @@ public class FWVad {
   }
 
   /**
-   * Cria um Panel invisÌvel que cria scrolls caso o conte˙do definido dentro dele seja maior do que o prÛprio Panel.<br>
-   * <B>ATEN«√O:</B> Os scrolls sÛ s„o gerados caso o conte˙do do panel n„o tenha o tamanho definido na direÁ„o que se deseja o Scroll.
+   * Cria um Panel invis√≠vel que cria scrolls caso o conte√∫do definido dentro dele seja maior do que o pr√≥prio Panel.<br>
+   * <B>ATEN√á√ÉO:</B> Os scrolls s√≥ s√£o gerados caso o conte√∫do do panel n√£o tenha o tamanho definido na dire√ß√£o que se deseja o Scroll.
    */
   public static Panel createScrollPanel() {
     Panel panel = new Panel();
@@ -1313,10 +1313,10 @@ public class FWVad {
   }
 
   /**
-   * Cria um Panel invisÌvel que cria scrolls caso o conte˙do definido dentro dele seja maior do que o prÛprio Panel.<br>
-   * <B>ATEN«√O:</B> Os scrolls sÛ s„o gerados caso o conte˙do do panel n„o tenha o tamanho definido na direÁ„o que se deseja o Scroll.
+   * Cria um Panel invis√≠vel que cria scrolls caso o conte√∫do definido dentro dele seja maior do que o pr√≥prio Panel.<br>
+   * <B>ATEN√á√ÉO:</B> Os scrolls s√≥ s√£o gerados caso o conte√∫do do panel n√£o tenha o tamanho definido na dire√ß√£o que se deseja o Scroll.
    *
-   * @param content Conte˙do a ser colocado dentro do Panel. NOTE QUE J¡ DEVE VIR COM A DEFINI«√O DE ALTURA "INDEFINIDA"!!!
+   * @param content Conte√∫do a ser colocado dentro do Panel. NOTE QUE J√Å DEVE VIR COM A DEFINI√á√ÉO DE ALTURA "INDEFINIDA"!!!
    */
   public static Panel createScrollPanel(Component content) {
     Panel panel = createScrollPanel();
@@ -1325,12 +1325,12 @@ public class FWVad {
   }
 
   /**
-   * Exibe uma mensagem de erro a partir de uma exceÁ„o qualquer.
+   * Exibe uma mensagem de erro a partir de uma exce√ß√£o qualquer.
    *
    * @param e Exception a ser transformada em Mensagem.
    */
   public static void showUncatchExceptionMessage(Throwable e) {
-    String message = "<br>Foi detectado um BUG no BIS. ReinÌcie sua sess„o, se o problema persistir, contate o suporte.<br><br><b>Erro: </b><i>";
+    String message = "<br>Foi detectado um BUG no BIS. Rein√≠cie sua sess√£o, se o problema persistir, contate o suporte.<br><br><b>Erro: </b><i>";
     if (e != null) {
       if (e.getCause() != null) {
         message += e.getCause().getClass().getName();
@@ -1349,11 +1349,11 @@ public class FWVad {
   }
 
   /**
-   * Este mÈtodo cria uma janela de dialogo MODAL para exibir uma mensagem de BUG.
+   * Este m√©todo cria uma janela de dialogo MODAL para exibir uma mensagem de BUG.
    *
-   * @param title TÌtulo da Janela de Dialogo.
+   * @param title T√≠tulo da Janela de Dialogo.
    * @param message Mensagem a ser exibida.
-   * @return Janela no formato de caixa de di·logo pronta para se exibida.
+   * @return Janela no formato de caixa de di√°logo pronta para se exibida.
    */
   public static Window createDialogBUG(String title, String message, Throwable ex) {
     final Window w = new Window(title);
@@ -1365,7 +1365,7 @@ public class FWVad {
     w.center();
     w.setIcon(new ThemeResource("icon/bug_64.png"));
 
-    // Conte˙do da Janela
+    // Conte√∫do da Janela
     VerticalLayout vl = new VerticalLayout();
     vl.setMargin(true);
 
@@ -1387,7 +1387,7 @@ public class FWVad {
     gl.setComponentAlignment(button, Alignment.MIDDLE_CENTER);
 
     if (ex != null) {
-      Button showLog = new Button("Registro TÈcnico");
+      Button showLog = new Button("Registro T√©cnico");
       showLog.addClickListener(evt -> addWindow(createDialogException(ex)));
       setButtonStyle(showLog, ButtonStyle.LINK);
       showLog.setWidth("140px");
@@ -1405,11 +1405,11 @@ public class FWVad {
   }
 
   /**
-   * Este mÈtodo cria uma janela de dialogo MODAL para exibir uma mensagem para confirmaÁ„o de excluir dados. O click em qualquer um dos botıes fechar· o dialog imediatamente, antes de chamar o evento no listener.
+   * Este m√©todo cria uma janela de dialogo MODAL para exibir uma mensagem para confirma√ß√£o de excluir dados. O click em qualquer um dos bot√µes fechar√° o dialog imediatamente, antes de chamar o evento no listener.
    *
-   * @param listener Listener para receber qual bot„o foi clicado.
+   * @param listener Listener para receber qual bot√£o foi clicado.
    *
-   * @return Janela no formato de caixa de di·logo pronta para se exibida.
+   * @return Janela no formato de caixa de di√°logo pronta para se exibida.
    */
   public static Window createDialogQuestionDelete(RFWDialogButtonClickListener listener) {
     final Window w = new Window("Tem Certeza Que Deseja Excluir?");
@@ -1422,11 +1422,11 @@ public class FWVad {
     w.setIcon(new ThemeResource("icon/delete_64.png"));
     w.addStyleName("bisErrorDialog");
 
-    // Conte˙do da Janela
+    // Conte√∫do da Janela
     VerticalLayout vl = new VerticalLayout();
     vl.setMargin(true);
 
-    Label lb = new Label("Caso clique em confirmar, o cadastro ser· excluÌdo do sistema!<br><b>Essa operaÁ„o n„o poder· ser desfeita!</b>", ContentMode.HTML);
+    Label lb = new Label("Caso clique em confirmar, o cadastro ser√° exclu√≠do do sistema!<br><b>Essa opera√ß√£o n√£o poder√° ser desfeita!</b>", ContentMode.HTML);
     vl.addComponent(lb);
     vl.setComponentAlignment(lb, Alignment.MIDDLE_LEFT);
     vl.setExpandRatio(lb, 1f);
@@ -1457,12 +1457,12 @@ public class FWVad {
   }
 
   /**
-   * Este mÈtodo cria uma janela de dialogo MODAL para exibir uma mensagem para confirmaÁ„o de desativar algum objeto. Desativar È o substituto do "delete" para objetos que n„o podem ser excluÌdos devido a associaÁıes ou histÛrico.<br>
-   * O click em qualquer um dos botıes fechar· o dialog imediatamente, antes de chamar o evento no listener.
+   * Este m√©todo cria uma janela de dialogo MODAL para exibir uma mensagem para confirma√ß√£o de desativar algum objeto. Desativar √© o substituto do "delete" para objetos que n√£o podem ser exclu√≠dos devido a associa√ß√µes ou hist√≥rico.<br>
+   * O click em qualquer um dos bot√µes fechar√° o dialog imediatamente, antes de chamar o evento no listener.
    *
-   * @param listener Listener para receber qual bot„o foi clicado.
+   * @param listener Listener para receber qual bot√£o foi clicado.
    *
-   * @return Janela no formato de caixa de di·logo pronta para se exibida.
+   * @return Janela no formato de caixa de di√°logo pronta para se exibida.
    */
   public static Window createDialogQuestionDeactivate(RFWDialogButtonClickListener listener) {
     final Window w = new Window("Tem Certeza Que Deseja Desativar e Excluir?");
@@ -1475,11 +1475,11 @@ public class FWVad {
     w.setIcon(new ThemeResource("icon/deactivate_64.png"));
     w.addStyleName("bisErrorDialog");
 
-    // Conte˙do da Janela
+    // Conte√∫do da Janela
     VerticalLayout vl = new VerticalLayout();
     vl.setMargin(true);
 
-    Label lb = new Label("Ao confirmar, o BIS desativar· o cadastro impedindo seu uso. Depois da desativaÁ„o, se n„o houver uso no histÛrico, o BIS excluir· o cadastro.<br><b>Caso ele seja excluÌdo, essa operaÁ„o n„o poder· ser desfeita!</b>", ContentMode.HTML);
+    Label lb = new Label("Ao confirmar, o BIS desativar√° o cadastro impedindo seu uso. Depois da desativa√ß√£o, se n√£o houver uso no hist√≥rico, o BIS excluir√° o cadastro.<br><b>Caso ele seja exclu√≠do, essa opera√ß√£o n√£o poder√° ser desfeita!</b>", ContentMode.HTML);
     vl.addComponent(lb);
     vl.setComponentAlignment(lb, Alignment.MIDDLE_LEFT);
     vl.setExpandRatio(lb, 1f);
@@ -1510,12 +1510,12 @@ public class FWVad {
   }
 
   /**
-   * Este mÈtodo cria uma janela de dialogo MODAL para exibir uma mensagem de InfomaÁ„o.
+   * Este m√©todo cria uma janela de dialogo MODAL para exibir uma mensagem de Infoma√ß√£o.
    *
-   * @param title TÌtulo da Janela de Dialogo.
+   * @param title T√≠tulo da Janela de Dialogo.
    * @param message Mensagem a ser exibida.
    * @param iconPath
-   * @return Janela no formato de caixa de di·logo pronta para se exibida.
+   * @return Janela no formato de caixa de di√°logo pronta para se exibida.
    */
   public static Window createDialogTip(String title, String message, String iconPath) {
     final Window w = new Window(title);
@@ -1527,7 +1527,7 @@ public class FWVad {
     w.setIcon(new ThemeResource(iconPath));
     w.addStyleName("bisTipDialog");
 
-    // Conte˙do da Janela
+    // Conte√∫do da Janela
     VerticalLayout vl = new VerticalLayout();
     vl.setMargin(true);
 
@@ -1550,24 +1550,24 @@ public class FWVad {
   }
 
   /**
-   * Este mÈtodo cria uma janela de dialogo MODAL para exibir uma mensagem de opÁıes para o usu·rio com um aviso de perigo.<br>
-   * O click em qualquer um dos botıes fechar· o dialog imediatamente, antes de chamar o evento no listener.
+   * Este m√©todo cria uma janela de dialogo MODAL para exibir uma mensagem de op√ß√µes para o usu√°rio com um aviso de perigo.<br>
+   * O click em qualquer um dos bot√µes fechar√° o dialog imediatamente, antes de chamar o evento no listener.
    *
-   * @param title TÌtulo da Janela de Dialogo.
+   * @param title T√≠tulo da Janela de Dialogo.
    * @param message Mensagem a ser exibida.
-   * @param listener Listener para receber qual bot„o foi clicado.
-   * @param defaultButton Define o bot„o que ter· o foco. Podendo ser pressionado de imediato com o espaÁo ou ENTER. Se nulo, o primeiro bot„o receber· o foco. O bot„o passado aqui dever· estar entre os botıes do par‚metro buttons, ou n„o ter· efeito algum.
-   * @param cancelButton Define o bot„o que ser· acionado com a tecla ESC. Se nulo, nenhum bot„o recebe esta funÁ„o. O bot„o passado aqui dever· estar entre os botıes do par‚metro buttons, ou n„o ter· efeito algum.
-   * @param buttons Botıes a serem exibidos para o usu·rio. Se passado nulo, ser· exibido apenas o bot„o de OK. Os botıes ser„o colocados na ordem do array.
+   * @param listener Listener para receber qual bot√£o foi clicado.
+   * @param defaultButton Define o bot√£o que ter√° o foco. Podendo ser pressionado de imediato com o espa√ßo ou ENTER. Se nulo, o primeiro bot√£o receber√° o foco. O bot√£o passado aqui dever√° estar entre os bot√µes do par√¢metro buttons, ou n√£o ter√° efeito algum.
+   * @param cancelButton Define o bot√£o que ser√° acionado com a tecla ESC. Se nulo, nenhum bot√£o recebe esta fun√ß√£o. O bot√£o passado aqui dever√° estar entre os bot√µes do par√¢metro buttons, ou n√£o ter√° efeito algum.
+   * @param buttons Bot√µes a serem exibidos para o usu√°rio. Se passado nulo, ser√° exibido apenas o bot√£o de OK. Os bot√µes ser√£o colocados na ordem do array.
    *
-   * @return Janela no formato de caixa de di·logo pronta para se exibida.
+   * @return Janela no formato de caixa de di√°logo pronta para se exibida.
    */
   public static Window createDialogQuestionWarning(String title, String message, RFWDialogButtonClickListener listener, DialogButton defaultButton, DialogButton cancelButton, DialogButton... buttons) {
     return FWVad.createDialog(title, message, new ThemeResource("icon/error_64.png"), "bisErrorDialog", listener, defaultButton, cancelButton, buttons);
   }
 
   /**
-   * Cria um dialog modal com o conte˙do do {@link RUWiki#getFWWikiManual_HTML()} pronto para ser exibido como ajuda nos campos que aceitam BISWiki
+   * Cria um dialog modal com o conte√∫do do {@link RUWiki#getFWWikiManual_HTML()} pronto para ser exibido como ajuda nos campos que aceitam BISWiki
    */
   public static Window createDialogBISWikiHelp() {
     Window help = new Window();
@@ -1593,7 +1593,7 @@ public class FWVad {
     helpVL.addComponent(helpLB);
     helpVL.setExpandRatio(helpLB, 1);
 
-    // Cria barra de botıes
+    // Cria barra de bot√µes
     Button helpCloseBT = FWVad.createButton(ButtonType.CLOSE, evtClose -> {
       help.close();
     });
@@ -1604,11 +1604,11 @@ public class FWVad {
   }
 
   /**
-   * Cria o layout utilizado como barra de botıes nas telas do BIS e j· aceita colocar os components.<Br>
-   * NOTE QUE: este componente retorna com setMargins(true);, porem dependendo do layout em que ele for inserido, È possÌvel definir para false para que n„o fique com espaÁos duplos ou mesmo desalinhado em relaÁ„o ao restante da tela.
+   * Cria o layout utilizado como barra de bot√µes nas telas do BIS e j√° aceita colocar os components.<Br>
+   * NOTE QUE: este componente retorna com setMargins(true);, porem dependendo do layout em que ele for inserido, √© poss√≠vel definir para false para que n√£o fique com espa√ßos duplos ou mesmo desalinhado em rela√ß√£o ao restante da tela.
    *
-   * @param components Normalmente botıes que s„o colocados na tela.
-   * @return HorizontalLayout no formato de barra de botıes pronto para ser utilizado na tela.
+   * @param components Normalmente bot√µes que s√£o colocados na tela.
+   * @return HorizontalLayout no formato de barra de bot√µes pronto para ser utilizado na tela.
    */
   public static HorizontalLayout createButtonBarLayout(Component... components) {
     HorizontalLayout buttonBar = new HorizontalLayout();
@@ -1622,13 +1622,13 @@ public class FWVad {
   }
 
   /**
-   * Cria uma barra de botıes com os botıes "CANCEL" e "CONFIRM" padr„o do sistema.<br>
-   * Mesmo efeito que criar os botıes {@link ButtonType#CANCEL} e {@link ButtonType#CONFIRM} e colocados na barra criada com o {@link #createButtonBarLayout(Component...)}.
+   * Cria uma barra de bot√µes com os bot√µes "CANCEL" e "CONFIRM" padr√£o do sistema.<br>
+   * Mesmo efeito que criar os bot√µes {@link ButtonType#CANCEL} e {@link ButtonType#CONFIRM} e colocados na barra criada com o {@link #createButtonBarLayout(Component...)}.
    *
    * @param cancelListener
    * @param confirmListener
    *
-   * @return Barra de botıes pronta.
+   * @return Barra de bot√µes pronta.
    */
   public static HorizontalLayout createButtonBarLayoutCancelConfirm(ClickListener cancelListener, ClickListener confirmListener) {
     Button btCancel = FWVad.createButton(ButtonType.CANCEL, cancelListener);
@@ -1637,9 +1637,9 @@ public class FWVad {
   }
 
   /**
-   * MÈtodo utilizado para criar os botıes do sistema
+   * M√©todo utilizado para criar os bot√µes do sistema
    *
-   * @return Bot„o com o estilo padr„o do sistema.
+   * @return Bot√£o com o estilo padr√£o do sistema.
    */
   public static Button createButton(String caption, ButtonStyle buttonStyle, String iconPath, Button.ClickListener listener) {
     final Button b = new Button(caption);
@@ -1650,11 +1650,11 @@ public class FWVad {
   }
 
   /**
-   * Cria um bot„o padr„o do BIS do tipo Toggle totalmente configurado.
+   * Cria um bot√£o padr√£o do BIS do tipo Toggle totalmente configurado.
    *
-   * @param buttonType DefiniÁ„o do bot„o a ser criado.
+   * @param buttonType Defini√ß√£o do bot√£o a ser criado.
    * @param listener
-   * @return Bot„o criado j· com as carecteristicas do padr„o visual.
+   * @return Bot√£o criado j√° com as carecteristicas do padr√£o visual.
    */
   public static <T extends Object> RFWButtonToggle<T> createButtonToggle(ButtonType buttonType, ClickListener listener) {
     RFWButtonToggle<T> button = new RFWButtonToggle<T>();
@@ -1664,9 +1664,9 @@ public class FWVad {
   }
 
   /**
-   * MÈtodo utilizado para criar os botıes do tipo BISButtonToggle do sistema
+   * M√©todo utilizado para criar os bot√µes do tipo BISButtonToggle do sistema
    *
-   * @return Bot„o com o estilo padr„o do sistema.
+   * @return Bot√£o com o estilo padr√£o do sistema.
    */
   public static <T extends Object> RFWButtonToggle<T> createButtonToggle(String caption, ButtonStyle buttonStyle, String iconPath, Button.ClickListener listener) {
     final RFWButtonToggle<T> b = new RFWButtonToggle<T>(caption);
@@ -1677,9 +1677,9 @@ public class FWVad {
   }
 
   /**
-   * Mesmo que o mÈtodo {@link #createPopupButton(String, ButtonStyle, String, ClickListener, Component)}, mas j· cria o listener que faz com que o conte˙do popup seja exibido e ocultado a cada click.
+   * Mesmo que o m√©todo {@link #createPopupButton(String, ButtonStyle, String, ClickListener, Component)}, mas j√° cria o listener que faz com que o conte√∫do popup seja exibido e ocultado a cada click.
    *
-   * @return Bot„o Popup com o estilo padr„o do sistema.
+   * @return Bot√£o Popup com o estilo padr√£o do sistema.
    */
   public static PopupButton createPopupButton(String caption, ButtonStyle buttonStyle, String iconPath, Component content) {
     final PopupButton b = new PopupButton(caption);
@@ -1690,9 +1690,9 @@ public class FWVad {
   }
 
   /**
-   * Mesmo que o mÈtodo {@link #createPopupButton(String, ButtonStyle, String, ClickListener, Component)}, mas j· cria o listener que faz com que o conte˙do popup seja exibido e ocultado a cada click.
+   * Mesmo que o m√©todo {@link #createPopupButton(String, ButtonStyle, String, ClickListener, Component)}, mas j√° cria o listener que faz com que o conte√∫do popup seja exibido e ocultado a cada click.
    *
-   * @return Bot„o Popup com o estilo padr„o do sistema.
+   * @return Bot√£o Popup com o estilo padr√£o do sistema.
    */
   public static PopupButton createPopupButton(String caption, ButtonStyle buttonStyle, String iconPath, Button... buttons) {
     final PopupButton b = new PopupButton(caption);
@@ -1704,9 +1704,9 @@ public class FWVad {
   }
 
   /**
-   * MÈtodo utilizado para criar os botıes popup do sistema
+   * M√©todo utilizado para criar os bot√µes popup do sistema
    *
-   * @return Bot„o Popup com o estilo padr„o do sistema.
+   * @return Bot√£o Popup com o estilo padr√£o do sistema.
    */
   public static PopupButton createPopupButton(String caption, ButtonStyle buttonStyle, String iconPath, Button.ClickListener listener, Component content) {
     final PopupButton b = new PopupButton(caption);
@@ -1718,10 +1718,10 @@ public class FWVad {
   }
 
   /**
-   * Cria um bot„o Popup do BIS totalmente configurado com o padr„o visual do BIS.
+   * Cria um bot√£o Popup do BIS totalmente configurado com o padr√£o visual do BIS.
    *
-   * @param buttonType DefiniÁ„o do bot„o a ser criado.
-   * @return Bot„o criado j· com as carecteristicas do padr„o visual.
+   * @param buttonType Defini√ß√£o do bot√£o a ser criado.
+   * @return Bot√£o criado j√° com as carecteristicas do padr√£o visual.
    */
   public static PopupButton createPopupButton(ButtonType buttonType, Button.ClickListener listener, Component content) {
     PopupButton button = createPopupButton(null, null, null, listener, content);
@@ -1730,10 +1730,10 @@ public class FWVad {
   }
 
   /**
-   * Cria um bot„o Popup do BIS totalmente configurado com o padr„o visual do BIS.
+   * Cria um bot√£o Popup do BIS totalmente configurado com o padr√£o visual do BIS.
    *
-   * @param buttonType DefiniÁ„o do bot„o a ser criado.
-   * @return Bot„o criado j· com as carecteristicas do padr„o visual.
+   * @param buttonType Defini√ß√£o do bot√£o a ser criado.
+   * @return Bot√£o criado j√° com as carecteristicas do padr√£o visual.
    */
   public static PopupButton createPopupButton(ButtonType buttonType) {
     PopupButton button = createPopupButton(buttonType, null, null);
@@ -1741,12 +1741,12 @@ public class FWVad {
   }
 
   /**
-   * Cria um bot„o Popup do BIS totalmente configurado com o padr„o visual do BIS.<br>
-   * Criar o padr„o de bot„o com outros botıes tipo "link", como um menu de subopÁıes que sai do menu.
+   * Cria um bot√£o Popup do BIS totalmente configurado com o padr√£o visual do BIS.<br>
+   * Criar o padr√£o de bot√£o com outros bot√µes tipo "link", como um menu de subop√ß√µes que sai do menu.
    *
-   * @param buttonType DefiniÁ„o do bot„o a ser criado.
-   * @param buttons Lista de botıes a serem adicionados no layout.
-   * @return Bot„o criado j· com as carecteristicas do padr„o visual.
+   * @param buttonType Defini√ß√£o do bot√£o a ser criado.
+   * @param buttons Lista de bot√µes a serem adicionados no layout.
+   * @return Bot√£o criado j√° com as carecteristicas do padr√£o visual.
    */
   public static PopupButton createPopupButton(ButtonType buttonType, Button... buttons) {
     PopupButton button = new PopupButton();
@@ -1758,13 +1758,13 @@ public class FWVad {
   }
 
   /**
-   * Cria o conte˙do para o PopupButton no formato de lista de opÁıes (criado com VerticalLayout e botıes com estilo "Link").
+   * Cria o conte√∫do para o PopupButton no formato de lista de op√ß√µes (criado com VerticalLayout e bot√µes com estilo "Link").
    *
-   * @param button PopupButton para receber o conte˙do
-   * @param buttons Botıes com as opÁıes
+   * @param button PopupButton para receber o conte√∫do
+   * @param buttons Bot√µes com as op√ß√µes
    */
   public static void addPopupButtons(PopupButton button, Button... buttons) {
-    // Configura os botıes
+    // Configura os bot√µes
     for (Button bt : buttons) {
       bt.setStyleName(ValoTheme.BUTTON_LINK);
       bt.addClickListener(e -> button.setPopupVisible(false));
@@ -1778,14 +1778,14 @@ public class FWVad {
   }
 
   /**
-   * Retorna a largura da "·rea da p·gina" no navegador.
+   * Retorna a largura da "√°rea da p√°gina" no navegador.
    */
   public static int getCanvasWidth() {
     return getUI().getPage().getBrowserWindowWidth();
   }
 
   /**
-   * Retorna a altura da "·rea da p·gina" no navegador.
+   * Retorna a altura da "√°rea da p√°gina" no navegador.
    */
   public static int getCanvasHeight() {
     return getUI().getPage().getBrowserWindowHeight();

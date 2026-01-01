@@ -16,9 +16,9 @@ import br.eng.rodrigogml.rfw.kernel.vo.RFWVO;
 import br.eng.rodrigogml.rfw.vaadin.interfaces.RFWUI;
 
 /**
- * Description: Recebe e trata exceÁıes para que sejam exibidas adequadamente pela interface do programa.<br>
+ * Description: Recebe e trata exce√ß√µes para que sejam exibidas adequadamente pela interface do programa.<br>
  *
- * @author Rodrigo Leit„o
+ * @author Rodrigo Leit√£o
  * @since 3.0.0 (JUL / 2009)
  */
 public class TreatException {
@@ -32,18 +32,18 @@ public class TreatException {
 
   /**
    * Faz o tratamento da Exception recebida e exibe um Dialog na Tela.<br>
-   * Trata de forma diferente as exceptions do padr„o do RFWDeprec.<br>
-   * Qualquer exception que n„o pertenÁa ao sistema RFWDeprec È tratada como uma {@link RFWCriticalException}, por considerar que a falta de tratamento de exceptions para exceptions do sistema seja um erro crÌtico de falha do desvolvedor.
+   * Trata de forma diferente as exceptions do padr√£o do RFWDeprec.<br>
+   * Qualquer exception que n√£o perten√ßa ao sistema RFWDeprec √© tratada como uma {@link RFWCriticalException}, por considerar que a falta de tratamento de exceptions para exceptions do sistema seja um erro cr√≠tico de falha do desvolvedor.
    *
    * @param <VO>
    * @param e Throwable para ser tratado.
-   * @param fields Campos que est„o sendo exibidos na tela. Quando a Exception È do tipo {@link RFWValidationGroupException} ou {@link RFWValidationException} e as exceptions tiverem o "field" definido, o mÈtodo tentar· associar as mensagems de falha diretamente nos campos para deixar mais evidente para o usu·rio. Caso contr·rio a mensagem È exibida no popup de qualquer modo.<br>
+   * @param fields Campos que est√£o sendo exibidos na tela. Quando a Exception √© do tipo {@link RFWValidationGroupException} ou {@link RFWValidationException} e as exceptions tiverem o "field" definido, o m√©todo tentar√° associar as mensagems de falha diretamente nos campos para deixar mais evidente para o usu√°rio. Caso contr√°rio a mensagem √© exibida no popup de qualquer modo.<br>
    *          Esta Hash deve ter a chave definida com o mesmo caminho que o BISValidation cria.
    */
   public static <VO extends RFWVO> void treat(Throwable e, Map<String, HasValue<?>> fields) {
     if (RFW.isDevelopmentEnvironment()) e.printStackTrace();
 
-    // Procura se temos a mensagem de falta de sess„o em algum lugar, mesmo que encapsulada por outra exception
+    // Procura se temos a mensagem de falta de sess√£o em algum lugar, mesmo que encapsulada por outra exception
     Throwable last = null;
     Throwable next = e;
     while (last != next) {
@@ -61,11 +61,11 @@ public class TreatException {
       next = next.getCause();
     }
 
-    // Verifica o tipo de excec„o recebida
+    // Verifica o tipo de excec√£o recebida
     int countWarnings = 0;
     StringBuilder warnings = new StringBuilder();
     if (e instanceof RFWValidationGroupException) {
-      // Se È um grupo de validaÁ„o tentamos associar cada erro ao seu campo, se o campo n„o for encontrado gera um "log" e È exibido como um Warning na tela
+      // Se √© um grupo de valida√ß√£o tentamos associar cada erro ao seu campo, se o campo n√£o for encontrado gera um "log" e √© exibido como um Warning na tela
       for (RFWValidationException ex : ((RFWValidationGroupException) e).getValidationlist()) {
         String msg = RFWBundle.get(ex);
 
@@ -91,12 +91,12 @@ public class TreatException {
   private static void showExceptionDialog(Throwable e, String warnings) {
     if (e instanceof RFWValidationGroupException) {
       if (warnings == null || "".equals(warnings)) {
-        FWVad.showValidationMessage("Algumas informaÁıes s„o inv·lidas! Verifique as exclamaÁıes de erros em cada campo com problema para corrigi-los.");
+        FWVad.showValidationMessage("Algumas informa√ß√µes s√£o inv√°lidas! Verifique as exclama√ß√µes de erros em cada campo com problema para corrigi-los.");
       } else {
         FWVad.showValidationMessage(warnings);
       }
     } else if (e instanceof RFWValidationException) {
-      // Tenta associara mensagem ao campo, mas como sÛ temos uma validaÁ„o e n„o o grupo, vamos exibir a mesma mensagem na caixa de informaÁıes ao invÈs de uma informaÁ„o genÈrica
+      // Tenta associara mensagem ao campo, mas como s√≥ temos uma valida√ß√£o e n√£o o grupo, vamos exibir a mesma mensagem na caixa de informa√ß√µes ao inv√©s de uma informa√ß√£o gen√©rica
       // TreatExceptionMessages.associateValidationsToFields((RFWValidationException) e, hashMap, msg);
       FWVad.showValidationMessage(RFWBundle.get(e));
     } else if (e instanceof RFWWarningException) {

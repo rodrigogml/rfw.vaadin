@@ -3,11 +3,11 @@ package br.eng.rodrigogml.rfw.vaadin.interfaces;
 import com.vaadin.server.Page.BrowserWindowResizeEvent;
 
 /**
- * Description: Os Frames e janelas que implementarem essa interface receberão a notificação de alteração de tamanho do Browser, permitindo que o layout seja refeito ou reconfigurado.<br>
+ * Description: Os Frames e janelas que implementarem essa interface receberÃ£o a notificaÃ§Ã£o de alteraÃ§Ã£o de tamanho do Browser, permitindo que o layout seja refeito ou reconfigurado.<br>
  *
- * Note que o único componente que "ouve" diretamente do Vaadin é o BISUI, este por sua vez tenta passar o evento para o frame ativo, que deve passar para as janelas ativas, e assim por diante.
+ * Note que o Ãºnico componente que "ouve" diretamente do Vaadin Ã© o BISUI, este por sua vez tenta passar o evento para o frame ativo, que deve passar para as janelas ativas, e assim por diante.
  *
- * @author Rodrigo Leitão
+ * @author Rodrigo LeitÃ£o
  * @since 7.1.0 (5 de nov de 2016)
  */
 public interface RFWBrowserResizeListener {

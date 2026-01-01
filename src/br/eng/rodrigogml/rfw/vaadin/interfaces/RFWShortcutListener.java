@@ -10,12 +10,12 @@ import com.vaadin.ui.AbstractComponent;
 public interface RFWShortcutListener {
 
   /**
-   * Método chamado quando a tecla de atalho é pressionada
+   * MÃ©todo chamado quando a tecla de atalho Ã© pressionada
    *
-   * @param component Componente à qual o listener foi anexado.
-   * @param sender Sender recebido do Handler do Vaadin (Sem documentação de explicação) - provavelmente o objeto que tinha o foco quando a tecla foi pressionada.
-   * @param target Targer recebido do Handler do Vaadin (Sem documentação de explicação)
-   * @param keyCode Código da Tecla pressionada (mesma passada no momento do bind do shortcut) - {@link KeyCode}
+   * @param component Componente Ã  qual o listener foi anexado.
+   * @param sender Sender recebido do Handler do Vaadin (Sem documentaÃ§Ã£o de explicaÃ§Ã£o) - provavelmente o objeto que tinha o foco quando a tecla foi pressionada.
+   * @param target Targer recebido do Handler do Vaadin (Sem documentaÃ§Ã£o de explicaÃ§Ã£o)
+   * @param keyCode CÃ³digo da Tecla pressionada (mesma passada no momento do bind do shortcut) - {@link KeyCode}
    * @param keyModifier Array com as teclas "modificadoras" (mesmas passadas no momento do bind do Shortcut) - {@link ModifierKey}
    */
   public void shortCutPressed(AbstractComponent component, Object sender, Object target, int keyCode, int... keyModifier);

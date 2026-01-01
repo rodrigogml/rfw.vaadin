@@ -14,7 +14,7 @@ import br.eng.rodrigogml.rfw.kernel.exceptions.RFWRunTimeException;
 /**
  * Description: Componente que permite que componentes sejam associados vizualmente um colado com o outro.<br>
  *
- * @author Rodrigo Leitão
+ * @author Rodrigo LeitÃ£o
  * @since 10.0.0 (27 de nov de 2018)
  */
 public class RFWAssociativeComponent extends CustomField<Object> {
@@ -33,23 +33,23 @@ public class RFWAssociativeComponent extends CustomField<Object> {
   }
 
   /**
-   * Retorna o GridLayout para manipulação direta do layout, caso necessário, como troca do tamanho dos componentes, etc.
+   * Retorna o GridLayout para manipulaÃ§Ã£o direta do layout, caso necessÃ¡rio, como troca do tamanho dos componentes, etc.
    *
-   * @return Layout utilizado na aparência do componente
+   * @return Layout utilizado na aparÃªncia do componente
    */
   public GridLayout getLayout() {
     return this.gl;
   }
 
   /**
-   * Repassa a chamada para o {@link GridLayout} utilizado na base da aparência deste componente.
+   * Repassa a chamada para o {@link GridLayout} utilizado na base da aparÃªncia deste componente.
    */
   public void setColumnExpandRatio(int columnIndex, float ratio) {
     this.gl.setColumnExpandRatio(columnIndex, ratio);
   }
 
   /**
-   * Repassa a chamada para o {@link GridLayout} utilizado na base da aparência deste componente.
+   * Repassa a chamada para o {@link GridLayout} utilizado na base da aparÃªncia deste componente.
    */
   public void addComponents(Component... c) {
     for (Component cp : c) {
@@ -71,7 +71,7 @@ public class RFWAssociativeComponent extends CustomField<Object> {
   }
 
   /**
-   * Repassa a chamada para o {@link GridLayout} utilizado na base da aparência deste componente.
+   * Repassa a chamada para o {@link GridLayout} utilizado na base da aparÃªncia deste componente.
    */
   public void addComponent(Component c) {
     this.gl.setColumns(this.gl.getColumns() + 1);
@@ -95,11 +95,11 @@ public class RFWAssociativeComponent extends CustomField<Object> {
 
   @Override
   public Object getValue() {
-    throw new RFWRunTimeException("O RFWAssociativeComponent não trata os valores dos campos, ele tem a finalidade apenas de uni-los visualmente. Por favor chame o método diretamente do próprio componente!");
+    throw new RFWRunTimeException("O RFWAssociativeComponent nÃ£o trata os valores dos campos, ele tem a finalidade apenas de uni-los visualmente. Por favor chame o mÃ©todo diretamente do prÃ³prio componente!");
   }
 
   @Override
   protected void doSetValue(Object value) {
-    throw new RFWRunTimeException("O RFWAssociativeComponent não trata os valores dos campos, ele tem a finalidade apenas de uni-los visualmente. Por favor chame o método diretamente do próprio componente!");
+    throw new RFWRunTimeException("O RFWAssociativeComponent nÃ£o trata os valores dos campos, ele tem a finalidade apenas de uni-los visualmente. Por favor chame o mÃ©todo diretamente do prÃ³prio componente!");
   }
 }
