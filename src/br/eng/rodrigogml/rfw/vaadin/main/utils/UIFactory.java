@@ -2275,41 +2275,41 @@ public class UIFactory<VO extends RFWVO> {
       t = new TextField(((RFWMetaStringCNPJField) ann).caption() + ':');
       t.setRequiredIndicatorVisible(forceRequired);
       if (fieldAlignment == null) fieldAlignment = FieldAlignment.CENTER;
-      t.setMaxLength(RFWCNPJDataFormatter.createInstance().getMaxLenght());
+      t.setMaxLength(RFWCNPJDataFormatter.createInstance().getMaxLength());
       t.setWidth("170px");
     } else if (ann instanceof RFWMetaStringCPFField) {
       t = new TextField(((RFWMetaStringCPFField) ann).caption() + ':');
       t.setRequiredIndicatorVisible(forceRequired);
       if (fieldAlignment == null) fieldAlignment = FieldAlignment.CENTER;
-      t.setMaxLength(RFWCPFDataFormatter.getInstance().getMaxLenght());
+      t.setMaxLength(RFWCPFDataFormatter.getInstance().getMaxLength());
       t.setWidth("170px");
     } else if (ann instanceof RFWMetaStringCPFOrCNPJField) {
       t = new TextField(((RFWMetaStringCPFOrCNPJField) ann).caption() + ':');
       t.setRequiredIndicatorVisible(forceRequired);
       if (fieldAlignment == null) fieldAlignment = FieldAlignment.CENTER;
-      t.setMaxLength(RFWCPFOrCNPJDataFormatter.getInstance().getMaxLenght());
+      t.setMaxLength(RFWCPFOrCNPJDataFormatter.getInstance().getMaxLength());
       t.setWidth("170px");
     } else if (ann instanceof RFWMetaStringIEField) {
       t = new TextField(((RFWMetaStringIEField) ann).caption() + ':');
       t.setRequiredIndicatorVisible(forceRequired);
       if (fieldAlignment == null) fieldAlignment = FieldAlignment.CENTER;
-      t.setMaxLength(RFWIEDataFormatter.getInstance().getMaxLenght());
+      t.setMaxLength(RFWIEDataFormatter.getInstance().getMaxLength());
       t.setWidth("200px");
     } else if (ann instanceof RFWMetaStringPhoneField) {
       t = new TextField(((RFWMetaStringPhoneField) ann).caption() + ':');
       t.setRequiredIndicatorVisible(forceRequired);
-      t.setMaxLength(new RFWPhoneDataFormatter().getMaxLenght());
+      t.setMaxLength(new RFWPhoneDataFormatter().getMaxLength());
       t.setWidth("100%");
     } else if (ann instanceof RFWMetaStringEmailField) {
       t = new TextField(((RFWMetaStringEmailField) ann).caption() + ':');
       t.setRequiredIndicatorVisible(forceRequired);
-      t.setMaxLength(RFWEmailDataFormatter.getInstance().getMaxLenght());
+      t.setMaxLength(RFWEmailDataFormatter.getInstance().getMaxLength());
       t.setWidth("100%");
     } else if (ann instanceof RFWMetaStringCEPField) {
       t = new TextField(((RFWMetaStringCEPField) ann).caption() + ':');
       t.setRequiredIndicatorVisible(forceRequired);
       if (fieldAlignment == null) fieldAlignment = FieldAlignment.CENTER;
-      t.setMaxLength(RFWCEPDataFormatter.getInstance().getMaxLenght());
+      t.setMaxLength(RFWCEPDataFormatter.getInstance().getMaxLength());
       t.setWidth("130px");
     } else {
       throw new RFWCriticalException("RFWMeta '${2}' não suportada pelo UIFactory: atributo '${0}' da classe '${1}'.", new String[] { attribute, voClass.getCanonicalName(), ann.annotationType().getSimpleName() });
@@ -2334,7 +2334,7 @@ public class UIFactory<VO extends RFWVO> {
     }
 
     // Se tiver um df, e tiver um maxlength utilizamos ele, pois normalmente com a formatação é necessário mais caracteres
-    if (df != null && df.getMaxLenght() > 0) t.setMaxLength(df.getMaxLenght());
+    if (df != null && df.getMaxLength() > 0) t.setMaxLength(df.getMaxLength());
 
     return t;
   }
@@ -2385,7 +2385,7 @@ public class UIFactory<VO extends RFWVO> {
       }
       t.setMaxLength(((RFWMetaStringField) ann).maxLength());
       // Se tiver um df, e tiver um maxlength utilizamos ele, pois normalmente com a formatação é necessário mais caracteres
-      if (df != null && df.getMaxLenght() > 0) t.setMaxLength(df.getMaxLenght());
+      if (df != null && df.getMaxLength() > 0) t.setMaxLength(df.getMaxLength());
       t.setWidth("100%");
     } else {
       throw new RFWCriticalException("RFWMeta '${2}' não suportada pelo UIFactory: atributo '${0}' da classe '${1}'.", new String[] { attribute, voClass.getCanonicalName(), ann.annotationType().getSimpleName() });
@@ -3906,7 +3906,7 @@ public class UIFactory<VO extends RFWVO> {
     }
 
     // Se temos um DF, e temos um campo do tipo TextField, atualizamos o MaxLength para o definido no DataFormatter. Isso pq o campo gerado utiliza o maxLength da RFWMeta do VO, e a formatação em geral inclui mais caracteres.
-    if (df != null && field instanceof AbstractTextField) ((AbstractTextField) field).setMaxLength(df.getMaxLenght());
+    if (df != null && field instanceof AbstractTextField) ((AbstractTextField) field).setMaxLength(df.getMaxLength());
 
     return bind(field, vo, propertyPath, df, required, nullValue);
   }
